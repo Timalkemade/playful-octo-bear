@@ -30,8 +30,7 @@ public class HelloWorld extends BasicGame {
     public void init(GameContainer gc) throws SlickException {
         LoadingList.setDeferredLoading(true);
 
-        new Image("images/cursor_arrow.png");
-        Image image = new Image("images/earth_128.png");
+        Image image = new Image("images/earth.jpg");
         world = new Avatar(image, new Vector2f(200f, 200f), 0, new Vector2f(0, 0));
         gc.setMaximumLogicUpdateInterval(20);
         gc.setMinimumLogicUpdateInterval(50);
