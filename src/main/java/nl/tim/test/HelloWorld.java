@@ -1,6 +1,7 @@
 package nl.tim.test;
 
 import org.newdawn.slick.*;
+import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.loading.DeferredResource;
 import org.newdawn.slick.loading.LoadingList;
 import org.slf4j.Logger;
@@ -17,7 +18,7 @@ public class HelloWorld extends BasicGame {
      */
     private DeferredResource nextResource;
 
-    private Image image;
+    private Avatar world;
 
     private boolean started;
 
@@ -30,7 +31,11 @@ public class HelloWorld extends BasicGame {
         LoadingList.setDeferredLoading(true);
 
         new Image("images/cursor_arrow.png");
-        image = new Image("images/earth_128.png");
+        Image image = new Image("images/earth_128.png");
+        world = new Avatar(image, new Vector2f(200f, 200f), 0, new Vector2f(0, 0));
+        gc.setMaximumLogicUpdateInterval(20);
+        gc.setMinimumLogicUpdateInterval(50);
+
     }
 
     @Override
@@ -56,6 +61,27 @@ public class HelloWorld extends BasicGame {
             if (!started) {
                 started = true;
             }
+
+            Input input = gc.getInput();
+            Vector2f moveDir = new Vector2f(0, 0);
+
+            if (input.isKeyDown(Input.KEY_RIGHT)) {
+                moveDir.x = 1;
+            }
+            if (input.isKeyDown(Input.KEY_LEFT)) {
+                moveDir.x = -1;
+            }
+            if (input.isKeyDown(Input.KEY_UP)) {
+                moveDir.y = -1;
+            }
+            if (input.isKeyDown(Input.KEY_DOWN)) {
+                moveDir.y = 1;
+            }
+            world.setDirection(moveDir);
+            world.setSpeed(400);
+            world.move(delta);
+
+
         }
     }
 
@@ -76,7 +102,7 @@ public class HelloWorld extends BasicGame {
             LOGGER.debug("loaded {}", loaded);
             LOGGER.debug("Bar: {}", bar);
         } else if (started) {
-            image.draw(100, 200);
+            world.render();
             g.drawString("LOADING COMPLETE", 100, 500);
         }
     }
