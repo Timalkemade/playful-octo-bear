@@ -28,8 +28,34 @@ public class Bob implements Physical, Renderable {
     }
 
     @Override
+    public void setX(float x) {
+    }
+
+    @Override
     public float getY() {
         return y;
+    }
+
+    @Override
+    public void setY(float y) {
+    }
+
+    @Override
+    public float getAngle() {
+        return 0;
+    }
+
+    @Override
+    public void setAngle(float angle) {
+    }
+
+    @Override
+    public boolean isDynamic() {
+        return false;
+    }
+
+    @Override
+    public void setDynamic(boolean dynamic) {
     }
 
     @Override
