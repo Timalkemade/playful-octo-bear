@@ -14,4 +14,11 @@ public interface Physical {
     
     void setY(float y);
     
+    float getAngle();
+    
+    void setAngle(float angle);
+    
+    boolean isDynamic();
+    
+    void setDynamic(boolean dynamic);
 }

@@ -25,12 +25,13 @@ public class PhysicsInterface {
 		// Update Box2D world
         world.step(timeStep, 8, 3);
         
-        // Sync Box2D objects with the physical objects
+        // Sync Box2D objects with the Physical objects
         for (Physical physical : objects.keySet()) {
         	Body body = objects.get(physical);
         	
         	physical.setX(body.getPosition().x);
-        	physical.setY( body.getPosition().y);
+        	physical.setY(body.getPosition().y);
+        	physical.setAngle(body.getAngle());
         }
 	}
 	
@@ -38,11 +39,18 @@ public class PhysicsInterface {
 		// Create Bodydef using Physical properties
 		float x = physical.getX();
 		float y = physical.getY();
+		float angle = physical.getAngle();
 
 		BodyDef bodyDef = new BodyDef();
-	    bodyDef.type = BodyType.STATIC;
-	    bodyDef.angle = 0;
+	    bodyDef.angle = angle;
 		bodyDef.position.set(x,y);
+
+		if (physical.isDynamic()) {
+			bodyDef.type = BodyType.DYNAMIC;
+		}
+		else {
+			bodyDef.type = BodyType.STATIC;
+		}
 		
 		// Attach Bodydef to world and save body to hashmap
 		Body body = world.createBody(bodyDef);
