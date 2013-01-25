@@ -7,5 +7,5 @@ package nl.sest.gamejam.view;
  */
 public interface Renderer {
 
-
+    void render();
 }
