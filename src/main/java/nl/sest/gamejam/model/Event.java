@@ -5,4 +5,6 @@ package nl.sest.gamejam.model;
  * @since 1/25/13 11:47 PM
  */
 public interface Event {
+
+    long getTimestamp();
 }
