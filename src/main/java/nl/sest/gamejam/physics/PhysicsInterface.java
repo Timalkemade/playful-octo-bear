@@ -32,6 +32,10 @@ public class PhysicsInterface implements CreatePhysicalListener, DeletePhysicalL
 		// Set model
 		this.model = model;
 		
+		// Add listeners
+		model.registerCreatePhysicalEventListener(this);
+		model.registerDeletePhysicalEventListener(this);
+		
 	    // Init world
 		Vec2 gravity = new Vec2(0.0f, 0.0f);
 	    boolean doSleep = true;
