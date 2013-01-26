@@ -21,37 +21,35 @@ public class Bob implements Physical, Renderable {
 	private float angle;
 	private boolean isDynamic;
 	protected PointOfInterest poi;
-
-	public Bob(float x, float y) {
-		this(null, x, y);
-		renderer = createDefaultRenderer();
-	}
-
-	public void setPOI(PointOfInterest poi) {
-		this.poi = poi;
-	}
-
-	public PointOfInterest getPOI() {
-		return poi;
-	}
-
-	/**
-	 * TODO Not correctly implemented yet
-	 *
-	 * @return
-	 */
-	public Renderer createDefaultRenderer() {
-		return new ViewPhysical(this);
-	}
-
-	public Bob(Renderer aRenderer, float x, float y) {
-		this.renderer = aRenderer;
-		this.x = x;
-		this.y = y;
-		angle = 0;
-		isDynamic = true;
-
-	}
+    
+    public Bob(float x, float y) {
+    	this(null, x, y);
+    	renderer = createDefaultRenderer();
+    	setRadius(1);
+    }
+    
+    public Bob(Renderer aRenderer, float x, float y) {
+        this.renderer = aRenderer;
+        this.x = x;
+        this.y = y;
+        angle = 0;
+        isDynamic = true;
+    }
+    
+    public void setPOI(PointOfInterest poi) {
+    	this.poi = poi;
+    }
+    
+    public PointOfInterest getPOI() {
+    	return poi;
+    }
+    
+    /**
+     * @return
+     */
+    public Renderer createDefaultRenderer() {
+    	return new ViewPhysical(this);
+    }
 
 	@Override
 	public float getX() {

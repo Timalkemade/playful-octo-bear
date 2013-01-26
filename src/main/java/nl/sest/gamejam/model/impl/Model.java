@@ -8,6 +8,8 @@ import nl.sest.gamejam.model.player.PlayerRepulsor;
 
 import java.util.*;
 
+import org.jbox2d.dynamics.World;
+
 /**
  * The model keeps track of where everything in is in the world. Basically is should be called Big Brother.
  *
@@ -16,11 +18,14 @@ import java.util.*;
  */
 public class Model {
 
-	private final Stack<Collision> collisions = new Stack<Collision>();
-	private final Set<Bob> bobs = new HashSet<Bob>();
+    private final Stack<Collision> collisions = new Stack<Collision>();
+    private final Set<Bob> bobs = new HashSet<Bob>();
+    private final Set<PlayerAttractor> playerAttractors = new HashSet<PlayerAttractor>();
+    private final Set<PlayerRepulsor> playerRepulsors = new HashSet<PlayerRepulsor>();
+
 	private final List<PointOfInterest> pointsOfInterest = new ArrayList<PointOfInterest>();
-	private final Set<PlayerAttractor> playerAttractors = new HashSet<PlayerAttractor>();
-	private final Set<PlayerRepulsor> playerRepulsors = new HashSet<PlayerRepulsor>();
+
+    private final Set<Obstacle> obstacles = new HashSet<Obstacle>();
 
 	private final ArrayList<TrainDestination> trainDestinations = new ArrayList<TrainDestination>();
 
@@ -62,15 +67,6 @@ public class Model {
 	}
 
 	/**
-	 * Adds a collision to the list of collissions that occurred.
-	 *
-	 * @param collision The collision to add
-	 */
-	public void addCollision(Collision collision) {
-		collisions.add(collision);
-	}
-
-	/**
 	 * Get the current Heartbeat.
 	 *
 	 * @return the heartbeat of the game
@@ -87,21 +83,18 @@ public class Model {
 		bobs.add(bob);
 		fireCreateListeners(bob);
 	}
-
-
-	/**
-	 * Get all the Bobs in the world
-	 *
-	 * @return
-	 */
-	public Set<Bob> getBobs() {
-		return Collections.unmodifiableSet(bobs);
-	}
-
 	public void removeBob(Bob bob) {
 		bobs.remove(bob);
 		fireDeleteListeners(bob);
 	}
+    
+    /**
+     * Get all the Bobs in the world
+     * @return
+     */
+    public Set<Bob> getBobs() {
+    	return bobs;
+    }
 
 	public ArrayList<TrainDestination> getTrainDestinations() {
 		return trainDestinations;
@@ -110,6 +103,23 @@ public class Model {
 	public void addPointOfInterest(PointOfInterest pointOfInterest) {
 		pointsOfInterest.add(pointOfInterest);
 	}
+    
+    /**
+     * Add an Obstacle to the Model
+     * @param o
+     */
+    public void addObstacle(Obstacle o) {
+    	obstacles.add(o);
+    	fireCreateListeners(o);
+    }
+    
+    /**
+     * Get all Obstacles from the Model
+     * @return
+     */
+    public Set<Obstacle> getObstacles() {
+    	return obstacles;
+    }
 
 	public void removePointOfInterest(PointOfInterest pointOfInterest) {
 		pointsOfInterest.remove(pointOfInterest);

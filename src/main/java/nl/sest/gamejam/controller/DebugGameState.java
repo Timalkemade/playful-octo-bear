@@ -1,13 +1,10 @@
 package nl.sest.gamejam.controller;
 
-import java.util.List;
-
 import nl.sest.gamejam.model.impl.Model;
 import nl.sest.gamejam.physics.PhysicsInterface;
 
 import org.jbox2d.callbacks.DebugDraw;
 import org.jbox2d.common.Vec2;
-import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.World;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -15,38 +12,45 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import nl.sest.gamejam.view.DebugRenderer;
 import nl.sest.gamejam.view.Renderer;
 import nl.sest.gamejam.view.Slick2DJBox2DDebugDraw;
-import nl.sest.gamejam.view.ViewGame;
 
-public class MainGameState extends BasicGameState {
+public class DebugGameState extends BasicGameState {
 
-	//	GameController gc;
-	private GameInputController inputController;
-	private Renderer renderer;
-	private Model model;
-	private World world;
+//	GameController gc;
+	Model model;
+	World world;
+	Renderer renderer;
+	GameInputController inputController;
 	
-	public MainGameState() {
-		// TODO Auto-generated constructor stub
+	public DebugGameState() {
+		
 	}
 
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1)
 			throws SlickException {
 
-		Model model = new Model();
-		inputController = new GameInputController(model);
 		model = new Model();
 		PhysicsInterface pi = new PhysicsInterface(model);
-		world = pi.getWorld();
 		
 		MapLoader maploader = new MapLoader();
 		maploader.loadMap(model);
 		
 //		gc = new GameController(model);
-		renderer = new ViewGame(arg0);
-
+		
+//		// Setup debugger
+		Slick2DJBox2DDebugDraw debug = new Slick2DJBox2DDebugDraw(arg0);
+		debug.appendFlags(DebugDraw.e_shapeBit);
+		debug.setCamera(0, 0, 0);
+		pi.getWorld().setDebugDraw(debug);
+		pi.update();
+		
+		world = pi.getWorld();
+		renderer = new DebugRenderer(world);
+		
+		inputController = new GameInputController(model);
 	}
 
 	@Override

@@ -41,30 +41,25 @@ public class ViewGame implements Renderer {
     /**
      * Render Game view
      */
-    public void render(Graphics graphics) {
+    public void render() throws SlickException {
         //Disable Frame per Seconds
         gamecontainer.setShowFPS(false);
 
-        topBar(graphics);
+        topBar();
         sideBar();
         map();
     }
 
     /**
      * Create topbar with scores and time
-	 * @param graphics
-	 */
-    private void topBar(Graphics graphics){
-        try{
-            Image topbar = new Image("images/topbar.jpg");
-            HeightTopBar = topbar.getHeight();
-            topbar.draw(0,0);
-        }
-        catch(SlickException se){
-        }
+     */
+    private void topBar() throws SlickException{
+        Image topbar = new Image("images/topbar.jpg");
+        HeightTopBar = topbar.getHeight();
+        topbar.draw(0,0);
 
         String sScore = new DecimalFormat("###,###,###,###").format(score);
-        font.drawString(166,10, sScore, Color.black);
+        font.drawString(166, 8, sScore, Color.black);
 
         /*
         int seconds = (int) ((time / 1000) % 60);
@@ -73,25 +68,21 @@ public class ViewGame implements Renderer {
         */
 
         int FPS = gamecontainer.getFPS();
-        graphics.drawString("FPS: " + FPS, 700, 1);
+        font.drawString(700, 1, "FPS: " + FPS);
     }
 
     /**
      * Map generator
      */
-    private void map() {
-        try{
-            Image map = new Image("images/map.jpg");
-            map.draw(0,HeightTopBar);
-        }
-        catch(SlickException se){
-        }
+    private void map() throws SlickException {
+        Image map = new Image("images/map.jpg");
+        map.draw(0,HeightTopBar);
     }
 
     /**
      * Create sidebar with Twitterfeed
      */
-    private void sideBar(){
+    private void sideBar() throws SlickException{
         //@Todo: Twitter feed
 
     }
