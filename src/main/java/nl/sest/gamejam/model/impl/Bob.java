@@ -1,15 +1,10 @@
 package nl.sest.gamejam.model.impl;
 
-import org.newdawn.slick.Image;
-import org.newdawn.slick.geom.Vector2f;
-
 import nl.sest.gamejam.model.Physical;
 import nl.sest.gamejam.model.Renderable;
 import nl.sest.gamejam.view.Renderer;
-import nl.sest.gamejam.view.ViewObject;
 import nl.sest.gamejam.view.ViewPhysical;
-
-import java.util.UUID;
+import org.newdawn.slick.Image;
 
 /**
  * A bob is a simple-minded drooling thingy which will follow any shiny thing he sees.
@@ -19,114 +14,97 @@ import java.util.UUID;
  */
 public class Bob implements Physical, Renderable {
 
-    private final UUID id = UUID.randomUUID();
-    private Renderer renderer;
-    private float x;
-    private float y;
-    private Image image;
-    private float angle;
-    private boolean isDynamic;
-    protected PointOfInterest poi;
+	private Renderer renderer;
+	private float x;
+	private float y;
+	private Image image;
+	private float angle;
+	private boolean isDynamic;
+	protected PointOfInterest poi;
 
-    public Bob(float x, float y) {
-    	this(null, x, y);
-    	renderer = createDefaultRenderer();
-    }
-    
-    public void setPOI(PointOfInterest poi) {
-    	this.poi = poi;
-    }
-    
-    public PointOfInterest getPOI() {
-    	return poi;
-    }
-    
-    /**
-     * @return
-     */
-    public Renderer createDefaultRenderer() {
-    	return new ViewPhysical(this);
-    }
-    
-    public Bob(Renderer aRenderer, float x, float y) {
-        this.renderer = aRenderer;
-        this.x = x;
-        this.y = y;
-        angle = 0;
-        isDynamic = true;
+	public Bob(float x, float y) {
+		this(null, x, y);
+		renderer = createDefaultRenderer();
+	}
 
-    }
+	public void setPOI(PointOfInterest poi) {
+		this.poi = poi;
+	}
 
-    @Override
-    public float getX() {
-        return x;
-    }
+	public PointOfInterest getPOI() {
+		return poi;
+	}
 
-    @Override
-    public void setX(float newX) {
-        this.x = newX;
-    }
+	/**
+	 * TODO Not correctly implemented yet
+	 *
+	 * @return
+	 */
+	public Renderer createDefaultRenderer() {
+		return new ViewPhysical(this);
+	}
 
-    @Override
-    public float getY() {
-        return y;
-    }
+	public Bob(Renderer aRenderer, float x, float y) {
+		this.renderer = aRenderer;
+		this.x = x;
+		this.y = y;
+		angle = 0;
+		isDynamic = true;
 
-    @Override
-    public void setY(float newY) {
-        y = newY;
-    }
+	}
 
-    public float getAngle() {
-        return angle;
-    }
+	@Override
+	public float getX() {
+		return x;
+	}
 
-    public void setAngle(float newAngle) {
-        this.angle = newAngle;
-    }
+	@Override
+	public void setX(float newX) {
+		this.x = newX;
+	}
 
-    @Override
-    public boolean isDynamic() {
-        return isDynamic;
-    }
+	@Override
+	public float getY() {
+		return y;
+	}
 
-    @Override
-    public void setDynamic(boolean dynamic) {
-        this.isDynamic = dynamic;
-    }
+	@Override
+	public void setY(float newY) {
+		y = newY;
+	}
 
-    @Override
-    public Image getImage() {
-        return image;
-    }
+	public float getAngle() {
+		return angle;
+	}
 
-    @Override
-    public void setImage(Image anImage){
-        this.image = anImage;
-    }
+	public void setAngle(float newAngle) {
+		this.angle = newAngle;
+	}
 
-    @Override
-    public Renderer getRenderer() {
-        return renderer;
-    }
+	@Override
+	public boolean isDynamic() {
+		return isDynamic;
+	}
 
-    public UUID getId() {
-        return id;
-    }
+	@Override
+	public void setDynamic(boolean dynamic) {
+		this.isDynamic = dynamic;
+	}
 
+	@Override
+	public Image getImage() {
+		return image;
+	}
 
-    @Override
-    public boolean equals(Object other) {
-        return this == other
-                || (other != null
-                && getClass() == other.getClass()
-                && id.equals(((Bob) other).id));
-    }
+	@Override
+	public void setImage(Image anImage) {
+		this.image = anImage;
+	}
 
-    @Override
-    public int hashCode() {
-        return id.hashCode();
-    }
+	@Override
+	public Renderer getRenderer() {
+		return renderer;
+	}
 
 	@Override
 	public float getRadius() {

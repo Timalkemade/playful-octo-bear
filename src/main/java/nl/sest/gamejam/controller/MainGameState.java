@@ -1,7 +1,6 @@
 package nl.sest.gamejam.controller;
 
 import nl.sest.gamejam.model.impl.Model;
-
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -10,8 +9,9 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class MainGameState extends BasicGameState {
 
-//	GameController gc;
-	
+	//	GameController gc;
+	private GameInputController inputController;
+
 	public MainGameState() {
 		// TODO Auto-generated constructor stub
 	}
@@ -19,8 +19,9 @@ public class MainGameState extends BasicGameState {
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1)
 			throws SlickException {
-		
+
 		Model model = new Model();
+		inputController = new GameInputController(model);
 //		gc = new GameController(model);
 
 	}
@@ -35,9 +36,9 @@ public class MainGameState extends BasicGameState {
 	@Override
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2)
 			throws SlickException {
-		
+
 //		gc.step(arg2);
-		
+
 	}
 
 	@Override
@@ -46,4 +47,11 @@ public class MainGameState extends BasicGameState {
 		return 0;
 	}
 
+
+	@Override
+	public void mouseClicked(int button, int x, int y, int clickCount) {
+		if (button == 0) {
+			inputController.handleLeftClick(x, y);
+		}
+	}
 }
