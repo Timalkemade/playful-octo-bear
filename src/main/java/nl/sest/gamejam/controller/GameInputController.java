@@ -11,14 +11,18 @@ import nl.sest.gamejam.model.impl.PointOfInterest;
  */
 public class GameInputController {
 
-    private Model model;
+	private Model model;
 
-    public GameInputController(Model model) {
-        this.model = model;
-    }
+	// Settings
+	private float poiLifeTime = 10000; // in ms
+	private float poiMaxInterest = 10;
 
-    public void handleLeftClick(float x, float y) {
-        PointOfInterest pointOfInterest = new PointOfInterest(x, y);
-        model.addPointOfInterest(pointOfInterest);
-    }
+	public GameInputController(Model model) {
+		this.model = model;
+	}
+
+	public void handleLeftClick(float x, float y) {
+		PointOfInterest pointOfInterest = new PointOfInterest(x, y, poiMaxInterest, poiLifeTime);
+		model.addPointOfInterest(pointOfInterest);
+	}
 }

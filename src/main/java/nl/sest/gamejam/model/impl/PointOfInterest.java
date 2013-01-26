@@ -10,27 +10,82 @@ import nl.sest.gamejam.model.Force;
  */
 public class PointOfInterest implements Force {
 
-    private float x;
-    private float y;
+	private float x;
+	private float y;
 
-    /**
-     * Constructor for a point of interest.
-     *
-     * @param x The x location of this PointOfInterest
-     * @param y The y location of this PointOfInternet
-     */
-    public PointOfInterest(float x, float y) {
-        this.x = x;
-        this.y = y;
-    }
+	protected float interest = 0; // This will affect how many Bobs will go to this POI.
+	protected long startTime = 0;
+	protected float maxLifetime = 0; // The total lifetime of this POI (sigma of Gaussian function)
+	protected float maxInterest = 0; // The maximum interest that this POI will reach ('a' of Gaussian function)
 
-    @Override
-    public float getX() {
-        return x;
-    }
 
-    @Override
-    public float getY() {
-        return y;
-    }
+	/**
+	 * Constructor for a point of interest.
+	 *
+	 * @param x The x location of this PointOfInterest
+	 * @param y The y location of this PointOfInternet
+	 */
+	public PointOfInterest(float x, float y, float maxInterest, float lifetime) {
+		this.x = x;
+		this.y = y;
+
+		this.startTime = System.currentTimeMillis();
+		this.maxInterest = maxInterest;
+		this.maxLifetime = lifetime;
+	}
+
+	@Override
+	public float getX() {
+		return x;
+	}
+
+	@Override
+	public float getY() {
+		return y;
+	}
+
+	/**
+	 * Get the time at which this POI was created
+	 *
+	 * @return
+	 */
+	public float getStartTime() {
+		return startTime;
+	}
+
+	/**
+	 * Get the total expected lifetime of this POI.
+	 *
+	 * @return
+	 */
+	public float getMaxLifetime() {
+		return maxLifetime;
+	}
+
+	/**
+	 * Get the maximum interest factor that this POI should reach.
+	 *
+	 * @return
+	 */
+	public float getMaxInterest() {
+		return maxInterest;
+	}
+
+	/**
+	 * Set the interest factor of the POI (this affects how many Bobs will go to this POI).
+	 *
+	 * @param i
+	 */
+	public void setInterest(float i) {
+		interest = i;
+	}
+
+	/**
+	 * Gets the interest factor of this POI. This affects how many Bobs will go to this POI.
+	 *
+	 * @return
+	 */
+	public float getInterest() {
+		return interest;
+	}
 }

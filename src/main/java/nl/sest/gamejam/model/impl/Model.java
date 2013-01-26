@@ -15,107 +15,150 @@ import java.util.*;
  */
 public class Model {
 
-    private final Stack<Collision> collisions = new Stack<Collision>();
-    private final Set<Bob> bobs = new HashSet<Bob>();
-    private final Set<PointOfInterest> pointsOfInterest = new HashSet<PointOfInterest>();
-    private final Set<PlayerAttractor> playerAttractors = new HashSet<PlayerAttractor>();
-    private final Set<PlayerRepulsor> playerRepulsors = new HashSet<PlayerRepulsor>();
-    private final ArrayList<TrainDestination> trainDestinations = new ArrayList<TrainDestination>();
+	private final Stack<Collision> collisions = new Stack<Collision>();
+	private final Set<Bob> bobs = new HashSet<Bob>();
+	private final Set<PointOfInterest> pointsOfInterest = new HashSet<PointOfInterest>();
+	private final Set<PlayerAttractor> playerAttractors = new HashSet<PlayerAttractor>();
+	private final Set<PlayerRepulsor> playerRepulsors = new HashSet<PlayerRepulsor>();
 
-    private List<CreatePhysicalListener> createListeners = new ArrayList<CreatePhysicalListener>();
-    private List<DeletePhysicalListener> deleteListeners = new ArrayList<DeletePhysicalListener>();
+	private final ArrayList<TrainDestination> trainDestinations = new ArrayList<TrainDestination>();
 
-    private Heartbeat heartbeat;
+	private List<CreatePhysicalListener> createListeners = new ArrayList<CreatePhysicalListener>();
+	private List<DeletePhysicalListener> deleteListeners = new ArrayList<DeletePhysicalListener>();
 
-    public Model() {
-    }
+	private Heartbeat heartbeat;
 
-    public Iterable<Collision> getCollisions() {
-        return Collections.unmodifiableCollection(collisions);
-    }
+	public Model() {
+	}
 
-    public void addCollision(Collision collision) {
-        collisions.add(collision);
-    }
+	/**
+	 * Apply damage to the valuable
+	 *
+	 * @param v
+	 * @param damage
+	 */
+	public void applyDamage(Valuable v, float damage) {
+		// TODO Implement
+	}
 
-    /**
-     * Get the current Heartbeat.
-     *
-     * @return the heartbeat of the game
-     */
-    public Heartbeat getHeartbeat() {
-        return heartbeat;
-    }
+	/**
+	 * Get all the Bobs in the world
+	 *
+	 * @return
+	 */
+	public Set<Bob> getBobs() {
+		return bobs;
+	}
 
-    public void setHeartbeat(Heartbeat aHeartbeat) {
-        heartbeat = aHeartbeat;
-    }
+	/**
+	 * Gives the POIs in the World.
+	 *
+	 * @return
+	 */
+	public Set<PointOfInterest> getPointsOfInterest() {
+		return Collections.unmodifiableSet(pointsOfInterest);
+	}
 
-    public void addBob(Bob bob) {
-        bobs.add(bob);
-    }
+	/**
+	 * Gives the collisions that occurred over time
+	 *
+	 * @return
+	 */
+	public Iterable<Collision> getCollisions() {
+		return Collections.unmodifiableCollection(collisions);
+	}
 
-    public ArrayList<TrainDestination> getTrainDestinations() {
-        return trainDestinations;
-    }
+	/**
+	 * Adds a collision to the list of collissions that occurred.
+	 *
+	 * @param collision
+	 */
+	public void addCollision(Collision collision) {
+		collisions.add(collision);
+	}
 
-    public void removeBob(Bob bob) {
-        bobs.remove(bob);
-    }
+	/**
+	 * Get the current Heartbeat.
+	 *
+	 * @return the heartbeat of the game
+	 */
+	public Heartbeat getHeartbeat() {
+		return heartbeat;
+	}
 
-    public void addPointOfInterest(PointOfInterest pointOfInterest) {
-        pointsOfInterest.add(pointOfInterest);
-    }
+	public void setHeartbeat(Heartbeat aHeartbeat) {
+		heartbeat = aHeartbeat;
+	}
 
-    public void removePointOfInterest(PointOfInterest pointOfInterest) {
-        pointsOfInterest.remove(pointOfInterest);
-    }
+	public void addBob(Bob bob) {
+		bobs.add(bob);
+	}
 
-    public void addPlayerAttractor(PlayerAttractor playerAttractor) {
-        playerAttractors.add(playerAttractor);
-    }
+	public ArrayList<TrainDestination> getTrainDestinations() {
+		return trainDestinations;
+	}
 
-    public void removePlayerAttractor(PlayerAttractor playerAttractor) {
-        playerAttractors.remove(playerAttractor);
-    }
+	public void removeBob(Bob bob) {
+		bobs.remove(bob);
+	}
 
-    public void addPlayerRepulsor(PlayerRepulsor playerRepulsor) {
-        playerRepulsors.add(playerRepulsor);
-    }
+	public void addPointOfInterest(PointOfInterest pointOfInterest) {
+		pointsOfInterest.add(pointOfInterest);
+	}
 
-    public void removePlayerRepulsor(PlayerRepulsor playerRepulsor) {
-        playerRepulsors.remove(playerRepulsor);
-    }
+	public void removePointOfInterest(PointOfInterest pointOfInterest) {
+		pointsOfInterest.remove(pointOfInterest);
+	}
 
-    /**
-     * Register a listener which listens to creation of physical objects.
-     * @param listener the listener
-     */
-    public void registerCreatePhysicalEventListener(CreatePhysicalListener listener) {
-        createListeners.add(listener);
-    }
+	public void addPlayerAttractor(PlayerAttractor playerAttractor) {
+		playerAttractors.add(playerAttractor);
+	}
 
-    /**
-     * Remove a listener which listens to creation of physical objects.
-     * @param listener the listener
-     */
-    public void unregisterCreatePhysicalEventListener(CreatePhysicalListener listener) {
-        createListeners.remove(listener);
-    }
+	public void removePlayerAttractor(PlayerAttractor playerAttractor) {
+		playerAttractors.remove(playerAttractor);
+	}
 
-    /**
-     * Add a listener which listens to deletion of physical objects.
-     * @param listener the listener
-     */
-    public void registerDeletePhysicalEventListener(DeletePhysicalListener listener) {
-        deleteListeners.add(listener);
-    }
+	public void addPlayerRepulsor(PlayerRepulsor playerRepulsor) {
+		playerRepulsors.add(playerRepulsor);
+	}
 
-    /**
-     * Remove a listener which listens to deletion of physical objects.
-     * @param listener the listener
-     */
-    public void unregisterDeletePhysicalEventListener(DeletePhysicalListener listener) {
-        deleteListeners.remove(listener);
-    }
+	public void removePlayerRepulsor(PlayerRepulsor playerRepulsor) {
+		playerRepulsors.remove(playerRepulsor);
+	}
+
+	/**
+	 * Register a listener which listens to creation of physical objects.
+	 *
+	 * @param listener the listener
+	 */
+	public void registerCreatePhysicalEventListener(CreatePhysicalListener listener) {
+		createListeners.add(listener);
+	}
+
+	/**
+	 * Remove a listener which listens to creation of physical objects.
+	 *
+	 * @param listener the listener
+	 */
+	public void unregisterCreatePhysicalEventListener(CreatePhysicalListener listener) {
+		createListeners.remove(listener);
+	}
+
+	/**
+	 * Add a listener which listens to deletion of physical objects.
+	 *
+	 * @param listener the listener
+	 */
+	public void registerDeletePhysicalEventListener(DeletePhysicalListener listener) {
+		deleteListeners.add(listener);
+	}
+
+	/**
+	 * Remove a listener which listens to deletion of physical objects.
+	 *
+	 * @param listener the listener
+	 */
+	public void unregisterDeletePhysicalEventListener(DeletePhysicalListener listener) {
+		deleteListeners.remove(listener);
+	}
 }

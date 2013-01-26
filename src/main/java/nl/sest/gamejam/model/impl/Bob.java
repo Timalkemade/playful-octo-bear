@@ -3,9 +3,8 @@ package nl.sest.gamejam.model.impl;
 import nl.sest.gamejam.model.Physical;
 import nl.sest.gamejam.model.Renderable;
 import nl.sest.gamejam.view.Renderer;
-import nl.sest.gamejam.view.ViewObject;
+import nl.sest.gamejam.view.ViewPhysical;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.geom.Vector2f;
 
 /**
  * A bob is a simple-minded drooling thingy which will follow any shiny thing he sees.
@@ -15,96 +14,105 @@ import org.newdawn.slick.geom.Vector2f;
  */
 public class Bob implements Physical, Renderable {
 
-    private Renderer renderer;
-    private float x;
-    private float y;
-    private Image image;
-    private float angle;
-    private boolean isDynamic;
+	private Renderer renderer;
+	private float x;
+	private float y;
+	private Image image;
+	private float angle;
+	private boolean isDynamic;
+	protected PointOfInterest poi;
 
-    public Bob(float x, float y) {
-        this(null, x, y);
-        renderer = createDefaultRenderer();
-    }
+	public Bob(float x, float y) {
+		this(null, x, y);
+		renderer = createDefaultRenderer();
+	}
 
-    /**
-     * TODO Not correctly implemented yet
-     *
-     * @return
-     */
-    public Renderer createDefaultRenderer() {
-        return new ViewObject(null, new Vector2f());
-    }
+	public void setPOI(PointOfInterest poi) {
+		this.poi = poi;
+	}
 
-    public Bob(Renderer aRenderer, float x, float y) {
-        this.renderer = aRenderer;
-        this.x = x;
-        this.y = y;
-        angle = 0;
-        isDynamic = true;
+	public PointOfInterest getPOI() {
+		return poi;
+	}
 
-    }
+	/**
+	 * TODO Not correctly implemented yet
+	 *
+	 * @return
+	 */
+	public Renderer createDefaultRenderer() {
+		return new ViewPhysical(this);
+	}
 
-    @Override
-    public float getX() {
-        return x;
-    }
+	public Bob(Renderer aRenderer, float x, float y) {
+		this.renderer = aRenderer;
+		this.x = x;
+		this.y = y;
+		angle = 0;
+		isDynamic = true;
 
-    @Override
-    public void setX(float newX) {
-        this.x = newX;
-    }
+	}
 
-    @Override
-    public float getY() {
-        return y;
-    }
+	@Override
+	public float getX() {
+		return x;
+	}
 
-    @Override
-    public void setY(float newY) {
-        y = newY;
-    }
+	@Override
+	public void setX(float newX) {
+		this.x = newX;
+	}
 
-    public float getAngle() {
-        return angle;
-    }
+	@Override
+	public float getY() {
+		return y;
+	}
 
-    public void setAngle(float newAngle) {
-        this.angle = newAngle;
-    }
+	@Override
+	public void setY(float newY) {
+		y = newY;
+	}
 
-    @Override
-    public boolean isDynamic() {
-        return isDynamic;
-    }
+	public float getAngle() {
+		return angle;
+	}
 
-    @Override
-    public void setDynamic(boolean dynamic) {
-        this.isDynamic = dynamic;
-    }
+	public void setAngle(float newAngle) {
+		this.angle = newAngle;
+	}
 
-    @Override
-    public Image getImage() {
-        return image;
-    }
+	@Override
+	public boolean isDynamic() {
+		return isDynamic;
+	}
 
-    @Override
-    public void setImage(Image anImage) {
-        this.image = anImage;
-    }
+	@Override
+	public void setDynamic(boolean dynamic) {
+		this.isDynamic = dynamic;
+	}
 
-    @Override
-    public Renderer getRenderer() {
-        return renderer;
-    }
+	@Override
+	public Image getImage() {
+		return image;
+	}
 
-    @Override
-    public float getRadius() {
-        return 0;
-    }
+	@Override
+	public void setImage(Image anImage) {
+		this.image = anImage;
+	}
 
-    @Override
-    public void setRadius(float radius) {
-    }
+	@Override
+	public Renderer getRenderer() {
+		return renderer;
+	}
+
+	@Override
+	public float getRadius() {
+		return 0;
+	}
+
+	@Override
+	public void setRadius(float radius) {
+	}
 
 }

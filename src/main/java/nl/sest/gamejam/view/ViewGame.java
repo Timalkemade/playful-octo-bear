@@ -18,14 +18,22 @@ public class ViewGame implements Renderer {
     private float score = 5000f;
     private float time = 0f;
 
+    private int HeightTopBar = 0;
+    private int HeightWindow = 0;
+    private int WidthWindow = 0;
+
+
     /**
      * Constructor
-     * @param GameContainer gc
-     * @param Graphics g
+     * @param gc The GameContainer object
+     * @param g  The Graphics object
      */
     public ViewGame(GameContainer gc, Graphics g){
         this.gamecontainer = gc;
         this.graphics = g;
+
+        this.WidthWindow = gc.getWidth();
+        this.HeightWindow = gc.getHeight();
 
         //Set font                                    .
         Font awtFont = new Font("Times New Roman", Font.BOLD, 20);
@@ -41,6 +49,7 @@ public class ViewGame implements Renderer {
 
         TopBar();
         SideBar();
+        Map();
     }
 
     /**
@@ -49,6 +58,7 @@ public class ViewGame implements Renderer {
     private void TopBar(){
         try{
             Image topbar = new Image("images/topbar.jpg");
+            HeightTopBar = topbar.getHeight();
             topbar.draw(0,0);
         }
         catch(SlickException se){
@@ -65,6 +75,18 @@ public class ViewGame implements Renderer {
 
         int FPS = gamecontainer.getFPS();
         graphics.drawString("FPS: " + FPS, 700, 1);
+    }
+
+    /**
+     * Map generator
+     */
+    private void Map() {
+        try{
+            Image map = new Image("images/map.jpg");
+            map.draw(0,HeightTopBar);
+        }
+        catch(SlickException se){
+        }
     }
 
     /**
