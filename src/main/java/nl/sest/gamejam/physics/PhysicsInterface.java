@@ -2,7 +2,6 @@ package nl.sest.gamejam.physics;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import nl.sest.gamejam.controller.GameInputController;
@@ -196,7 +195,8 @@ public class PhysicsInterface implements CreatePhysicalListener, DeletePhysicalL
     	return new Vec2(distX*factor, distY*factor);
     }
     
-    private Vec2 calculateAttract(Vec2 poiPos, Vec2 bobPos, float bobMass) {
+    @SuppressWarnings("unused")
+	private Vec2 calculateAttract(Vec2 poiPos, Vec2 bobPos, float bobMass) {
         float forceStrength = 100; 
         
         Vec2 force = poiPos.sub(bobPos);
@@ -231,12 +231,12 @@ public class PhysicsInterface implements CreatePhysicalListener, DeletePhysicalL
 		
 		// See if a Bob collided with an Obstacle and which is which
 		if (physicalA instanceof Bob && physicalB instanceof Obstacle) {
-			Obstacle obstacle = (Obstacle) physicalA;
+			Obstacle obstacle = (Obstacle) physicalB;
 			// Do something with the obstacle
 			LOGGER.debug("Contact with obstacle at: [{}, {}]", bodyB.getPosition().x, bodyB.getPosition().y);
 		} 
 		else if (physicalB instanceof Bob && physicalA instanceof Obstacle) {
-			Obstacle obstacle = (Obstacle) physicalB;
+			Obstacle obstacle = (Obstacle) physicalA;
 			// Do something with the obstacle
 			LOGGER.debug("Contact with obstacle at: [{}, {}]", bodyA.getPosition().x, bodyA.getPosition().y);
 		}
