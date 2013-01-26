@@ -5,9 +5,11 @@ import nl.sest.gamejam.model.Renderable;
 import nl.sest.gamejam.model.impl.EventListener;
 import nl.sest.gamejam.model.impl.Heartbeat;
 import nl.sest.gamejam.model.impl.Model;
+import org.newdawn.slick.Color;
 import nl.sest.gamejam.events.HeartbeatEvent;
 
 import org.newdawn.slick.*;
+import org.newdawn.slick.Image;
 
 import java.awt.Font;
 import java.text.DecimalFormat;
@@ -21,16 +23,14 @@ public class ViewGame implements Renderer, EventListener {
 
 	private GameContainer gamecontainer = null;
 	private TrueTypeFont font;
-	private float score = 5000f;
+	private float score = 0f;
 	private float time = 0f;
 
 	private int HeightTopBar = 0;
 	private int HeightWindow = 0;
 	private int WidthWindow = 0;
 
-	private Graphics graphics;
 	private Model model;
-
 
 	/**
 	 * Constructor
@@ -82,7 +82,7 @@ public class ViewGame implements Renderer, EventListener {
         */
 
 		int FPS = gamecontainer.getFPS();
-		font.drawString(700, 1, "FPS: " + FPS);
+		font.drawString( WidthWindow-100, 1, "FPS: " + FPS);
 	}
 
 	/**
@@ -119,9 +119,16 @@ public class ViewGame implements Renderer, EventListener {
 
 	@Override
 	public void onEvent(HeartbeatEvent event) {
-		// TODO Auto-generated method stub
-		
-	}
+        SoundHeartbeat hb = new SoundHeartbeat();
+        try {
+            hb.render();
+        } catch (SlickException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+    }
+
+    @Override
+    public void update(int delta){ }
 
 
 }

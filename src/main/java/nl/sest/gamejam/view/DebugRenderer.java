@@ -17,4 +17,7 @@ public class DebugRenderer implements Renderer {
 		world.drawDebugData();
 	}
 
+    @Override
+    public void update(int delta){ }
+
 }

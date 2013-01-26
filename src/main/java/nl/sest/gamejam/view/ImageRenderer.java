@@ -30,4 +30,7 @@ public class ImageRenderer implements Renderer {
 		Vector2f location = new Vector2f(object.getX(), object.getY());
 		image.draw(location.x, location.y);
 	}
+
+    @Override
+    public void update(int delta){ }
 }

@@ -151,10 +151,11 @@ public class GameController {
 	/**
 	 * Increase and decrease the interest factors of the POIs
 	 */
-	public void updatePOIs() {
+	public void updatePOIs(int dt) {
 		// Go through POIs
 		List<PointOfInterest> pois = model.getPointsOfInterest();
 		for (PointOfInterest poi : pois) {
+            poi.updateRenderer(dt);
 			// If POI lifetime exceeds max lifetime, set interest to 0
 			if (currentTime - poi.getStartTime() > poi.getMaxLifetime())
 				poi.setInterest(0);
@@ -197,7 +198,7 @@ public class GameController {
 		handleCollisions();
 		maybeHeartbeat();
 		updateHeartbeat();
-		updatePOIs();
+		updatePOIs(dt);
 	}
 
 	/**
