@@ -41,7 +41,7 @@ public class PhysicsInterface {
         	if (physical instanceof Bob) {
         		Vec2 bobVec = new Vec2(physical.getX(), physical.getY());
         		Vec2 poiVec = new Vec2(0.5f, 0.5f);
-        		Vec2 force = computeForceVector(bobVec, poiVec, 1);
+        		Vec2 force = calculateAttract(poiVec, bobVec);
         		body.applyForce(force, body.getWorldCenter());
         	}
         	
@@ -109,13 +109,21 @@ public class PhysicsInterface {
 		objects.remove(physical);
 	}
 	
-    private Vec2 computeForceVector(Vec2 point1, Vec2 point2, float force) {
-    	float distX = point2.x - point1.x;
-    	float distY = point2.y - point1.y;
-    	float totalDist = (float) Math.sqrt(Math.pow(distX, 2.0) + Math.pow(distY, 2.0));
+    Vec2 calculateAttract(Vec2 poi, Vec2 bob) {
+    	Body poiBody = objects.get(poi);
+    	Body bobBody = objects.get(bob);
     	
-    	// Compute ratio to multiply vector by
-    	float factor = force / totalDist;
-    	return new Vec2(distX*factor, distY*factor);
-    }
+        float forceStrength = 100; 
+        Vec2 poiPos = poiBody.getWorldCenter();    
+        Vec2 bobPos = bobBody.getWorldCenter();
+        
+        Vec2 force = poiPos.sub(bobPos);
+        float distance = force.length();
+        force.normalize();
+
+        float strength = (forceStrength * 1 * bobBody.m_mass) / (distance * distance);
+        force.mulLocal(strength);
+        return force;
+      }
+
 }
