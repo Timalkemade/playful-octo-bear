@@ -5,25 +5,36 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import nl.sest.gamejam.controller.GameInputController;
 import nl.sest.gamejam.model.Physical;
 import nl.sest.gamejam.model.event.listener.CreatePhysicalListener;
 import nl.sest.gamejam.model.event.listener.DeletePhysicalListener;
 import nl.sest.gamejam.model.impl.Bob;
 import nl.sest.gamejam.model.impl.Model;
+import nl.sest.gamejam.model.impl.Obstacle;
 import nl.sest.gamejam.model.impl.PointOfInterest;
 import nl.sest.gamejam.model.player.PlayerAttractor;
 import nl.sest.gamejam.model.player.PlayerRepulsor;
 
+import org.jbox2d.callbacks.ContactImpulse;
+import org.jbox2d.callbacks.ContactListener;
+import org.jbox2d.collision.Manifold;
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
+import org.jbox2d.dynamics.Fixture;
 import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
+import org.jbox2d.dynamics.contacts.Contact;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public class PhysicsInterface implements CreatePhysicalListener, DeletePhysicalListener {
+public class PhysicsInterface implements CreatePhysicalListener, DeletePhysicalListener, ContactListener {
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(GameInputController.class);
+	
 	private World world;
 	private HashMap<Physical, Body> objects = new HashMap<Physical, Body>();
 	private Model model;
@@ -44,6 +55,7 @@ public class PhysicsInterface implements CreatePhysicalListener, DeletePhysicalL
 	    boolean doSleep = true;
 	    
 	    world = new World(gravity, doSleep);
+	    world.setContactListener(this);
 	}
 	
 	public World getWorld() {
@@ -204,5 +216,41 @@ public class PhysicsInterface implements CreatePhysicalListener, DeletePhysicalL
 	@Override
 	public void fireCreatePhysical(Physical physical) {
 		addObject(physical);
+	}
+
+	@Override
+	public void beginContact(Contact contact) {
+		Fixture fixtureA = contact.getFixtureA();
+		Fixture fixtureB = contact.getFixtureB();
+		
+		Body bodyA = fixtureA.getBody();
+		Body bodyB = fixtureB.getBody();
+		
+		Physical physicalA = (Physical) bodyA.getUserData();
+		Physical physicalB = (Physical) bodyB.getUserData();
+		
+		// See if a Bob collided with an Obstacle and which is which
+		if (physicalA instanceof Bob && physicalB instanceof Obstacle) {
+			Obstacle obstacle = (Obstacle) physicalA;
+			// Do something with the obstacle
+			LOGGER.debug("Contact with obstacle at: [{}, {}]", bodyB.getPosition().x, bodyB.getPosition().y);
+		} 
+		else if (physicalB instanceof Bob && physicalA instanceof Obstacle) {
+			Obstacle obstacle = (Obstacle) physicalB;
+			// Do something with the obstacle
+			LOGGER.debug("Contact with obstacle at: [{}, {}]", bodyA.getPosition().x, bodyA.getPosition().y);
+		}
+	}
+
+	@Override
+	public void endContact(Contact contact) {
+	}
+
+	@Override
+	public void preSolve(Contact contact, Manifold oldManifold) {
+	}
+
+	@Override
+	public void postSolve(Contact contact, ContactImpulse impulse) {
 	}
 }
