@@ -25,7 +25,7 @@ public class PhysicsInterface {
     public int targetFPS = 120;  
     public int timeStep = (1000 / targetFPS);  
     
-	public PhysicsInterface(Modem model) {
+	public PhysicsInterface(Model model) {
 		// Set model
 		this.model = model;
 		
@@ -40,35 +40,22 @@ public class PhysicsInterface {
 		// Update Box2D world
         world.step(timeStep, 8, 3);
         
-        // Get POIs
-        ArrayList<PointOfInterest> pois = model.getPointsOfInterest();
-        
         // Sync Box2D objects with the Physical objects
         for (Physical physical : objects.keySet()) {
         	Body body = objects.get(physical);
         	
         	// If the physical is a Bob, apply force using all POIs
         	if (physical instanceof Bob) {
-        		for(PointOfInterest poi : pois) {
-        			Vec2 bobVec = new Vec2(physical.getX(), physical.getY());
-        			Vec2 poiVec = new Vec2(poi.getX(), poi.getY());
-        			Vec2 force = calculateAttract(poiVec, bobVec);
-        			body.applyForce(force, body.getWorldCenter());
-        		}
+        		applyForces(body);
         	}
         	
         	// If the Physical is dynamic, update the Physical properties using the Body properties
         	if (physical.isDynamic()) {
-	        	physical.setX(body.getPosition().x);
-	        	physical.setY(body.getPosition().y);
-	        	physical.setAngle(body.getAngle());
+        		updatePhysical(physical, body);
         	}
         	// Else if the Physical is static, update the Body properties using the Physical properties
         	else {
-        		float x = physical.getX();
-        		float y = physical.getY();
-        		float angle = physical.getAngle();
-        		body.setTransform(new Vec2(x, y), angle);
+        		updateBody(body, physical);
         	}
         }
 	}
@@ -121,6 +108,31 @@ public class PhysicsInterface {
 		objects.remove(physical);
 	}
 	
+    private void updatePhysical(Physical physical, Body body) {
+    	physical.setX(body.getPosition().x);
+    	physical.setY(body.getPosition().y);
+    	physical.setAngle(body.getAngle());
+    }
+    
+    private void updateBody(Body body, Physical physical) {
+		float x = physical.getX();
+		float y = physical.getY();
+		float angle = physical.getAngle();
+		body.setTransform(new Vec2(x, y), angle);
+    }
+    
+    private void applyForces(Body body) {
+    	ArrayList<PointOfInterest> pois = model.getPointsOfInterest();
+    	Physical physical = (Physical) body.getUserData();
+    	
+    	for(PointOfInterest poi : pois) {
+			Vec2 bobVec = new Vec2(physical.getX(), physical.getY());
+			Vec2 poiVec = new Vec2(poi.getX(), poi.getY());
+			Vec2 force = calculateAttract(poiVec, bobVec);
+			body.applyForce(force, body.getWorldCenter());
+		}
+    }
+    
     private Vec2 calculateAttract(Vec2 poi, Vec2 bob) {
     	Body poiBody = objects.get(poi);
     	Body bobBody = objects.get(bob);
