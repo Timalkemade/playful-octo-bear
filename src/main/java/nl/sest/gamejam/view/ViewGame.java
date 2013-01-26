@@ -43,7 +43,7 @@ public class ViewGame implements Renderer {
     /**
      * Render Game view
      */
-    public void render() {
+    public void render() throws SlickException {
         //Disable Frame per Seconds
         gamecontainer.setShowFPS(false);
 
@@ -55,17 +55,13 @@ public class ViewGame implements Renderer {
     /**
      * Create topbar with scores and time
      */
-    private void TopBar(){
-        try{
-            Image topbar = new Image("images/topbar.jpg");
-            HeightTopBar = topbar.getHeight();
-            topbar.draw(0,0);
-        }
-        catch(SlickException se){
-        }
+    private void TopBar() throws SlickException{
+        Image topbar = new Image("images/topbar.jpg");
+        HeightTopBar = topbar.getHeight();
+        topbar.draw(0,0);
 
         String sScore = new DecimalFormat("###,###,###,###").format(score);
-        font.drawString(166,10, sScore, Color.black);
+        font.drawString(166, 8, sScore, Color.black);
 
         /*
         int seconds = (int) ((time / 1000) % 60);
@@ -80,19 +76,15 @@ public class ViewGame implements Renderer {
     /**
      * Map generator
      */
-    private void Map() {
-        try{
-            Image map = new Image("images/map.jpg");
-            map.draw(0,HeightTopBar);
-        }
-        catch(SlickException se){
-        }
+    private void Map() throws SlickException {
+        Image map = new Image("images/map.jpg");
+        map.draw(0,HeightTopBar);
     }
 
     /**
      * Create sidebar with Twitterfeed
      */
-    private void SideBar(){
+    private void SideBar() throws SlickException{
         //@Todo: Twitter feed
 
     }

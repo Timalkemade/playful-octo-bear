@@ -1,5 +1,7 @@
 package nl.sest.gamejam.view;
 
+import org.newdawn.slick.SlickException;
+
 /**
  * User: JMIEGHEM
  * Date: 25-1-13
@@ -8,5 +10,5 @@ package nl.sest.gamejam.view;
  */
 public interface Renderer {
 
-    void render();
+    void render() throws SlickException;
 }
