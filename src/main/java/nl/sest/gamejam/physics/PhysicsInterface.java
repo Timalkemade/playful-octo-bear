@@ -58,6 +58,8 @@ public class PhysicsInterface implements CreatePhysicalListener, DeletePhysicalL
         for (Physical physical : objects.keySet()) {
         	Body body = objects.get(physical);
         	
+        	body.setLinearDamping(0.05f);
+        	
         	// If the physical is a Bob, apply force using all POIs
         	if (physical instanceof Bob) {
         		applyPOIForces(body);
@@ -169,7 +171,7 @@ public class PhysicsInterface implements CreatePhysicalListener, DeletePhysicalL
     		Vec2 bobVec = body.getWorldCenter();
 			Vec2 force = computeForceVector(paVec, bobVec, 0.01f);
 			body.applyForce(force, body.getWorldCenter());
-    	}    	
+    	} 
     }
     
     private Vec2 computeForceVector(Vec2 point1, Vec2 point2, float force) {
