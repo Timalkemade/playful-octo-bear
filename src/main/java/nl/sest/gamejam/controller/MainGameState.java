@@ -13,11 +13,12 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class MainGameState extends BasicGameState {
 
-	//	GameController gc;
+	GameController gc;
 	Model model;
 	World world;
 	Renderer renderer;
 	GameInputController inputController;
+	PhysicsInterface pi;
 
 	public MainGameState() {
 		// TODO Auto-generated constructor stub
@@ -28,17 +29,19 @@ public class MainGameState extends BasicGameState {
 			throws SlickException {
 
 		model = new Model();
-		PhysicsInterface pi = new PhysicsInterface(model);
-		world = pi.getWorld();
+		pi = new PhysicsInterface(model);
 
 		inputController = new GameInputController(model);
 
 		MapLoader maploader = new MapLoader();
 		maploader.loadMap(model);
 
-//		gc = new GameController(model);
+		gc = new GameController(model);
+		pi.update();
+
 		renderer = new ViewGame(arg0, model);
 
+		world = pi.getWorld();
 		inputController = new GameInputController(model);
 
 	}
@@ -52,14 +55,13 @@ public class MainGameState extends BasicGameState {
 	@Override
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2)
 			throws SlickException {
-		world.step(arg2, 8, 3);
-//		gc.step(arg2);
+		pi.update();
+		gc.step(arg2);
 
 	}
 
 	@Override
 	public int getID() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
