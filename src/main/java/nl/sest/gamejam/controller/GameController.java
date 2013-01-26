@@ -17,12 +17,12 @@ public class GameController {
 
 	// Game state
 	protected long lastHeartbeat = 0; // timestamp when the last Heartbeat ended
-	protected int heartbeatTime = 10; // time in milliseconds between each heartbeat
+	protected int heartbeatTime = 1500; // time in milliseconds between each heartbeat
 	protected long lastPOIappeared = 0; // timestamp when the last POI appeared
 	protected long nextPOITime = 0; // timestamp when next POI should appear
 
 	// Settings
-	protected int heartbeatVolume = 10; // number of Bobs per heartbeat
+	protected int heartbeatVolume = 3; // number of Bobs per heartbeat
 	protected float damageChance = 1; // the chance that a single Bob will damage a Valuable on collision
 	protected float damagePerEvent = 20; // the damage applied for every violent event
 	protected float heartbeatDuration = 1000; // duration of a heartbeat in milliseconds
@@ -43,12 +43,21 @@ public class GameController {
 	 * Checks if it is time for a Heartbeat and if so, applies one.
 	 */
 	public void maybeHeartbeat() {
-		// Get current heartbeat state
-		float heartbeatState = model.getHeartbeat().getState();
-
-		// If it is time for a new heartbeat and there is no heartbeat in progress
-		if (heartbeatState == 0 && currentTime > lastHeartbeat - heartbeatTime) {
+		Heartbeat hb = model.getHeartbeat();
+		
+		// If no heartbeat has occurred yet, do one now
+		if(hb == null)
 			heartbeatStart();
+		
+		// Else check if it is time for new heartbeat
+		else {
+			// Get current heartbeat state
+			float heartbeatState = model.getHeartbeat().getState();
+	
+			// If it is time for a new heartbeat and there is no heartbeat in progress
+			if (heartbeatState == 0 && currentTime > lastHeartbeat - heartbeatTime) {
+				heartbeatStart();
+			}
 		}
 	}
 
@@ -60,12 +69,14 @@ public class GameController {
 		ArrayList<TrainDestination> destinations = model.getTrainDestinations();
 
 		// Pick a random destination
-		int r = (int) Math.random() * destinations.size();
-		TrainDestination destination = destinations.get(r);
-
-		// Create heartbeat
+		int numTrains = destinations.size();
 		Heartbeat hb = new Heartbeat(0);
-		hb.addTrain(new Train(destination, heartbeatVolume));
+		if(numTrains > 0) {
+			int r = (int) Math.random() * (destinations.size()-1);
+			TrainDestination destination = destinations.get(r);
+			hb.addTrain(new Train(destination, heartbeatVolume));
+		}
+		// Create heartbeat
 		model.setHeartbeat(hb);
 	}
 
@@ -94,6 +105,9 @@ public class GameController {
 	 */
 	protected void heartbeatEnd() {
 		lastHeartbeat = System.currentTimeMillis();
+		Heartbeat hb = model.getHeartbeat();
+		hb.setState(0);
+		hb.setUnloaded(false);
 	}
 
 	/**
@@ -112,6 +126,11 @@ public class GameController {
 		if (hb.getState() > 0.5 && !hb.isUnloaded()) {
 			heartbeatUnload();
 			hb.setUnloaded(true);
+		}
+		
+		// If heartbeat state passes 1, end heartbeat
+		if(hb.getState() > 1) {
+			heartbeatEnd();
 		}
 	}
 

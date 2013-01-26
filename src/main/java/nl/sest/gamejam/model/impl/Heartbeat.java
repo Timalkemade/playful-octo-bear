@@ -14,7 +14,7 @@ public class Heartbeat implements Event {
 
     private final long timestamp; // the start of the Heartbeat
     private float state; // indicates the progress of the Heartbeat (between 0 and 1)
-    private ArrayList<Train> trains;
+    private ArrayList<Train> trains = new ArrayList<Train>();
     private boolean isUnloaded = false;
 
     /**

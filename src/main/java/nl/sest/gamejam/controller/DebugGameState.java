@@ -38,9 +38,9 @@ public class DebugGameState extends BasicGameState {
 
 		MapLoader maploader = new MapLoader();
 		maploader.loadMap(model);
-
-//		gc = new GameController(model);
-
+		
+		gc = new GameController(model);
+		
 //		// Setup debugger
 		Slick2DJBox2DDebugDraw debug = new Slick2DJBox2DDebugDraw(arg0);
 		debug.appendFlags(DebugDraw.e_shapeBit);
@@ -65,7 +65,7 @@ public class DebugGameState extends BasicGameState {
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2)
 			throws SlickException {
 		pi.update();
-//		gc.step(arg2);
+		gc.step(arg2);
 
 	}
 

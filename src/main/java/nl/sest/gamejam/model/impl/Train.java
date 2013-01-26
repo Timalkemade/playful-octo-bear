@@ -8,6 +8,7 @@ public class Train {
 	
 	public Train(TrainDestination destination, int numBobs) {
 		this.destination = destination;
+		this.numBobs = numBobs;
 	}
 	
 	public TrainDestination getDestination() {

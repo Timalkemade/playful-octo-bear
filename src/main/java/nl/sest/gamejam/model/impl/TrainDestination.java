@@ -12,7 +12,7 @@ public class TrainDestination {
 	private Point location;
 	
 	public TrainDestination(float x, float y) {
-		
+		location = new Point(x, y);
 	}
 	
 	public Point getLocation() {
