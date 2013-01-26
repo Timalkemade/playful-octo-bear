@@ -29,6 +29,8 @@ public class MainGameState extends BasicGameState {
 			throws SlickException {
 
 		model = new Model();
+		Utils.setModel(model);
+
 		pi = new PhysicsInterface(model);
 
 		inputController = new GameInputController(model);
@@ -73,5 +75,11 @@ public class MainGameState extends BasicGameState {
 		} else if (button == 1) {
 			inputController.handleRightClick(x, y);
 		}
+	}
+
+	@Override
+	public void leave(GameContainer container, StateBasedGame game) throws SlickException {
+		super.leave(container, game);
+		Utils.setModel(null);
 	}
 }

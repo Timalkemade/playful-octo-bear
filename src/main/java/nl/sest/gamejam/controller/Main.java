@@ -25,7 +25,7 @@ public class Main {
 			width = 1440;
 
 			AppGameContainer app = new AppGameContainer(game, (int) width, (int) height, false);
-			Utils.setScreenDimension(width, height);
+			Utils.initialize(width, height);
 
 			app.setMinimumLogicUpdateInterval(20);
 			app.start();

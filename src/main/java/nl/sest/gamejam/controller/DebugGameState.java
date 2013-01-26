@@ -3,17 +3,13 @@ package nl.sest.gamejam.controller;
 import nl.sest.gamejam.model.impl.Model;
 import nl.sest.gamejam.physics.PhysicsInterface;
 import nl.sest.gamejam.view.DebugRenderer;
-import nl.sest.gamejam.view.Renderer;
 import nl.sest.gamejam.view.Slick2DJBox2DDebugDraw;
 import org.jbox2d.callbacks.DebugDraw;
-import org.jbox2d.dynamics.World;
 import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class DebugGameState extends MainGameState {
-
 
 
 	public DebugGameState() {
@@ -25,6 +21,8 @@ public class DebugGameState extends MainGameState {
 			throws SlickException {
 
 		model = new Model();
+		Utils.setModel(model);
+
 		pi = new PhysicsInterface(model);
 
 		inputController = new GameInputController(model);
