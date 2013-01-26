@@ -30,6 +30,7 @@ public class Model {
 
 	private List<CreatePhysicalListener> createListeners = new ArrayList<CreatePhysicalListener>();
 	private List<DeletePhysicalListener> deleteListeners = new ArrayList<DeletePhysicalListener>();
+	private List<EventListener> eventListeners = new ArrayList<EventListener>();
 
 	private Heartbeat heartbeat;
 	
@@ -180,6 +181,24 @@ public class Model {
 
 	public Collection<PlayerRepulsor> getPlayerRepulsors() {
 		return Collections.unmodifiableCollection(playerRepulsors);
+	}
+	
+	/**
+	 * Register a listener which listens to events.
+	 *
+	 * @param listener the listener
+	 */
+	public void registerEventListener(EventListener listener) {
+		eventListeners.add(listener);
+	}
+
+	/**
+	 * Remove a listener which listens to events.
+	 *
+	 * @param listener the listener
+	 */
+	public void unregisterEventListener(EventListener listener) {
+		eventListeners.remove(listener);
 	}
 
 	/**

@@ -23,7 +23,10 @@ public class Main {
 			float height = Float.parseFloat(heightArg);
 			float width = Float.parseFloat(widthArg);
 			
-			AppGameContainer app = new AppGameContainer(game, (int)width, (int)height, true);
+			height = 900;
+			width = 1440;
+			
+			AppGameContainer app = new AppGameContainer(game, (int)width, (int)height, false);
 			Utils.setScreenDimension(width, height);
 			
 			app.setMinimumLogicUpdateInterval(20);

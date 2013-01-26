@@ -6,6 +6,9 @@ import nl.sest.gamejam.model.impl.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * @author Remi
  */
@@ -17,7 +20,7 @@ public class GameController {
 
 	// Game state
 	protected long lastHeartbeat = 0; // timestamp when the last Heartbeat ended
-	protected int heartbeatTime = 1500; // time in milliseconds between each heartbeat
+	protected int heartbeatTime = 1000; // time in milliseconds between each heartbeat
 	protected long lastPOIappeared = 0; // timestamp when the last POI appeared
 	protected long nextPOITime = 0; // timestamp when next POI should appear
 
@@ -25,12 +28,14 @@ public class GameController {
 	protected int heartbeatVolume = 3; // number of Bobs per heartbeat
 	protected float damageChance = 1; // the chance that a single Bob will damage a Valuable on collision
 	protected float damagePerEvent = 20; // the damage applied for every violent event
-	protected float heartbeatDuration = 1000; // duration of a heartbeat in milliseconds
+	protected float heartbeatDuration = 500; // duration of a heartbeat in milliseconds
 	protected float POIminInterval = 5000; // minimum time in ms before a new POI appears
 	protected float POImaxInterval = 20000; // maximum time in ms before a new POI appears
 	protected float POImaxInterest = 10; // maximum interest factor of POIs
 	protected float POImaxLifeTime = 100000; // maximum life time of POIs
 
+	private final static Logger logger = LoggerFactory.getLogger(GameController.class);
+	
 	public GameController(Model model) {
 		this.model = model;
 	}
@@ -52,10 +57,10 @@ public class GameController {
 		// Else check if it is time for new heartbeat
 		else {
 			// Get current heartbeat state
-			float heartbeatState = model.getHeartbeat().getState();
+			float heartbeatState = hb.getState();
 	
 			// If it is time for a new heartbeat and there is no heartbeat in progress
-			if (heartbeatState == 0 && currentTime > lastHeartbeat - heartbeatTime) {
+			if (heartbeatState < 0 && currentTime - lastHeartbeat > heartbeatTime) {
 				heartbeatStart();
 			}
 		}
@@ -106,8 +111,8 @@ public class GameController {
 	protected void heartbeatEnd() {
 		lastHeartbeat = System.currentTimeMillis();
 		Heartbeat hb = model.getHeartbeat();
-		hb.setState(0);
-		hb.setUnloaded(false);
+		hb.setUnloaded(true);
+		hb.setState(-1);
 	}
 
 	/**
@@ -119,8 +124,10 @@ public class GameController {
 		long heartbeatStart = hb.getTimestamp();
 
 		// Compute state as percentage and set new state
-		float progress = (currentTime - heartbeatStart) / heartbeatDuration;
-		hb.setState(progress);
+		if(hb.getState() >= 0) {
+			float progress = (currentTime - heartbeatStart) / heartbeatDuration;
+			hb.setState(progress);
+		}
 
 		// If progress is past halfway and has Heartbeat has not been unloaded yet, unload
 		if (hb.getState() > 0.5 && !hb.isUnloaded()) {
@@ -129,7 +136,9 @@ public class GameController {
 		}
 		
 		// If heartbeat state passes 1, end heartbeat
+		logger.debug("state {}", hb.getState());
 		if(hb.getState() > 1) {
+			logger.debug("heatbeatEnd");
 			heartbeatEnd();
 		}
 	}
