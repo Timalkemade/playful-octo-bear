@@ -11,4 +11,6 @@ import org.newdawn.slick.SlickException;
 public interface Renderer {
 
     void render() throws SlickException;
+
+    void update(int dt);
 }

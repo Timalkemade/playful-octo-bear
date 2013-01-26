@@ -37,4 +37,7 @@ public class ImageRenderer implements Renderer {
 		LOGGER.debug("location {}", location);
 		image.draw(location.x, location.y);
 	}
+
+    @Override
+    public void update(int delta){ }
 }

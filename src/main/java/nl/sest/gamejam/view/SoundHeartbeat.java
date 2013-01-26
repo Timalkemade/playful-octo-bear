@@ -26,6 +26,9 @@ public class SoundHeartbeat implements Renderer {
         Heartbeat.play();
     }
 
+    @Override
+    public void update(int delta){ }
+
 
 
 }
