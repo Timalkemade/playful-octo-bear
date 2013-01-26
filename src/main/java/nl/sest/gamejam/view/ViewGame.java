@@ -56,6 +56,9 @@ public class ViewGame implements Renderer, EventListener {
 	public void render() throws SlickException {
 		//Disable Frame per Seconds
 		gamecontainer.setShowFPS(false);
+        Image background = new Image("images/Background.png");
+        background.draw(0, 0);
+
 		sideBar();
 		map();
 		renderModel();
@@ -76,7 +79,7 @@ public class ViewGame implements Renderer, EventListener {
         /*
 		int seconds = (int) ((time / 1000) % 60);
         int minutes = (int) ((time / 1000) / 60);
-        graphics.drawString("Time: " + minutes + ":" + seconds, 200,1);
+        font.drawString("Time: " + minutes + ":" + seconds, 200,1);
         */
 
 		int FPS = gamecontainer.getFPS();
