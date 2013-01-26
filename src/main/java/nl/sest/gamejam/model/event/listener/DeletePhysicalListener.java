@@ -10,5 +10,5 @@ import nl.sest.gamejam.model.Physical;
  */
 public interface DeletePhysicalListener {
 
-    void fireEvent(Physical physical);
+    void fireDeletePhysical(Physical physical);
 }

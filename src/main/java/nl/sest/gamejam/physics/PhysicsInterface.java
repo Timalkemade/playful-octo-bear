@@ -1,9 +1,12 @@
 package nl.sest.gamejam.physics;
 
+import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import nl.sest.gamejam.model.Physical;
+import nl.sest.gamejam.model.event.listener.CreatePhysicalListener;
+import nl.sest.gamejam.model.event.listener.DeletePhysicalListener;
 import nl.sest.gamejam.model.impl.Bob;
 import nl.sest.gamejam.model.impl.Model;
 import nl.sest.gamejam.model.impl.PointOfInterest;
@@ -16,7 +19,7 @@ import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
 
-public class PhysicsInterface {
+public class PhysicsInterface implements CreatePhysicalListener, DeletePhysicalListener {
 
 	private World world;
 	private HashMap<Physical, Body> objects;
@@ -122,7 +125,7 @@ public class PhysicsInterface {
     }
     
     private void applyForces(Body body) {
-    	ArrayList<PointOfInterest> pois = model.getPointsOfInterest();
+    	List<PointOfInterest> pois = model.getPointsOfInterest();
     	Physical physical = (Physical) body.getUserData();
     	
     	for(PointOfInterest poi : pois) {
@@ -149,4 +152,14 @@ public class PhysicsInterface {
         force.mulLocal(strength);
         return force;
      }
+
+	@Override
+	public void fireDeletePhysical(Physical physical) {
+		addObject(physical);
+	}
+
+	@Override
+	public void fireCreatePhysical(Physical physical) {
+		deleteObject(physical);
+	}
 }

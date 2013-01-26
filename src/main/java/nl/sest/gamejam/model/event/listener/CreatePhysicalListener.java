@@ -8,5 +8,5 @@ import nl.sest.gamejam.model.Physical;
  */
 public interface CreatePhysicalListener {
 
-    void fire(Physical physical);
+    void fireCreatePhysical(Physical physical);
 }
