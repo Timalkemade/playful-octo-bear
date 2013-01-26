@@ -2,6 +2,7 @@ package nl.sest.gamejam.controller;
 
 import nl.sest.gamejam.model.impl.Model;
 import nl.sest.gamejam.model.impl.PointOfInterest;
+import org.newdawn.slick.geom.Point;
 
 /**
  * Controller which handles user input.
