@@ -33,10 +33,10 @@ public class Model {
 	}
 
 	/**
-	 * Apply damage to the valuable
+	 * Apply damage to the valuable.
 	 *
-	 * @param v
-	 * @param damage
+	 * @param v      The valuable that was hit
+	 * @param damage The damage done to the valuable
 	 */
 	public void applyDamage(Valuable v, float damage) {
 		// TODO Implement
@@ -64,7 +64,7 @@ public class Model {
 	/**
 	 * Adds a collision to the list of collissions that occurred.
 	 *
-	 * @param collision
+	 * @param collision The collision to add
 	 */
 	public void addCollision(Collision collision) {
 		collisions.add(collision);
