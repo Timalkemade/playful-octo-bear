@@ -119,9 +119,13 @@ public class ViewGame implements Renderer, EventListener {
 
 	@Override
 	public void onEvent(HeartbeatEvent event) {
-		// TODO Auto-generated method stub
-		
-	}
+        SoundHeartbeat hb = new SoundHeartbeat();
+        try {
+            hb.render();
+        } catch (SlickException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+    }
 
     @Override
     public void update(int delta){ }
