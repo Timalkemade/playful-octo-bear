@@ -80,9 +80,11 @@ public class PhysicsInterface {
 		body.setUserData(physical);
 		objects.put(physical, body);
 
-		// Create shape (use circle for now)
+		// Create shape using Physical properties
+		float radius = physical.getRadius();
+		
 	    CircleShape circleShape = new CircleShape();
-	    circleShape.m_radius = 0.5f;
+	    circleShape.m_radius = radius;
 
 	    // Create FixtureDef (use predefined parameters for now)
 	    FixtureDef fixtureDef = new FixtureDef();

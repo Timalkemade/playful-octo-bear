@@ -21,4 +21,8 @@ public interface Physical {
     boolean isDynamic();
     
     void setDynamic(boolean dynamic);
+    
+    float getRadius();
+    
+    void setRadius(float radius);
 }
