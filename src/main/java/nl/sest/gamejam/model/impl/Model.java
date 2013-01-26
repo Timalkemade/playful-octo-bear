@@ -1,5 +1,6 @@
 package nl.sest.gamejam.model.impl;
 
+import nl.sest.gamejam.model.Event;
 import nl.sest.gamejam.model.Physical;
 import nl.sest.gamejam.model.Renderable;
 import nl.sest.gamejam.model.event.listener.CreatePhysicalListener;
@@ -66,6 +67,15 @@ public class Model {
 	
 	public float getWorldWidth() {
 		return width;
+	}
+	
+	/**
+	 * Fire an event for all EventListeners
+	 * @param e
+	 */
+	public void fireEvent(Event e) {
+		for(EventListener el : eventListeners)
+			el.onEvent(e);
 	}
 
 	/**

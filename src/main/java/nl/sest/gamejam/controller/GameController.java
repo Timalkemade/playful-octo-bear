@@ -1,5 +1,6 @@
 package nl.sest.gamejam.controller;
 
+import nl.sest.gamejam.events.HeartbeatEvent;
 import nl.sest.gamejam.model.Physical;
 import nl.sest.gamejam.model.impl.*;
 
@@ -83,6 +84,7 @@ public class GameController {
 		}
 		// Create heartbeat
 		model.setHeartbeat(hb);
+		model.fireEvent(new HeartbeatEvent(hb, currentTime));
 	}
 
 	/**
@@ -99,7 +101,10 @@ public class GameController {
 
 			// Create Bobs at the destination
 			for (int i = 0; i < t.getNumBobs(); i++) {
-				Bob bob = new Bob(x, y);
+				float rX = 3+(float)(Math.random()*3);
+				float rY = 3+(float)(Math.random()*3);
+				
+				Bob bob = new Bob(x+rX, y+rY);
 				model.addBob(bob);
 			}
 		}
