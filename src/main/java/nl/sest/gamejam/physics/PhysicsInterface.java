@@ -103,7 +103,7 @@ public class PhysicsInterface implements CreatePhysicalListener, DeletePhysicalL
 	    FixtureDef fixtureDef = new FixtureDef();
 	    fixtureDef.shape = circleShape;
 	    fixtureDef.density = 1;
-	    fixtureDef.friction = 0.01f;
+	    fixtureDef.friction = 100f;
 	    fixtureDef.restitution = 0.3f;
 		
 	    // Attach FixtureDef to body
@@ -139,9 +139,20 @@ public class PhysicsInterface implements CreatePhysicalListener, DeletePhysicalL
 			Vec2 poiVec = new Vec2(poi.getX(), poi.getY());
     		Vec2 bobVec = body.getWorldCenter();
 			float bobMass = body.m_mass;
-			Vec2 force = calculateAttract(poiVec, bobVec, bobMass);
+//			Vec2 force = calculateAttract(poiVec, bobVec, bobMass);
+			Vec2 force = computeForceVector(bobVec, poiVec, 0.01f);
 			body.applyForce(force, body.getWorldCenter());
 		}
+    }
+    
+    private Vec2 computeForceVector(Vec2 point1, Vec2 point2, float force) {
+    	float distX = point2.x - point1.x;
+    	float distY = point2.y - point1.y;
+    	float totalDist = (float) Math.sqrt(Math.pow(distX, 2.0) + Math.pow(distY, 2.0));
+    	
+    	// Compute ratio to multiply vector by
+    	float factor = force / totalDist;
+    	return new Vec2(distX*factor, distY*factor);
     }
     
     private Vec2 calculateAttract(Vec2 poiPos, Vec2 bobPos, float bobMass) {
