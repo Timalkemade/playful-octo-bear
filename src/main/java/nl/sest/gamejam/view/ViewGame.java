@@ -1,11 +1,11 @@
 package nl.sest.gamejam.view;
 
+import nl.sest.gamejam.model.Event;
 import nl.sest.gamejam.model.Renderable;
+import nl.sest.gamejam.model.impl.EventListener;
+import nl.sest.gamejam.model.impl.Heartbeat;
 import nl.sest.gamejam.model.impl.Model;
-import org.newdawn.slick.Color;
 import org.newdawn.slick.*;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 
 import java.awt.Font;
 import java.text.DecimalFormat;
@@ -15,7 +15,7 @@ import java.text.DecimalFormat;
  * Date: 25-1-13
  * Time: 22:51
  */
-public class ViewGame implements Renderer {
+public class ViewGame implements Renderer, EventListener {
 
 	private GameContainer gamecontainer = null;
 	private TrueTypeFont font;
@@ -38,6 +38,7 @@ public class ViewGame implements Renderer {
 	public ViewGame(GameContainer gc, Model theModel) {
 		this.gamecontainer = gc;
 		model = theModel;
+		model.registerEventListener(this);
 
 		this.WidthWindow = gc.getWidth();
 		this.HeightWindow = gc.getHeight();
@@ -106,6 +107,18 @@ public class ViewGame implements Renderer {
 			}
 		}
 
+	}
+
+	@Override
+	public void onEvent(Event event) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onEvent(Heartbeat event) {
+		// TODO Auto-generated method stub
+		
 	}
 
 
