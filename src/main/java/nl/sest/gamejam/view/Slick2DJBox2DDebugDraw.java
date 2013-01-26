@@ -12,6 +12,7 @@ import org.jbox2d.pooling.arrays.Vec2Array;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Polygon;
  
 /**

@@ -1,7 +1,5 @@
 package nl.sest.gamejam.controller;
 
-import nl.sest.gamejam.view.SoundHeartbeat;
-import nl.sest.gamejam.view.ViewGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;

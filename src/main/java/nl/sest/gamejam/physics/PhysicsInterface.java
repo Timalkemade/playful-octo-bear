@@ -22,7 +22,7 @@ import org.jbox2d.dynamics.World;
 public class PhysicsInterface implements CreatePhysicalListener, DeletePhysicalListener {
 
 	private World world;
-	private HashMap<Physical, Body> objects;
+	private HashMap<Physical, Body> objects = new HashMap<Physical, Body>();
 	private Model model;
 	
     public int targetFPS = 120;  
@@ -41,6 +41,10 @@ public class PhysicsInterface implements CreatePhysicalListener, DeletePhysicalL
 	    boolean doSleep = true;
 	    
 	    world = new World(gravity, doSleep);
+	}
+	
+	public World getWorld() {
+		return world;
 	}
 	
 	public void update() {
@@ -159,11 +163,11 @@ public class PhysicsInterface implements CreatePhysicalListener, DeletePhysicalL
 
 	@Override
 	public void fireDeletePhysical(Physical physical) {
-		addObject(physical);
+		deleteObject(physical);
 	}
 
 	@Override
 	public void fireCreatePhysical(Physical physical) {
-		deleteObject(physical);
+		addObject(physical);
 	}
 }

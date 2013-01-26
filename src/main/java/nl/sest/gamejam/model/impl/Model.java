@@ -87,15 +87,6 @@ public class Model {
 		bobs.remove(bob);
 		fireDeleteListeners(bob);
 	}
-    private World world;
-    
-    public void setPhysicsWorld(World world) {
-    	this.world = world;
-    }
-    
-    public World getPhysicsWorld() {
-    	return world;
-    }
     
     /**
      * Get all the Bobs in the world
@@ -119,6 +110,7 @@ public class Model {
      */
     public void addObstacle(Obstacle o) {
     	obstacles.add(o);
+    	fireCreateListeners(o);
     }
     
     /**
