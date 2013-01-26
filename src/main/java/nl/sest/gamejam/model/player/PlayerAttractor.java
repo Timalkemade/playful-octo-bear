@@ -36,13 +36,15 @@ public class PlayerAttractor implements Force, ImageRenderable {
 		LOGGER.debug("Created attractor at [{}, {}]", x, y);
 		this.x = x;
 		this.y = y;
-		renderer = new ImageRenderer(this);
 
 		try {
 			image = new Image("images/attraction.jpg");
 		} catch (SlickException e) {
 			throw new ImageLoadingException("Failed to load image", e);
 		}
+
+		renderer = new ImageRenderer(this);
+
 	}
 
 	public float getX() {
