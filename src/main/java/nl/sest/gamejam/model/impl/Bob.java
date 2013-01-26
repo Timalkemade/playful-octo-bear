@@ -1,9 +1,9 @@
 package nl.sest.gamejam.model.impl;
 
+import nl.sest.gamejam.model.ImageRenderable;
 import nl.sest.gamejam.model.Physical;
-import nl.sest.gamejam.model.Renderable;
+import nl.sest.gamejam.view.ImageRenderer;
 import nl.sest.gamejam.view.Renderer;
-import nl.sest.gamejam.view.ViewPhysical;
 import org.newdawn.slick.Image;
 
 /**
@@ -12,7 +12,7 @@ import org.newdawn.slick.Image;
  * @author Tim
  * @since 1/25/13 9:40 PM
  */
-public class Bob implements Physical, Renderable {
+public class Bob implements Physical, ImageRenderable {
 
 	private Renderer renderer;
 	private float x;
@@ -21,35 +21,35 @@ public class Bob implements Physical, Renderable {
 	private float angle;
 	private boolean isDynamic;
 	protected PointOfInterest poi;
-    
-    public Bob(float x, float y) {
-    	this(null, x, y);
-    	renderer = createDefaultRenderer();
-    	setRadius(1);
-    }
-    
-    public Bob(Renderer aRenderer, float x, float y) {
-        this.renderer = aRenderer;
-        this.x = x;
-        this.y = y;
-        angle = 0;
-        isDynamic = true;
-    }
-    
-    public void setPOI(PointOfInterest poi) {
-    	this.poi = poi;
-    }
-    
-    public PointOfInterest getPOI() {
-    	return poi;
-    }
-    
-    /**
-     * @return
-     */
-    public Renderer createDefaultRenderer() {
-    	return new ViewPhysical(this);
-    }
+
+	public Bob(float x, float y) {
+		this(null, x, y);
+		renderer = createDefaultRenderer();
+		setRadius(1);
+	}
+
+	public Bob(Renderer aRenderer, float x, float y) {
+		this.renderer = aRenderer;
+		this.x = x;
+		this.y = y;
+		angle = 0;
+		isDynamic = true;
+	}
+
+	public void setPOI(PointOfInterest poi) {
+		this.poi = poi;
+	}
+
+	public PointOfInterest getPOI() {
+		return poi;
+	}
+
+	/**
+	 * @return
+	 */
+	public Renderer createDefaultRenderer() {
+		return new ImageRenderer(this);
+	}
 
 	@Override
 	public float getX() {
@@ -112,5 +112,4 @@ public class Bob implements Physical, Renderable {
 	@Override
 	public void setRadius(float radius) {
 	}
-
 }

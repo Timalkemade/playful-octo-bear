@@ -1,8 +1,10 @@
 package nl.sest.gamejam.controller;
 
 import nl.sest.gamejam.model.impl.Model;
-import nl.sest.gamejam.model.impl.PointOfInterest;
-import org.newdawn.slick.geom.Point;
+import nl.sest.gamejam.model.player.PlayerAttractor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 /**
  * Controller which handles user input.
@@ -12,18 +14,18 @@ import org.newdawn.slick.geom.Point;
  */
 public class GameInputController {
 
-	private Model model;
+	private static final Logger LOGGER = LoggerFactory.getLogger(GameInputController.class);
 
-	// Settings
-	private float poiLifeTime = 10000; // in ms
-	private float poiMaxInterest = 10;
+	private Model model;
 
 	public GameInputController(Model model) {
 		this.model = model;
 	}
 
 	public void handleLeftClick(float x, float y) {
-		PointOfInterest pointOfInterest = new PointOfInterest(x, y, poiMaxInterest, poiLifeTime);
-		model.addPointOfInterest(pointOfInterest);
+		LOGGER.debug("Left click at: [{}, {}]", x, y);
+
+		PlayerAttractor playerAttractor = new PlayerAttractor(x, y);
+		model.addPlayerAttractor(playerAttractor);
 	}
 }

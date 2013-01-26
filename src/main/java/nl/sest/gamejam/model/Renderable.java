@@ -8,7 +8,26 @@ import nl.sest.gamejam.view.Renderer;
  */
 public interface Renderable {
 
-    Renderer getRenderer();
+	/**
+	 * The renderer that can render the object.
+	 *
+	 * @return The renderer
+	 */
+	Renderer getRenderer();
+
+	/**
+	 * Get X coordinate.
+	 *
+	 * @return the x coordinate
+	 */
+	float getX();
+
+	/**
+	 * Get Y coordinate.
+	 *
+	 * @return the y coordinates
+	 */
+	float getY();
 
 
 }

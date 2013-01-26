@@ -1,8 +1,12 @@
 package nl.sest.gamejam.model.player;
 
 import nl.sest.gamejam.model.Force;
-import nl.sest.gamejam.model.Renderable;
+import nl.sest.gamejam.model.ImageRenderable;
 import nl.sest.gamejam.view.Renderer;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The player attractor point is an attractive force that the player sets.
@@ -10,10 +14,13 @@ import nl.sest.gamejam.view.Renderer;
  * @author Tim
  * @since 1/26/13 9:37 AM
  */
-public class PlayerAttractor implements Force, Renderable {
+public class PlayerAttractor implements Force, ImageRenderable {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(PlayerAttractor.class);
 
 	private float x;
 	private float y;
+	private Image image;
 
 	/**
 	 * Constructor for the PlayerAttractor.
@@ -22,8 +29,15 @@ public class PlayerAttractor implements Force, Renderable {
 	 * @param y y location
 	 */
 	public PlayerAttractor(float x, float y) {
+		LOGGER.debug("Created attractor at [{}, {}]", x, y);
 		this.x = x;
 		this.y = y;
+
+		try {
+			image = new Image("images/earth.jpg");
+		} catch (SlickException e) {
+			throw new RuntimeException("Failed to load image");
+		}
 	}
 
 	public float getX() {
@@ -37,5 +51,10 @@ public class PlayerAttractor implements Force, Renderable {
 	@Override
 	public Renderer getRenderer() {
 		return null;
+	}
+
+	@Override
+	public Image getImage() {
+		return image;
 	}
 }
