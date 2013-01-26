@@ -57,10 +57,17 @@ public class PointOfInterest implements Force {
 	 */
 	public PointOfInterest(Point location, float maxInterest, float lifetime) {
 		this.location = location;
-		startTime = System.currentTimeMillis();
-		this.maxInterest = maxInterest;
-		this.maxLifetime = lifetime;
 		id = UUID.randomUUID();
+	}
+	
+	/**
+	 * Starts the lifecycle of the POI
+	 * @param maxInterest The interest factor to which it will grow
+	 * @param lifetime The time during which the POI will be active
+	 */
+	public void start(float maxInterest, float lifetime) {
+		startTime = System.currentTimeMillis();
+		start(maxInterest, lifetime);
 	}
 	
 	/**
