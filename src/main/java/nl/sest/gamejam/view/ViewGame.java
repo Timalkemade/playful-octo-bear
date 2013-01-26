@@ -14,10 +14,10 @@ public class ViewGame implements Renderer {
 
     private GameContainer gamecontainer = null;
     private Graphics graphics = null;
-    float score = 0f;
-    float time = 0f;
+    private float score = 0f;
+    private float time = 0f;
 
-    public void ViewGame(GameContainer gc, Graphics g){
+    public ViewGame(GameContainer gc, Graphics g){
         this.gamecontainer = gc;
         this.graphics = g;
     }
