@@ -5,6 +5,7 @@ import nl.sest.gamejam.model.impl.Constants;
 import nl.sest.gamejam.model.impl.Model;
 import nl.sest.gamejam.model.impl.Obstacle;
 import nl.sest.gamejam.model.impl.PointOfInterest;
+import nl.sest.gamejam.model.impl.TrainDestination;
 
 public class MapLoader {
 
@@ -46,6 +47,9 @@ public class MapLoader {
 		
 		// POIs
 		model.addPointOfInterest(new PointOfInterest(7f*gs, 8*gs, 0, 0));
+		
+		// Trains
+		model.addTrainDestination(new TrainDestination(0, -5));
 	}
 
 }

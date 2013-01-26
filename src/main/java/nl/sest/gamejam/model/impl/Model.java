@@ -120,6 +120,15 @@ public class Model {
 	public ArrayList<TrainDestination> getTrainDestinations() {
 		return trainDestinations;
 	}
+	
+
+	/**
+	 * Adds a TrainDestination to the Model
+	 * @param td
+	 */
+	public void addTrainDestination(TrainDestination td) {
+		trainDestinations.add(td);
+	}
 
 	public void addPointOfInterest(PointOfInterest pointOfInterest) {
 		pointsOfInterest.add(pointOfInterest);

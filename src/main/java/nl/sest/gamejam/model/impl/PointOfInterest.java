@@ -43,7 +43,6 @@ public class PointOfInterest implements Force, Renderable {
 	 */
 	public void start(float maxInterest, float lifetime) {
 		startTime = System.currentTimeMillis();
-		start(maxInterest, lifetime);
 	}
 
 	@Override

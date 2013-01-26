@@ -15,9 +15,16 @@ public class Main {
 	public static void main(String[] args) throws SlickException {
 		
 		try{
+			String widthArg = args[0];
+			String heightArg = args[1];
+			
 			TheGame game = new TheGame("The Game");
-			AppGameContainer app = new AppGameContainer(game, 800, 800, false);
-			Utils.setScreenDimension(800, 800);
+			
+			float height = Float.parseFloat(heightArg);
+			float width = Float.parseFloat(widthArg);
+			
+			AppGameContainer app = new AppGameContainer(game, (int)width, (int)height, true);
+			Utils.setScreenDimension(width, height);
 			
 			app.setMinimumLogicUpdateInterval(20);
 			app.start();
