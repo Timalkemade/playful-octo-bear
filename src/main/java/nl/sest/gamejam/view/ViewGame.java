@@ -56,12 +56,10 @@ public class ViewGame implements Renderer, EventListener {
 	public void render() throws SlickException {
 		//Disable Frame per Seconds
 		gamecontainer.setShowFPS(false);
-
-		topBar();
 		sideBar();
 		map();
-
 		renderModel();
+        topBar();
 	}
 
 	/**
@@ -72,7 +70,7 @@ public class ViewGame implements Renderer, EventListener {
 		HeightTopBar = topbar.getHeight();
 		topbar.draw(0, 0);
 
-		String sScore = new DecimalFormat("###,###,###,###").format(score);
+		String sScore = new DecimalFormat("###,###,###,###").format(model.getCurrency());
 		font.drawString(166, 8, sScore, Color.black);
 
         /*
