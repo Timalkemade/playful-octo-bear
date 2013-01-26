@@ -14,10 +14,15 @@ public class Main {
 	 */
 	public static void main(String[] args) throws SlickException {
 		
-		TheGame game = new TheGame("The Game");
-		AppGameContainer app = new AppGameContainer(game, 800, 800, false);
+		try{
+			TheGame game = new TheGame("The Game");
+			AppGameContainer app = new AppGameContainer(game, 800, 800, false);
 		
-		app.start();
+			app.start();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

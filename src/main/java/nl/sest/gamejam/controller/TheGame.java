@@ -21,15 +21,7 @@ public class TheGame extends StateBasedGame {
     @Override
     public void render(GameContainer gc, Graphics g) throws SlickException
     {
-        ViewGame vg = new ViewGame(gc,g);
-        vg.render();
+    	getCurrentState().render(gc, this, g);
     }
-
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-
-	}
 
 }

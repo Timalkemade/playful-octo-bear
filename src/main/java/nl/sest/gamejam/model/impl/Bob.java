@@ -31,6 +31,7 @@ public class Bob implements Physical, Renderable {
     public Bob(float x, float y) {
     	this(null, x, y);
     	renderer = createDefaultRenderer();
+    	setRadius(1);
     }
     
     public void setPOI(PointOfInterest poi) {

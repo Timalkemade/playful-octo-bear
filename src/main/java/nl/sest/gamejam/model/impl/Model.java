@@ -5,6 +5,8 @@ import nl.sest.gamejam.model.player.PlayerRepulsor;
 
 import java.util.*;
 
+import org.jbox2d.dynamics.World;
+
 /**
  * The model keeps track of where everything in is in the world. Basically is should be called Big Brother.
  *
@@ -17,12 +19,23 @@ public class Model {
     private final Set<Bob> bobs = new HashSet<Bob>();
     private final Set<PlayerAttractor> playerAttractors = new HashSet<PlayerAttractor>();
     private final Set<PlayerRepulsor> playerRepulsors = new HashSet<PlayerRepulsor>();
+    private final Set<Obstacle> obstacles = new HashSet<Obstacle>();
 
     private final ArrayList<TrainDestination> trainDestinations = new ArrayList<TrainDestination>();
     private final ArrayList<PointOfInterest> pointsOfInterest = new ArrayList<PointOfInterest>();
     private Heartbeat heartbeat;
 
+    private World world;
+    
     public Model() {
+    }
+    
+    public void setPhysicsWorld(World world) {
+    	this.world = world;
+    }
+    
+    public World getPhysicsWorld() {
+    	return world;
     }
     
     /**
@@ -64,6 +77,22 @@ public class Model {
      */
     public void addCollision(Collision collision) {
         collisions.add(collision);
+    }
+    
+    /**
+     * Add an Obstacle to the Model
+     * @param o
+     */
+    public void addObstacle(Obstacle o) {
+    	obstacles.add(o);
+    }
+    
+    /**
+     * Get all Obstacles from the Model
+     * @return
+     */
+    public Set<Obstacle> getObstacles() {
+    	return obstacles;
     }
 
     /**
