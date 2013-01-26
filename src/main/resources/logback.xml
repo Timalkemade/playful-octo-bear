@@ -8,7 +8,9 @@
         </encoder>
     </appender>
 
-    <root level="DEBUG">
+	<logger name="nl.sest.gamejam.controller.GameController" level="DEBUG">
+	</logger>
+    <root level="WARN">
         <appender-ref ref="STDOUT" />
     </root>
 </configuration>

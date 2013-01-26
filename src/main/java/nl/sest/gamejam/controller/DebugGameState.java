@@ -4,7 +4,6 @@ import nl.sest.gamejam.model.impl.Model;
 import nl.sest.gamejam.physics.PhysicsInterface;
 
 import org.jbox2d.callbacks.DebugDraw;
-import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -51,8 +50,12 @@ public class DebugGameState extends BasicGameState {
 
 		world = pi.getWorld();
 		renderer = new DebugRenderer(world);
+		pi.registerPhysicsCollisionListener(gc);
 
 		inputController = new GameInputController(model);
+		
+		// Start Game
+		gc.start();
 	}
 
 	@Override

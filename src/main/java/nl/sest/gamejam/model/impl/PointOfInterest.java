@@ -19,7 +19,7 @@ public class PointOfInterest implements Force, Renderable {
 
 	protected float interest = 0; // This will affect how many Bobs will go to this POI.
 	protected long startTime = 0;
-	protected float maxLifetime = 0; // The total lifetime of this POI (sigma of Gaussian function)
+	protected float maxBoostTime = 0; // The total lifetime of this POI (sigma of Gaussian function)
 	protected float maxInterest = 0; // The maximum interest that this POI will reach ('a' of Gaussian function)
 
 
@@ -29,13 +29,13 @@ public class PointOfInterest implements Force, Renderable {
 	 * @param x The x location of this PointOfInterest
 	 * @param y The y location of this PointOfInternet
 	 */
-	public PointOfInterest(float x, float y, float maxInterest, float lifetime) {
+	public PointOfInterest(float x, float y, float maxInterest, float maxBoostTime) {
 		this.x = x;
 		this.y = y;
 
 		this.startTime = System.currentTimeMillis();
 		this.maxInterest = maxInterest;
-		this.maxLifetime = lifetime;
+		this.maxBoostTime = maxBoostTime;
         this.renderer = new ViewPOI( this );
 	}
 
@@ -46,6 +46,7 @@ public class PointOfInterest implements Force, Renderable {
 	 */
 	public void start(float maxInterest, float lifetime) {
 		startTime = System.currentTimeMillis();
+		interest = 0.01f;
 	}
 
 	@Override
@@ -63,7 +64,7 @@ public class PointOfInterest implements Force, Renderable {
 	 *
 	 * @return
 	 */
-	public float getStartTime() {
+	public long getStartTime() {
 		return startTime;
 	}
 
@@ -72,8 +73,8 @@ public class PointOfInterest implements Force, Renderable {
 	 *
 	 * @return
 	 */
-	public float getMaxLifetime() {
-		return maxLifetime;
+	public float getMaxBoostTime() {
+		return maxBoostTime;
 	}
 
 	/**
