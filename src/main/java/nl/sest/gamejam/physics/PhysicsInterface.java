@@ -1,9 +1,12 @@
 package nl.sest.gamejam.physics;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import nl.sest.gamejam.model.Physical;
 import nl.sest.gamejam.model.impl.Bob;
+import nl.sest.gamejam.model.impl.Model;
+import nl.sest.gamejam.model.impl.PointOfInterest;
 
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.common.Vec2;
@@ -17,11 +20,15 @@ public class PhysicsInterface {
 
 	private World world;
 	private HashMap<Physical, Body> objects;
+	private Model model;
 	
     public int targetFPS = 120;  
     public int timeStep = (1000 / targetFPS);  
     
-	public PhysicsInterface() {
+	public PhysicsInterface(Modem model) {
+		// Set model
+		this.model = model;
+		
 	    // Init world
 		Vec2 gravity = new Vec2(0.0f, 0.0f);
 	    boolean doSleep = true;
@@ -33,16 +40,21 @@ public class PhysicsInterface {
 		// Update Box2D world
         world.step(timeStep, 8, 3);
         
+        // Get POIs
+        ArrayList<PointOfInterest> pois = model.getPointsOfInterest();
+        
         // Sync Box2D objects with the Physical objects
         for (Physical physical : objects.keySet()) {
         	Body body = objects.get(physical);
         	
-        	// If the physical is a Bob, apply force (use predefined force for now)
+        	// If the physical is a Bob, apply force using all POIs
         	if (physical instanceof Bob) {
-        		Vec2 bobVec = new Vec2(physical.getX(), physical.getY());
-        		Vec2 poiVec = new Vec2(0.5f, 0.5f);
-        		Vec2 force = calculateAttract(poiVec, bobVec);
-        		body.applyForce(force, body.getWorldCenter());
+        		for(PointOfInterest poi : pois) {
+        			Vec2 bobVec = new Vec2(physical.getX(), physical.getY());
+        			Vec2 poiVec = new Vec2(poi.getX(), poi.getY());
+        			Vec2 force = calculateAttract(poiVec, bobVec);
+        			body.applyForce(force, body.getWorldCenter());
+        		}
         	}
         	
         	// If the Physical is dynamic, update the Physical properties using the Body properties
@@ -109,7 +121,7 @@ public class PhysicsInterface {
 		objects.remove(physical);
 	}
 	
-    Vec2 calculateAttract(Vec2 poi, Vec2 bob) {
+    private Vec2 calculateAttract(Vec2 poi, Vec2 bob) {
     	Body poiBody = objects.get(poi);
     	Body bobBody = objects.get(bob);
     	
@@ -124,6 +136,5 @@ public class PhysicsInterface {
         float strength = (forceStrength * 1 * bobBody.m_mass) / (distance * distance);
         force.mulLocal(strength);
         return force;
-      }
-
+     }
 }
