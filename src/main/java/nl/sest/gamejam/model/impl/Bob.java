@@ -5,7 +5,6 @@ import nl.sest.gamejam.model.ImageRenderable;
 import nl.sest.gamejam.model.Physical;
 import nl.sest.gamejam.view.ImageRenderer;
 import nl.sest.gamejam.view.Renderer;
-import nl.sest.gamejam.view.ViewPhysical;
 import org.newdawn.slick.Image;
 
 /**
@@ -60,7 +59,7 @@ public class Bob implements Physical, ImageRenderable {
      * @return
      */
     public Renderer createDefaultRenderer() {
-    	return new ViewPhysical(this);
+    	return new ImageRenderer(this);
     }
 
 	@Override
