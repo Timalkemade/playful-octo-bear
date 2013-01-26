@@ -33,13 +33,6 @@ public class Model {
     public Heartbeat getHeartbeat() {
         return heartbeat;
     }
-    
-    /**
-     * Set a new Heartbeat
-     * @param hb
-     */
-    public void setHeartbeat(Heartbeat hb) {
-    	heartbeat = hb;
 
     public void setHeartbeat(Heartbeat aHeartbeat) {
         heartbeat = aHeartbeat;
@@ -51,6 +44,7 @@ public class Model {
     
     public ArrayList<TrainDestination> getTrainDestinations() {
     	return trainDestinations;
+    }
 
     public void removeBob(Bob bob) {
         bobs.remove(bob);
