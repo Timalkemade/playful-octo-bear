@@ -36,9 +36,19 @@ public class PhysicsInterface {
         for (Physical physical : objects.keySet()) {
         	Body body = objects.get(physical);
         	
-        	physical.setX(body.getPosition().x);
-        	physical.setY(body.getPosition().y);
-        	physical.setAngle(body.getAngle());
+        	// If the Physical is dynamic, update the Physical properties using the Body properties
+        	if (physical.isDynamic()) {
+	        	physical.setX(body.getPosition().x);
+	        	physical.setY(body.getPosition().y);
+	        	physical.setAngle(body.getAngle());
+        	}
+        	// Else if the Physical is static, update the Body properties using the Physical properties
+        	else {
+        		float x = physical.getX();
+        		float y = physical.getY();
+        		float angle = physical.getAngle();
+        		body.setTransform(new Vec2(x, y), angle);
+        	}
         }
 	}
 	
