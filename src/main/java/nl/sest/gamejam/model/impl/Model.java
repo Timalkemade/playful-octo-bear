@@ -17,7 +17,7 @@ public class Model {
 
 	private final Stack<Collision> collisions = new Stack<Collision>();
 	private final Set<Bob> bobs = new HashSet<Bob>();
-	private final Set<PointOfInterest> pointsOfInterest = new HashSet<PointOfInterest>();
+	private final List<PointOfInterest> pointsOfInterest = new ArrayList<PointOfInterest>();
 	private final Set<PlayerAttractor> playerAttractors = new HashSet<PlayerAttractor>();
 	private final Set<PlayerRepulsor> playerRepulsors = new HashSet<PlayerRepulsor>();
 
@@ -55,8 +55,8 @@ public class Model {
 	 *
 	 * @return
 	 */
-	public Set<PointOfInterest> getPointsOfInterest() {
-		return Collections.unmodifiableSet(pointsOfInterest);
+	public List<PointOfInterest> getPointsOfInterest() {
+		return Collections.unmodifiableList(pointsOfInterest);
 	}
 
 	/**

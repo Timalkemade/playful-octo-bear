@@ -1,16 +1,10 @@
 package nl.sest.gamejam.controller;
 
 import nl.sest.gamejam.model.Physical;
-import nl.sest.gamejam.model.impl.Bob;
-import nl.sest.gamejam.model.impl.Collision;
-import nl.sest.gamejam.model.impl.Heartbeat;
-import nl.sest.gamejam.model.impl.Model;
-import nl.sest.gamejam.model.impl.PointOfInterest;
-import nl.sest.gamejam.model.impl.Train;
-import nl.sest.gamejam.model.impl.TrainDestination;
-import nl.sest.gamejam.model.impl.Valuable;
+import nl.sest.gamejam.model.impl.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Remi
@@ -26,7 +20,7 @@ public class GameController {
 	protected int heartbeatTime = 10; // time in milliseconds between each heartbeat
 	protected long lastPOIappeared = 0; // timestamp when the last POI appeared
 	protected long nextPOITime = 0; // timestamp when next POI should appear
-	
+
 	// Settings
 	protected int heartbeatVolume = 10; // number of Bobs per heartbeat
 	protected float damageChance = 1; // the chance that a single Bob will damage a Valuable on collision
@@ -36,7 +30,7 @@ public class GameController {
 	protected float POImaxInterval = 20000; // maximum time in ms before a new POI appears
 	protected float POImaxInterest = 10; // maximum interest factor of POIs
 	protected float POImaxLifeTime = 100000; // maximum life time of POIs
-	
+
 	public GameController(Model model) {
 		this.model = model;
 	}
@@ -126,13 +120,13 @@ public class GameController {
 	 */
 	public void updatePOIs() {
 		// Go through POIs
-		Iterable<PointOfInterest> pois = model.getPointsOfInterest();
+		List<PointOfInterest> pois = model.getPointsOfInterest();
 		for (PointOfInterest poi : pois) {
 			// If POI lifetime exceeds max lifetime, set interest to 0
 			if (currentTime - poi.getStartTime() > poi.getMaxLifetime())
 				poi.setInterest(0);
-			// Otherwise, if POI is active (has an interest factor higher than 0) calculate new interest
-			else if (poi.getInterest() > 0){
+				// Otherwise, if POI is active (has an interest factor higher than 0) calculate new interest
+			else if (poi.getInterest() > 0) {
 				// Gaussian function
 				float mean = poi.getMaxLifetime() / 2;
 				float sd = poi.getMaxLifetime() / 6;
@@ -144,18 +138,18 @@ public class GameController {
 				poi.setInterest(currentInterest);
 			}
 		}
-		
+
 		// If it is time, create new POI
-		if(currentTime > nextPOITime) {
+		if (currentTime > nextPOITime) {
 			// Select random POI
-			int random = (int)Math.random()*pois.size();
+			int random = (int) Math.random() * pois.size();
 			PointOfInterest poi = pois.get(random);
-			
+
 			// Activate POI
 			poi.start(POImaxInterest, POImaxLifeTime);
-			
+
 			// Determine next POI appearance
-			int POIInterval = (int) (Math.random() * (POImaxInterval-POIminInterval) + POIminInterval);
+			int POIInterval = (int) (Math.random() * (POImaxInterval - POIminInterval) + POIminInterval);
 			nextPOITime = currentTime + POIInterval;
 		}
 	}
