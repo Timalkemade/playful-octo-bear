@@ -34,7 +34,7 @@ public class Model {
 	private List<EventListener> eventListeners = new ArrayList<EventListener>();
 
 	private Heartbeat heartbeat;
-	
+
 	private float height = 0;
 	private float width = 0;
 
@@ -50,9 +50,10 @@ public class Model {
 	public void applyDamage(Valuable v, float damage) {
 		// TODO Implement
 	}
-	
+
 	/**
 	 * Set the dimension of the World
+	 *
 	 * @param width
 	 * @param height
 	 */
@@ -60,21 +61,22 @@ public class Model {
 		this.height = height;
 		this.width = width;
 	}
-	
+
 	public float getWorldHeight() {
 		return height;
 	}
-	
+
 	public float getWorldWidth() {
 		return width;
 	}
-	
+
 	/**
 	 * Fire an event for all EventListeners
+	 *
 	 * @param e
 	 */
 	public void fireEvent(Event e) {
-		for(EventListener el : eventListeners)
+		for (EventListener el : eventListeners)
 			el.onEvent(e);
 	}
 
@@ -131,10 +133,11 @@ public class Model {
 	public ArrayList<TrainDestination> getTrainDestinations() {
 		return trainDestinations;
 	}
-	
+
 
 	/**
 	 * Adds a TrainDestination to the Model
+	 *
 	 * @param td
 	 */
 	public void addTrainDestination(TrainDestination td) {
@@ -192,7 +195,7 @@ public class Model {
 	public Collection<PlayerRepulsor> getPlayerRepulsors() {
 		return Collections.unmodifiableCollection(playerRepulsors);
 	}
-	
+
 	/**
 	 * Register a listener which listens to events.
 	 *
@@ -252,6 +255,8 @@ public class Model {
 		renderables.addAll(bobs);
 		renderables.addAll(obstacles);
 		renderables.addAll(pointsOfInterest);
+		renderables.addAll(playerAttractors);
+		renderables.addAll(playerRepulsors);
 
 		return renderables;
 	}

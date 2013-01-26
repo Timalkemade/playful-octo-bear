@@ -2,6 +2,7 @@ package nl.sest.gamejam.model.player;
 
 import nl.sest.gamejam.model.Force;
 import nl.sest.gamejam.model.ImageRenderable;
+import nl.sest.gamejam.view.ImageRenderer;
 import nl.sest.gamejam.view.Renderer;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
@@ -22,6 +23,8 @@ public class PlayerAttractor implements Force, ImageRenderable {
 	private float y;
 	private Image image;
 
+	private Renderer renderer;
+
 	/**
 	 * Constructor for the PlayerAttractor.
 	 *
@@ -32,9 +35,10 @@ public class PlayerAttractor implements Force, ImageRenderable {
 		LOGGER.debug("Created attractor at [{}, {}]", x, y);
 		this.x = x;
 		this.y = y;
+		renderer = new ImageRenderer(this);
 
 		try {
-			image = new Image("images/earth.jpg");
+			image = new Image("images/attraction.jpg");
 		} catch (SlickException e) {
 			throw new RuntimeException("Failed to load image");
 		}
@@ -50,7 +54,7 @@ public class PlayerAttractor implements Force, ImageRenderable {
 
 	@Override
 	public Renderer getRenderer() {
-		return null;
+		return renderer;
 	}
 
 	@Override
