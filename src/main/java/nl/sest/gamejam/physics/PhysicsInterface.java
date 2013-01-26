@@ -1,5 +1,6 @@
 package nl.sest.gamejam.physics;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,6 +12,7 @@ import nl.sest.gamejam.model.impl.Bob;
 import nl.sest.gamejam.model.impl.Model;
 import nl.sest.gamejam.model.impl.PointOfInterest;
 import nl.sest.gamejam.model.player.PlayerAttractor;
+import nl.sest.gamejam.model.player.PlayerRepulsor;
 
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.common.Vec2;
@@ -149,7 +151,7 @@ public class PhysicsInterface implements CreatePhysicalListener, DeletePhysicalL
     }
     
     private void applyPlayerAttractorForces(Body body) {
-    	List<PlayerAttractor> pas = model.getPlayerAttractors();
+    	Collection<PlayerAttractor> pas = model.getPlayerAttractors();
     	
     	for(PlayerAttractor pa : pas) {
     		Vec2 paVec = new Vec2(pa.getX(), pa.getY());
@@ -160,9 +162,9 @@ public class PhysicsInterface implements CreatePhysicalListener, DeletePhysicalL
     }
     
     private void applyPlayerRepulsorForces(Body body) {
-    	List<PlayerAttractor> prs = model.getPlayerRepulsors();
+    	Collection<PlayerRepulsor> prs = model.getPlayerRepulsors();
     	
-    	for(PlayerAttractor pr : prs) {
+    	for(PlayerRepulsor pr : prs) {
     		Vec2 paVec = new Vec2(pr.getX(), pr.getY());
     		Vec2 bobVec = body.getWorldCenter();
 			Vec2 force = computeForceVector(paVec, bobVec, 0.01f);
