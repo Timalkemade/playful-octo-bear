@@ -4,9 +4,12 @@ import java.util.HashMap;
 
 import nl.sest.gamejam.model.Physical;
 
+import org.jbox2d.collision.shapes.CircleShape;
+import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
+import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
 
 public class PhysicsInterface {
@@ -18,7 +21,11 @@ public class PhysicsInterface {
     public int timeStep = (1000 / targetFPS);  
     
 	public PhysicsInterface() {
-		
+	    // Init world
+		Vec2 gravity = new Vec2(0.0f, 0.0f);
+	    boolean doSleep = true;
+	    
+	    world = new World(gravity, doSleep);
 	}
 	
 	public void update() {
@@ -51,11 +58,25 @@ public class PhysicsInterface {
 		else {
 			bodyDef.type = BodyType.STATIC;
 		}
-		
+
 		// Attach Bodydef to world and save body to hashmap
 		Body body = world.createBody(bodyDef);
 		body.setUserData(physical);
 		objects.put(physical, body);
+
+		// Create shape (use circle for now)
+	    CircleShape circleShape = new CircleShape();
+	    circleShape.m_radius = 0.5f;
+
+	    // Create FixtureDef (use predefined parameters for now)
+	    FixtureDef fixtureDef = new FixtureDef();
+	    fixtureDef.shape = circleShape;
+	    fixtureDef.density = 1;
+	    fixtureDef.friction = 0.01f;
+	    fixtureDef.restitution = 0.3f;
+		
+	    // Attach FixtureDef to body
+	    body.createFixture(fixtureDef);
 	}
 	
 	public void deleteObject(Physical physical) {
