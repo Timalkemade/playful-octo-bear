@@ -25,10 +25,18 @@ public class Bob implements Physical, Renderable {
     private Image image;
     private float angle;
     private boolean isDynamic;
+    protected PointOfInterest poi;
 
     public Bob(float x, float y) {
     	this(null, x, y);
-    	renderer = createDefaultRenderer();
+    }
+    
+    public void setPOI(PointOfInterest poi) {
+    	this.poi = poi;
+    }
+    
+    public PointOfInterest getPOI() {
+    	return poi;
     }
     
     /**
