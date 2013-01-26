@@ -12,10 +12,18 @@ public class SoundHeartbeat implements Renderer {
 
     private String SoundFile = "sounds/heartbeat.ogg";
 
+    /**
+     * Constructor
+     * @param file location of the sound (in case empty use default)
+     */
     public SoundHeartbeat(String file) {
-        SoundFile = file;
+        if(file.compareTo("") == 0)
+            SoundFile = file;
     }
 
+    /**
+     * Play sound
+     */
     public void render() {
         try{
         Sound Heartbeat = new Sound(SoundFile);
