@@ -130,10 +130,9 @@ public class PhysicsInterface implements CreatePhysicalListener, DeletePhysicalL
     
     private void applyForces(Body body) {
     	List<PointOfInterest> pois = model.getPointsOfInterest();
-    	Physical physical = (Physical) body.getUserData();
     	
     	for(PointOfInterest poi : pois) {
-			Vec2 bobVec = new Vec2(physical.getX(), physical.getY());
+			Vec2 bobVec = body.getPosition();
 			Vec2 poiVec = new Vec2(poi.getX(), poi.getY());
 			Vec2 force = calculateAttract(poiVec, bobVec);
 			body.applyForce(force, body.getWorldCenter());
