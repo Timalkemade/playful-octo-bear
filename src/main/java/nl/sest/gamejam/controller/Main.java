@@ -10,29 +10,26 @@ public class Main {
 
 	/**
 	 * @param args
-	 * @throws SlickException 
+	 * @throws SlickException
 	 */
 	public static void main(String[] args) throws SlickException {
-		
-		try{
-			String widthArg = args[0];
-			String heightArg = args[1];
-			
+
+		try {
+
 			TheGame game = new TheGame("The Game");
-			
-			float height = Float.parseFloat(heightArg);
-			float width = Float.parseFloat(widthArg);
-			
+
+			float height;
+			float width;
+
 			height = 900;
 			width = 1440;
-			
-			AppGameContainer app = new AppGameContainer(game, (int)width, (int)height, false);
-			Utils.setScreenDimension(width, height);
-			
+
+			AppGameContainer app = new AppGameContainer(game, (int) width, (int) height, false);
+			Utils.initialize(width, height);
+
 			app.setMinimumLogicUpdateInterval(20);
 			app.start();
-		}
-		catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

@@ -1,8 +1,11 @@
 package nl.sest.gamejam.view;
 
+import nl.sest.gamejam.controller.Utils;
 import nl.sest.gamejam.model.ImageRenderable;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Vector2f;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * User: JMIEGHEM
@@ -10,6 +13,8 @@ import org.newdawn.slick.geom.Vector2f;
  * Time: 11:40
  */
 public class ImageRenderer implements Renderer {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(ImageRenderer.class);
 
 	private ImageRenderable object;
 
@@ -27,7 +32,9 @@ public class ImageRenderer implements Renderer {
 	 */
 	public void render() {
 		Image image = object.getImage();
-		Vector2f location = new Vector2f(object.getX(), object.getY());
+		LOGGER.debug("original Location {}, {}", object.getX(), object.getY());
+		Vector2f location = Utils.worldToScreen(object.getX(), object.getY());
+		LOGGER.debug("location {}", location);
 		image.draw(location.x, location.y);
 	}
 
