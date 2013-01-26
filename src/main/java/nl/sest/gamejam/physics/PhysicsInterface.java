@@ -10,6 +10,7 @@ import nl.sest.gamejam.model.event.listener.DeletePhysicalListener;
 import nl.sest.gamejam.model.impl.Bob;
 import nl.sest.gamejam.model.impl.Model;
 import nl.sest.gamejam.model.impl.PointOfInterest;
+import nl.sest.gamejam.model.player.PlayerAttractor;
 
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.common.Vec2;
@@ -57,7 +58,9 @@ public class PhysicsInterface implements CreatePhysicalListener, DeletePhysicalL
         	
         	// If the physical is a Bob, apply force using all POIs
         	if (physical instanceof Bob) {
-        		applyForces(body);
+        		applyPOIForces(body);
+        		applyPlayerAttractorForces(body);
+        		applyPlayerRepulsorForces(body);
         	}
         	
         	// If the Physical is dynamic, update the Physical properties using the Body properties
@@ -132,17 +135,39 @@ public class PhysicsInterface implements CreatePhysicalListener, DeletePhysicalL
 		body.setTransform(new Vec2(x, y), angle);
     }
     
-    private void applyForces(Body body) {
+    private void applyPOIForces(Body body) {
     	List<PointOfInterest> pois = model.getPointsOfInterest();
     	
     	for(PointOfInterest poi : pois) {
 			Vec2 poiVec = new Vec2(poi.getX(), poi.getY());
     		Vec2 bobVec = body.getWorldCenter();
-			float bobMass = body.m_mass;
+//			float bobMass = body.m_mass;
 //			Vec2 force = calculateAttract(poiVec, bobVec, bobMass);
 			Vec2 force = computeForceVector(bobVec, poiVec, 0.01f);
 			body.applyForce(force, body.getWorldCenter());
 		}
+    }
+    
+    private void applyPlayerAttractorForces(Body body) {
+    	List<PlayerAttractor> pas = model.getPlayerAttractors();
+    	
+    	for(PlayerAttractor pa : pas) {
+    		Vec2 paVec = new Vec2(pa.getX(), pa.getY());
+    		Vec2 bobVec = body.getWorldCenter();
+			Vec2 force = computeForceVector(bobVec, paVec, 0.01f);
+			body.applyForce(force, body.getWorldCenter());
+    	}
+    }
+    
+    private void applyPlayerRepulsorForces(Body body) {
+    	List<PlayerAttractor> prs = model.getPlayerRepulsors();
+    	
+    	for(PlayerAttractor pr : prs) {
+    		Vec2 paVec = new Vec2(pr.getX(), pr.getY());
+    		Vec2 bobVec = body.getWorldCenter();
+			Vec2 force = computeForceVector(paVec, bobVec, 0.01f);
+			body.applyForce(force, body.getWorldCenter());
+    	}    	
     }
     
     private Vec2 computeForceVector(Vec2 point1, Vec2 point2, float force) {
