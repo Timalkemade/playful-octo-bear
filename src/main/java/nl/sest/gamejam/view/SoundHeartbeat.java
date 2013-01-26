@@ -21,14 +21,9 @@ public class SoundHeartbeat implements Renderer {
     /**
      * Play sound
      */
-    public void render() {
-        try{
-            Sound Heartbeat = new Sound(SoundFile);
-            Heartbeat.play();
-        }
-        catch (SlickException ex)
-        {
-        }
+    public void render() throws SlickException {
+        Sound Heartbeat = new Sound(SoundFile);
+        Heartbeat.play();
     }
 
 

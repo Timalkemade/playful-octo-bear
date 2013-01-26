@@ -1,5 +1,8 @@
 package nl.sest.gamejam.model.impl;
 
+import nl.sest.gamejam.model.Physical;
+import nl.sest.gamejam.model.event.listener.CreatePhysicalListener;
+import nl.sest.gamejam.model.event.listener.DeletePhysicalListener;
 import nl.sest.gamejam.model.player.PlayerAttractor;
 import nl.sest.gamejam.model.player.PlayerRepulsor;
 
@@ -19,16 +22,72 @@ public class Model {
     private final Set<Bob> bobs = new HashSet<Bob>();
     private final Set<PlayerAttractor> playerAttractors = new HashSet<PlayerAttractor>();
     private final Set<PlayerRepulsor> playerRepulsors = new HashSet<PlayerRepulsor>();
+
+	private final List<PointOfInterest> pointsOfInterest = new ArrayList<PointOfInterest>();
+
     private final Set<Obstacle> obstacles = new HashSet<Obstacle>();
 
-    private final ArrayList<TrainDestination> trainDestinations = new ArrayList<TrainDestination>();
-    private final ArrayList<PointOfInterest> pointsOfInterest = new ArrayList<PointOfInterest>();
-    private Heartbeat heartbeat;
+	private final ArrayList<TrainDestination> trainDestinations = new ArrayList<TrainDestination>();
 
+	private List<CreatePhysicalListener> createListeners = new ArrayList<CreatePhysicalListener>();
+	private List<DeletePhysicalListener> deleteListeners = new ArrayList<DeletePhysicalListener>();
+
+	private Heartbeat heartbeat;
+
+	public Model() {
+	}
+
+	/**
+	 * Apply damage to the valuable.
+	 *
+	 * @param v      The valuable that was hit
+	 * @param damage The damage done to the valuable
+	 */
+	public void applyDamage(Valuable v, float damage) {
+		// TODO Implement
+	}
+
+
+	/**
+	 * Gives the POIs in the World.
+	 *
+	 * @return
+	 */
+	public List<PointOfInterest> getPointsOfInterest() {
+		return Collections.unmodifiableList(pointsOfInterest);
+	}
+
+	/**
+	 * Gives the collisions that occurred over time
+	 *
+	 * @return
+	 */
+	public Iterable<Collision> getCollisions() {
+		return Collections.unmodifiableCollection(collisions);
+	}
+
+	/**
+	 * Get the current Heartbeat.
+	 *
+	 * @return the heartbeat of the game
+	 */
+	public Heartbeat getHeartbeat() {
+		return heartbeat;
+	}
+
+	public void setHeartbeat(Heartbeat aHeartbeat) {
+		heartbeat = aHeartbeat;
+	}
+
+	public void addBob(Bob bob) {
+		bobs.add(bob);
+		fireCreateListeners(bob);
+	}
+	public void removeBob(Bob bob) {
+		bobs.remove(bob);
+		fireDeleteListeners(bob);
+	}
     private World world;
-    
-    public Model() {
-    }
     
     public void setPhysicsWorld(World world) {
     	this.world = world;
@@ -39,15 +98,6 @@ public class Model {
     }
     
     /**
-     * Apply damage to the valuable
-     * @param v
-     * @param damage
-     */
-    public void applyDamage(Valuable v, float damage) {
-    	// TODO Implement
-    }
-    
-    /**
      * Get all the Bobs in the world
      * @return
      */
@@ -55,29 +105,13 @@ public class Model {
     	return bobs;
     }
 
-    /**
-     * Gives the POIs in the World.
-     * @return
-     */
-    public ArrayList<PointOfInterest> getPointsOfInterest() {
-    	return pointsOfInterest;
-    }
-    
-    /**
-     * Gives the collisions that occurred over time
-     * @return
-     */
-    public Iterable<Collision> getCollisions() {
-        return Collections.unmodifiableCollection(collisions);
-    }
+	public ArrayList<TrainDestination> getTrainDestinations() {
+		return trainDestinations;
+	}
 
-    /**
-     * Adds a collision to the list of collissions that occurred.
-     * @param collision
-     */
-    public void addCollision(Collision collision) {
-        collisions.add(collision);
-    }
+	public void addPointOfInterest(PointOfInterest pointOfInterest) {
+		pointsOfInterest.add(pointOfInterest);
+	}
     
     /**
      * Add an Obstacle to the Model
@@ -95,52 +129,81 @@ public class Model {
     	return obstacles;
     }
 
-    /**
-     * Get the current Heartbeat.
-     *
-     * @return the heartbeat of the game
-     */
-    public Heartbeat getHeartbeat() {
-        return heartbeat;
-    }
+	public void removePointOfInterest(PointOfInterest pointOfInterest) {
+		pointsOfInterest.remove(pointOfInterest);
+	}
 
-    public void setHeartbeat(Heartbeat aHeartbeat) {
-        heartbeat = aHeartbeat;
-    }
+	public void addPlayerAttractor(PlayerAttractor playerAttractor) {
+		playerAttractors.add(playerAttractor);
+	}
 
-    public void addBob(Bob bob) {
-        bobs.add(bob);
-    }
+	public void removePlayerAttractor(PlayerAttractor playerAttractor) {
+		playerAttractors.remove(playerAttractor);
+	}
 
-    public ArrayList<TrainDestination> getTrainDestinations() {
-        return trainDestinations;
-    }
+	public void addPlayerRepulsor(PlayerRepulsor playerRepulsor) {
+		playerRepulsors.add(playerRepulsor);
+	}
 
-    public void removeBob(Bob bob) {
-        bobs.remove(bob);
-    }
+	public void removePlayerRepulsor(PlayerRepulsor playerRepulsor) {
+		playerRepulsors.remove(playerRepulsor);
+	}
 
-    public void addPointOfInterest(PointOfInterest pointOfInterest) {
-        pointsOfInterest.add(pointOfInterest);
-    }
+	/**
+	 * Register a listener which listens to creation of physical objects.
+	 *
+	 * @param listener the listener
+	 */
+	public void registerCreatePhysicalEventListener(CreatePhysicalListener listener) {
+		createListeners.add(listener);
+	}
 
-    public void removePointOfInterest(PointOfInterest pointOfInterest) {
-        pointsOfInterest.remove(pointOfInterest);
-    }
+	/**
+	 * Remove a listener which listens to creation of physical objects.
+	 *
+	 * @param listener the listener
+	 */
+	public void unregisterCreatePhysicalEventListener(CreatePhysicalListener listener) {
+		createListeners.remove(listener);
+	}
 
-    public void addPlayerAttractor(PlayerAttractor playerAttractor) {
-        playerAttractors.add(playerAttractor);
-    }
+	/**
+	 * Add a listener which listens to deletion of physical objects.
+	 *
+	 * @param listener the listener
+	 */
+	public void registerDeletePhysicalEventListener(DeletePhysicalListener listener) {
+		deleteListeners.add(listener);
+	}
 
-    public void removePlayerAttractor(PlayerAttractor playerAttractor) {
-        playerAttractors.remove(playerAttractor);
-    }
+	/**
+	 * Remove a listener which listens to deletion of physical objects.
+	 *
+	 * @param listener the listener
+	 */
+	public void unregisterDeletePhysicalEventListener(DeletePhysicalListener listener) {
+		deleteListeners.remove(listener);
+	}
 
-    public void addPlayerRepulsor(PlayerRepulsor playerRepulsor) {
-        playerRepulsors.add(playerRepulsor);
-    }
+	/**
+	 * Fires all {@link CreatePhysicalListener}s that are registered.
+	 *
+	 * @param physical The {@link Physical} that was created
+	 */
+	private void fireCreateListeners(Physical physical) {
+		for (CreatePhysicalListener createPhysicalListener : createListeners) {
+			createPhysicalListener.fireCreatePhysical(physical);
+		}
+	}
 
-    public void removePlayerRepulsor(PlayerRepulsor playerRepulsor) {
-        playerRepulsors.remove(playerRepulsor);
-    }
+	/**
+	 * Fires all {@link DeletePhysicalListener}s that are registered.
+	 *
+	 * @param physical The {@link Physical} that was deleted
+	 */
+	private void fireDeleteListeners(Physical physical) {
+		for (DeletePhysicalListener deletePhysicalListener : deleteListeners) {
+			deletePhysicalListener.fireDeletePhysical(physical);
+		}
+	}
 }
