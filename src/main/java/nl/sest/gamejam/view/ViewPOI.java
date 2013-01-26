@@ -15,23 +15,24 @@ public class ViewPOI implements Renderer {
 
     /** The particle system running everything */
     private ParticleSystem system;
-    int delta = 0;
 
     /**
      * POI particle view
      * @param location Vector2f lcoation of POI
-     * @param delta Delta integer for the Particle state
      * @throws SlickException
      */
-    public ViewPOI( Vector2f location, int delta) throws SlickException{
+    public ViewPOI( Vector2f location) throws SlickException{
         Image image = new Image("images/earth.jpg", true);
         system = new ParticleSystem(image);
 
         system.addEmitter(new FireEmitter( (int)location.x, (int)location.y ));
     }
 
+    public void update(int delta){
+        system.update(delta);
+    }
+
     public void render(){
-        system.update(delta+1);
         system.render();
     }
 

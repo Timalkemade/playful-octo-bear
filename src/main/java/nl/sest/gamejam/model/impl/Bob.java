@@ -1,5 +1,6 @@
 package nl.sest.gamejam.model.impl;
 
+import nl.sest.gamejam.model.ImagePicker;
 import nl.sest.gamejam.model.Physical;
 import nl.sest.gamejam.model.Renderable;
 import nl.sest.gamejam.view.Renderer;
@@ -25,15 +26,24 @@ public class Bob implements Physical, Renderable {
     public Bob(float x, float y) {
     	this(null, x, y);
     	renderer = createDefaultRenderer();
-    	setRadius(1);
+        initializeBob();
     }
     
     public Bob(Renderer aRenderer, float x, float y) {
         this.renderer = aRenderer;
         this.x = x;
         this.y = y;
+        initializeBob();
+    }
+
+    private void initializeBob()
+    {
+        setRadius(1);
         angle = 0;
         isDynamic = true;
+        //PickImage
+        ImagePicker im = new ImagePicker();
+        this.image = im.pick("bobs");
     }
     
     public void setPOI(PointOfInterest poi) {
