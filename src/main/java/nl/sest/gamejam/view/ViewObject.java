@@ -13,11 +13,19 @@ public class ViewObject implements Renderer {
     private Image image;
     private Vector2f location;
 
+    /**
+     * Start object with image
+     * @param Image image
+     * @param Vector2f Location
+     */
     public ViewObject(Image anImage, Vector2f aLocation) {
         this.image = anImage;
         this.location = aLocation;
     }
 
+    /**
+     * Render object
+     */
     public void render() {
         image.draw(location.x, location.y);
     }
