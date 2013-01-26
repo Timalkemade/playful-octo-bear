@@ -9,7 +9,7 @@ import org.newdawn.slick.geom.Vector2f;
  * Date: 26-1-13
  * Time: 11:40
  */
-public class ViewPhysical {
+public class ViewPhysical implements Renderer {
 
     private Image image;
     private Vector2f location;
