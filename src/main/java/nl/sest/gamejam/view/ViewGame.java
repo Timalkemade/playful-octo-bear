@@ -6,6 +6,8 @@ import nl.sest.gamejam.model.impl.EventListener;
 import nl.sest.gamejam.model.impl.Heartbeat;
 import nl.sest.gamejam.model.impl.Model;
 import org.newdawn.slick.Color;
+import nl.sest.gamejam.events.HeartbeatEvent;
+
 import org.newdawn.slick.*;
 import org.newdawn.slick.Image;
 
@@ -116,7 +118,7 @@ public class ViewGame implements Renderer, EventListener {
 	}
 
 	@Override
-	public void onEvent(Heartbeat event) {
+	public void onEvent(HeartbeatEvent event) {
 		// TODO Auto-generated method stub
 		
 	}
