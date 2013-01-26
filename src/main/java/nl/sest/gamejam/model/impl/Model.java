@@ -1,5 +1,7 @@
 package nl.sest.gamejam.model.impl;
 
+import nl.sest.gamejam.model.event.listener.CreatePhysicalListener;
+import nl.sest.gamejam.model.event.listener.DeletePhysicalListener;
 import nl.sest.gamejam.model.player.PlayerAttractor;
 import nl.sest.gamejam.model.player.PlayerRepulsor;
 
@@ -18,8 +20,11 @@ public class Model {
     private final Set<PointOfInterest> pointsOfInterest = new HashSet<PointOfInterest>();
     private final Set<PlayerAttractor> playerAttractors = new HashSet<PlayerAttractor>();
     private final Set<PlayerRepulsor> playerRepulsors = new HashSet<PlayerRepulsor>();
-
     private final ArrayList<TrainDestination> trainDestinations = new ArrayList<TrainDestination>();
+
+    private List<CreatePhysicalListener> createListeners = new ArrayList<CreatePhysicalListener>();
+    private List<DeletePhysicalListener> deleteListeners = new ArrayList<DeletePhysicalListener>();
+
     private Heartbeat heartbeat;
 
     public Model() {
@@ -80,5 +85,37 @@ public class Model {
 
     public void removePlayerRepulsor(PlayerRepulsor playerRepulsor) {
         playerRepulsors.remove(playerRepulsor);
+    }
+
+    /**
+     * Register a listener which listens to creation of physical objects.
+     * @param listener the listener
+     */
+    public void registerCreatePhysicalEventListener(CreatePhysicalListener listener) {
+        createListeners.add(listener);
+    }
+
+    /**
+     * Remove a listener which listens to creation of physical objects.
+     * @param listener the listener
+     */
+    public void unregisterCreatePhysicalEventListener(CreatePhysicalListener listener) {
+        createListeners.remove(listener);
+    }
+
+    /**
+     * Add a listener which listens to deletion of physical objects.
+     * @param listener the listener
+     */
+    public void registerDeletePhysicalEventListener(DeletePhysicalListener listener) {
+        deleteListeners.add(listener);
+    }
+
+    /**
+     * Remove a listener which listens to deletion of physical objects.
+     * @param listener the listener
+     */
+    public void unregisterDeletePhysicalEventListener(DeletePhysicalListener listener) {
+        deleteListeners.remove(listener);
     }
 }
