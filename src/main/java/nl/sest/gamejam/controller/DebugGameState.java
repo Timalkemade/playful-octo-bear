@@ -18,9 +18,10 @@ import nl.sest.gamejam.view.Slick2DJBox2DDebugDraw;
 
 public class DebugGameState extends BasicGameState {
 
-//	GameController gc;
+	GameController gc;
 	Model model;
 	World world;
+	PhysicsInterface pi;
 	Renderer renderer;
 	GameInputController inputController;
 	
@@ -33,7 +34,7 @@ public class DebugGameState extends BasicGameState {
 			throws SlickException {
 
 		model = new Model();
-		PhysicsInterface pi = new PhysicsInterface(model);
+		pi = new PhysicsInterface(model);
 		
 		MapLoader maploader = new MapLoader();
 		maploader.loadMap(model);
@@ -43,7 +44,8 @@ public class DebugGameState extends BasicGameState {
 //		// Setup debugger
 		Slick2DJBox2DDebugDraw debug = new Slick2DJBox2DDebugDraw(arg0);
 		debug.appendFlags(DebugDraw.e_shapeBit);
-		debug.setCamera(0, 0, 0);
+		debug.appendFlags(DebugDraw.e_aabbBit);
+		debug.setCamera(40, 40, 8);
 		pi.getWorld().setDebugDraw(debug);
 		pi.update();
 		
@@ -62,7 +64,7 @@ public class DebugGameState extends BasicGameState {
 	@Override
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2)
 			throws SlickException {
-		world.step(arg2, 8, 3);
+		pi.update();
 //		gc.step(arg2);
 
 	}

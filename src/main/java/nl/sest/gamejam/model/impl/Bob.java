@@ -17,6 +17,7 @@ public class Bob implements Physical, ImageRenderable {
 	private Renderer renderer;
 	private float x;
 	private float y;
+	private float radius;
 	private Image image;
 	private float angle;
 	private boolean isDynamic;
@@ -106,10 +107,11 @@ public class Bob implements Physical, ImageRenderable {
 
 	@Override
 	public float getRadius() {
-		return 0;
+		return radius;
 	}
 
 	@Override
 	public void setRadius(float radius) {
+		this.radius = radius;
 	}
 }

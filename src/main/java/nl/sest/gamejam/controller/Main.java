@@ -18,6 +18,7 @@ public class Main {
 			TheGame game = new TheGame("The Game");
 			AppGameContainer app = new AppGameContainer(game, 800, 800, false);
 		
+			app.setMinimumLogicUpdateInterval(20);
 			app.start();
 		}
 		catch(Exception e) {
