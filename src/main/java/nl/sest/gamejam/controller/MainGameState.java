@@ -31,6 +31,8 @@ public class MainGameState extends BasicGameState {
 		PhysicsInterface pi = new PhysicsInterface(model);
 		world = pi.getWorld();
 
+		inputController = new GameInputController(model);
+
 		MapLoader maploader = new MapLoader();
 		maploader.loadMap(model);
 

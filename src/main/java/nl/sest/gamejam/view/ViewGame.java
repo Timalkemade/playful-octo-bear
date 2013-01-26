@@ -86,7 +86,7 @@ public class ViewGame implements Renderer {
 	 * Map generator
 	 */
 	private void map() throws SlickException {
-		Image map = new Image("images/map.jpg");
+		Image map = new Image("images/Map.jpg");
 		map.draw(0, HeightTopBar);
 
 	}
