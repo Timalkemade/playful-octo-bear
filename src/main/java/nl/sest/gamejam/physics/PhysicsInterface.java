@@ -136,26 +136,22 @@ public class PhysicsInterface implements CreatePhysicalListener, DeletePhysicalL
     	List<PointOfInterest> pois = model.getPointsOfInterest();
     	
     	for(PointOfInterest poi : pois) {
-			Vec2 bobVec = body.getPosition();
 			Vec2 poiVec = new Vec2(poi.getX(), poi.getY());
-			Vec2 force = calculateAttract(poiVec, bobVec);
+    		Vec2 bobVec = body.getWorldCenter();
+			float bobMass = body.m_mass;
+			Vec2 force = calculateAttract(poiVec, bobVec, bobMass);
 			body.applyForce(force, body.getWorldCenter());
 		}
     }
     
-    private Vec2 calculateAttract(Vec2 poi, Vec2 bob) {
-    	Body poiBody = objects.get(poi);
-    	Body bobBody = objects.get(bob);
-    	
+    private Vec2 calculateAttract(Vec2 poiPos, Vec2 bobPos, float bobMass) {
         float forceStrength = 100; 
-        Vec2 poiPos = poiBody.getWorldCenter();    
-        Vec2 bobPos = bobBody.getWorldCenter();
         
         Vec2 force = poiPos.sub(bobPos);
         float distance = force.length();
         force.normalize();
 
-        float strength = (forceStrength * 1 * bobBody.m_mass) / (distance * distance);
+        float strength = (forceStrength * 1 * bobMass) / (distance * distance);
         force.mulLocal(strength);
         return force;
      }
