@@ -1,5 +1,6 @@
 package nl.sest.gamejam.physics;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.HashMap;
@@ -38,6 +39,8 @@ public class PhysicsInterface implements CreatePhysicalListener, DeletePhysicalL
 	private World world;
 	private HashMap<Physical, Body> objects = new HashMap<Physical, Body>();
 	private Model model;
+	
+	private ArrayList<PhysicsCollisionListener> physicsCollisionListeners = new ArrayList<PhysicsCollisionListener>();
 	
     public int targetFPS = 120;  
     public int timeStep = (1000 / targetFPS);  
@@ -208,6 +211,26 @@ public class PhysicsInterface implements CreatePhysicalListener, DeletePhysicalL
         force.mulLocal(strength);
         return force;
      }
+    
+    public void fireObstacleCollisionEvent(Bob bob, Obstacle obstacle) {
+    	for (PhysicsCollisionListener physicsCollisionListener : physicsCollisionListeners) {
+    		physicsCollisionListener.obstacleCollisionEvent(bob, obstacle);
+    	}
+    }
+    
+    public void fireValuableCollisionEvent(Bob bob, Valuable valuable) {
+    	for (PhysicsCollisionListener physicsCollisionListener : physicsCollisionListeners) {
+    		physicsCollisionListener.valuableCollisionEvent(bob, valuable);
+    	}
+    }
+    
+    public void registerPhysicsCollisionListener(PhysicsCollisionListener physicsCollisionListener) {
+    	physicsCollisionListeners.add(physicsCollisionListener);
+    }
+    
+    public void unregisterPhysicsCollisionListener(PhysicsCollisionListener physicsCollisionListener) {
+    	physicsCollisionListeners.remove(physicsCollisionListener);
+    }
 
 	@Override
 	public void fireDeletePhysical(Physical physical) {
