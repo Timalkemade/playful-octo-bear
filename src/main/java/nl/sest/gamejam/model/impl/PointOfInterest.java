@@ -1,9 +1,12 @@
 package nl.sest.gamejam.model.impl;
 
+import nl.sest.gamejam.exception.ImageLoadingException;
 import nl.sest.gamejam.model.Force;
-import nl.sest.gamejam.model.Renderable;
+import nl.sest.gamejam.model.ImageRenderable;
+import nl.sest.gamejam.view.ParticleRenderer;
 import nl.sest.gamejam.view.Renderer;
-import nl.sest.gamejam.view.ViewPOI;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
 
 /**
  * A point of interest is a shiny, cool or otherwise attractive point which attracts a Bob.
@@ -11,11 +14,13 @@ import nl.sest.gamejam.view.ViewPOI;
  * @author Tim
  * @since 1/25/13 10:03 PM
  */
-public class PointOfInterest implements Force, Renderable {
+public class PointOfInterest implements Force, ImageRenderable {
 
-    private Renderer renderer;
+	private Renderer renderer;
 	private float x;
 	private float y;
+
+	private Image image;
 
 	protected float interest = 0; // This will affect how many Bobs will go to this POI.
 	protected long startTime = 0;
@@ -36,13 +41,21 @@ public class PointOfInterest implements Force, Renderable {
 		this.startTime = System.currentTimeMillis();
 		this.maxInterest = maxInterest;
 		this.maxLifetime = lifetime;
-        this.renderer = new ViewPOI( this );
+
+		try {
+			this.image = new Image("images/earth.jpg");
+		} catch (SlickException e) {
+			throw new ImageLoadingException("Could not load image", e);
+		}
+
+		this.renderer = new ParticleRenderer(this);
 	}
 
 	/**
 	 * Starts the lifecycle of the POI
+	 *
 	 * @param maxInterest The interest factor to which it will grow
-	 * @param lifetime The time during which the POI will be active
+	 * @param lifetime    The time during which the POI will be active
 	 */
 	public void start(float maxInterest, float lifetime) {
 		startTime = System.currentTimeMillis();
@@ -105,10 +118,15 @@ public class PointOfInterest implements Force, Renderable {
 
 	@Override
 	public Renderer getRenderer() {
-        return renderer;
+		return renderer;
 	}
 
-    public void updateRenderer(int delta) {
-        this.renderer.update(delta);
-    }
+	public void updateRenderer(int delta) {
+		this.renderer.update(delta);
+	}
+
+	@Override
+	public Image getImage() {
+		return image;
+	}
 }

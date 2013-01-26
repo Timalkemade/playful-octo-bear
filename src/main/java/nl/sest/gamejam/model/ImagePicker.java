@@ -1,5 +1,6 @@
 package nl.sest.gamejam.model;
 
+import nl.sest.gamejam.exception.ImageLoadingException;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.util.ClasspathLocation;
@@ -16,40 +17,39 @@ import java.net.URL;
  */
 public class ImagePicker {
 
-    public ImagePicker ()
-    {
-    }
+	public ImagePicker() {
+	}
 
-    public Image pick(String map){
-        File[] fileList = getImages(map);
-        int max = fileList.length;
-        int random = (int)(Math.random() * max);
-        String file = fileList[random].getPath();
+	public Image pick(String map) {
+		File[] fileList = getImages(map);
+		int max = fileList.length;
+		int random = (int) (Math.random() * max);
+		String file = fileList[random].getPath();
 
-        Image pickImg = null;
-        try {
-            pickImg = new Image(file);
-        } catch (SlickException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-        return pickImg;
-    }
+		Image pickImg;
+		try {
+			pickImg = new Image(file);
+		} catch (SlickException e) {
+			throw new ImageLoadingException("Failed to load image", e);
+		}
+		return pickImg;
+	}
 
 
-    private File[] getImages(String map){
-        ClasspathLocation resourcemap = new ClasspathLocation();
-        URL mappath = resourcemap.getResource("images/"+map+"/");
+	private File[] getImages(String map) {
+		ClasspathLocation resourcemap = new ClasspathLocation();
+		URL mappath = resourcemap.getResource("images/" + map + "/");
 
-        URI mapUri = null;
-        try {
-            mapUri = mappath.toURI();
-        } catch (URISyntaxException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
+		URI mapUri;
+		try {
+			mapUri = mappath.toURI();
+		} catch (URISyntaxException e) {
+			throw new RuntimeException("problem in uri", e);
+		}
 
-        File directory = new File(mapUri);
-        File[] fileList = directory.listFiles();
-        return fileList;
-    }
+		File directory = new File(mapUri);
+		File[] fileList = directory.listFiles();
+		return fileList;
+	}
 
 }
