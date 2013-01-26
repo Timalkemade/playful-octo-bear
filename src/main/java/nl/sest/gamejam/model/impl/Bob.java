@@ -7,6 +7,8 @@ import nl.sest.gamejam.model.Renderable;
 import nl.sest.gamejam.view.Renderer;
 import nl.sest.gamejam.view.ViewObject;
 
+import java.util.UUID;
+
 /**
  * A bob is a simple-minded drooling thingy which will follow any shiny thing he sees.
  *
@@ -15,6 +17,7 @@ import nl.sest.gamejam.view.ViewObject;
  */
 public class Bob implements Physical, Renderable {
 
+    private final UUID id = UUID.randomUUID();
     private Renderer renderer;
     private float x;
     private float y;
@@ -77,5 +80,23 @@ public class Bob implements Physical, Renderable {
     @Override
     public Renderer getRenderer() {
         return renderer;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+
+    @Override
+    public boolean equals(Object other) {
+        return this == other
+                || (other != null
+                && getClass() == other.getClass()
+                && id.equals(((Bob) other).id));
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
     }
 }
