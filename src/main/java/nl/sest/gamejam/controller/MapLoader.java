@@ -47,6 +47,9 @@ public class MapLoader {
 
 		// Trains
 		model.addTrainDestination(new TrainDestination(0, -5));
+		
+		// Valuable
+		model.addValuable(new Valuable(4*gs, 5*gs, 1000));
 	}
 
 }

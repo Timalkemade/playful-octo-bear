@@ -1,10 +1,11 @@
 package nl.sest.gamejam.controller;
 
 import nl.sest.gamejam.events.HeartbeatEvent;
-import nl.sest.gamejam.model.Physical;
 import nl.sest.gamejam.model.impl.*;
+import nl.sest.gamejam.physics.PhysicsCollisionListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -13,10 +14,9 @@ import org.slf4j.LoggerFactory;
 /**
  * @author Remi
  */
-public class GameController {
+public class GameController implements PhysicsCollisionListener {
 
 	protected Model model;
-	protected long startTime;
 	protected long currentTime;
 
 	// Game state
@@ -24,17 +24,22 @@ public class GameController {
 	protected int heartbeatTime = 1000; // time in milliseconds between each heartbeat
 	protected long lastPOIappeared = 0; // timestamp when the last POI appeared
 	protected long nextPOITime = 0; // timestamp when next POI should appear
-
+	protected HashMap<Bob, Float> bobDamageCooldown = new HashMap<Bob, Float>();
+	
 	// Settings
-	protected int heartbeatVolume = 3; // number of Bobs per heartbeat
+	protected int heartbeatVolume = 9; // number of Bobs per heartbeat
 	protected float damageChance = 1; // the chance that a single Bob will damage a Valuable on collision
 	protected float damagePerEvent = 20; // the damage applied for every violent event
+	protected float damageCoolDown = 1000; // time in ms before a Bob can damage something again
 	protected float heartbeatDuration = 500; // duration of a heartbeat in milliseconds
 	protected float POIminInterval = 5000; // minimum time in ms before a new POI appears
 	protected float POImaxInterval = 20000; // maximum time in ms before a new POI appears
 	protected float POImaxInterest = 10; // maximum interest factor of POIs
-	protected float POImaxLifeTime = 100000; // maximum life time of POIs
-
+	protected float POImaxBoostTime = 10000; // maximum life time of POIs 
+	protected float POIboostRate = 0.001f; // interest boost per ms during boost
+	protected float POIdecayRate = 0.0005f; // interest decrease per ms always
+	protected float startingCurrency = 100000; // starting currency
+	
 	private final static Logger logger = LoggerFactory.getLogger(GameController.class);
 	
 	public GameController(Model model) {
@@ -42,7 +47,8 @@ public class GameController {
 	}
 
 	public void start() {
-		startTime = System.currentTimeMillis();
+		model.setStartTime(System.currentTimeMillis());
+		model.setCurrency(startingCurrency);
 	}
 
 	/**
@@ -101,8 +107,9 @@ public class GameController {
 
 			// Create Bobs at the destination
 			for (int i = 0; i < t.getNumBobs(); i++) {
-				float rX = 3+(float)(Math.random()*3);
-				float rY = 3+(float)(Math.random()*3);
+				// Scatter Bobs
+				float rX = (float)(Math.random()*9);
+				float rY = (float)(Math.random()*9);
 				
 				Bob bob = new Bob(x+rX, y+rY);
 				model.addBob(bob);
@@ -141,9 +148,7 @@ public class GameController {
 		}
 		
 		// If heartbeat state passes 1, end heartbeat
-		logger.debug("state {}", hb.getState());
 		if(hb.getState() > 1) {
-			logger.debug("heatbeatEnd");
 			heartbeatEnd();
 		}
 	}
@@ -156,36 +161,37 @@ public class GameController {
 		List<PointOfInterest> pois = model.getPointsOfInterest();
 		for (PointOfInterest poi : pois) {
             poi.updateRenderer(dt);
-			// If POI lifetime exceeds max lifetime, set interest to 0
-			if (currentTime - poi.getStartTime() > poi.getMaxLifetime())
-				poi.setInterest(0);
-				// Otherwise, if POI is active (has an interest factor higher than 0) calculate new interest
-			else if (poi.getInterest() > 0) {
-				// Gaussian function
-				float mean = poi.getMaxLifetime() / 2;
-				float sd = poi.getMaxLifetime() / 6;
-				float max = poi.getMaxInterest();
-				float x = currentTime - poi.getStartTime();
-				float currentInterest = (float) Math.pow(max * Math.E, -1 * (Math.pow(x - mean, 2.0) / Math.pow(2 * sd, 2.0)));
-
-				// Set new interest
-				poi.setInterest(currentInterest);
+            
+            // Get current interest
+            float currentInterest = poi.getInterest();
+            
+			// If POI is within boost time, add interest
+			if (currentTime - poi.getStartTime() < poi.getMaxBoostTime()) {
+				// Boost
+				currentInterest += POIboostRate * dt;
 			}
+			
+			// Decay interest
+			currentInterest -= POIdecayRate * dt;
+			
+			// Update interest
+			logger.debug("Interest {}", currentInterest);
+			poi.setInterest(currentInterest);
 		}
 
-		// If it is time, create new POI
+		// If it is time, activate new POI
 		if (currentTime > nextPOITime) {
 			// Select random POI
 			int random = (int) Math.random() * pois.size();
 			PointOfInterest poi = pois.get(random);
 
 			// Activate POI
-			poi.start(POImaxInterest, POImaxLifeTime);
+			poi.start(POImaxInterest, POImaxBoostTime);
 
 			// Determine next POI appearance
 			int POIInterval = (int) (Math.random() * (POImaxInterval - POIminInterval) + POIminInterval);
 			nextPOITime = currentTime + POIInterval;
-		}
+		}			
 	}
 
 	/**
@@ -195,31 +201,9 @@ public class GameController {
 	 */
 	public void step(int dt) {
 		currentTime = System.currentTimeMillis();
-		handleCollisions();
 		maybeHeartbeat();
 		updateHeartbeat();
 		updatePOIs(dt);
-	}
-
-	/**
-	 * Handles all the collisions during this step.
-	 */
-	public void handleCollisions() {
-		// Get collisions
-		Iterable<Collision> collisions = model.getCollisions();
-
-		// Go through collisions
-		for (Collision c : collisions) {
-			Physical objectA = c.getCollider1();
-			Physical objectB = c.getCollider2();
-
-			// If one of the objects is Bob and the other Valuable, by chance apply damage to Valuable
-			if ((objectA instanceof Bob && objectB instanceof Valuable)) {
-				maybeApplyDamage((Bob) objectA, (Valuable) objectB);
-			} else if (objectA instanceof Valuable && objectB instanceof Bob) {
-				maybeApplyDamage((Bob) objectB, (Valuable) objectA);
-			}
-		}
 	}
 
 	/**
@@ -246,6 +230,16 @@ public class GameController {
 	 */
 	public void loadSettings() {
 
+	}
+
+	@Override
+	public void obstacleCollisionEvent(Bob bob, Obstacle obstacle) {
+		
+	}
+
+	@Override
+	public void valuableCollisionEvent(Bob bob, Valuable valuable) {
+		maybeApplyDamage(bob, valuable);
 	}
 
 }

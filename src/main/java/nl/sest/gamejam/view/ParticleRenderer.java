@@ -1,9 +1,8 @@
 package nl.sest.gamejam.view;
 
 import nl.sest.gamejam.controller.Utils;
+import nl.sest.gamejam.model.ImageRenderable;
 import nl.sest.gamejam.model.Renderable;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.particles.ParticleSystem;
 import org.newdawn.slick.particles.effects.FireEmitter;
@@ -15,12 +14,12 @@ import org.slf4j.LoggerFactory;
  * Date: 26-1-13
  * Time: 13:22
  */
-public class ViewPOI implements Renderer {
+public class ParticleRenderer implements Renderer {
 
 	/**
 	 * The particle system running everything
 	 */
-	private static final Logger LOGGER = LoggerFactory.getLogger(ViewPOI.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(ParticleRenderer.class);
 
 	private ParticleSystem system;
 	private Renderable object;
@@ -30,16 +29,10 @@ public class ViewPOI implements Renderer {
 	 *
 	 * @param newObject Renderable object POI
 	 */
-	public ViewPOI(Renderable newObject) {
+	public ParticleRenderer(ImageRenderable newObject) {
 		object = newObject;
 
-		Image image = null;
-		try {
-			image = new Image("images/earth.jpg", true);
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}
-		system = new ParticleSystem(image);
+		system = new ParticleSystem(newObject.getImage());
 		Vector2f location = Utils.worldToScreen(object.getX(), object.getY());
 		system.addEmitter(new FireEmitter((int) location.getX(), (int) location.getY()));
 	}

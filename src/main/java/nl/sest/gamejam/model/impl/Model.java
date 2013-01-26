@@ -26,6 +26,7 @@ public class Model {
 	private final List<PointOfInterest> pointsOfInterest = new ArrayList<PointOfInterest>();
 
 	private final Set<Obstacle> obstacles = new HashSet<Obstacle>();
+	private final Set<Valuable> valuables = new HashSet<Valuable>();
 
 	private final ArrayList<TrainDestination> trainDestinations = new ArrayList<TrainDestination>();
 
@@ -37,8 +38,51 @@ public class Model {
 
 	private float height = 0;
 	private float width = 0;
+	
+	private float currency = 0;
+	private long startTime = 0;
 
 	public Model() {
+	}
+	
+	/**
+	 * Set the game starting time
+	 * @param startTime
+	 */
+	public void setStartTime(long startTime) {
+		this.startTime = startTime;
+	}
+	
+	/**
+	 * Get the timestamp when the game started
+	 * @return
+	 */
+	public long getStartTime() {
+		return startTime;
+	}
+	
+	/**
+	 * Set the amount of currency the player has
+	 * @param currency
+	 */
+	public void setCurrency(float currency) {
+		this.currency = currency;
+	}
+	
+	/**
+	 * Add or subtract currency from the player's stash
+	 * @param delta
+	 */
+	public void updateCurrency(float delta) {
+		this.currency += delta;
+	}
+	
+	/**
+	 * Get the current amount of currency in the player's stash
+	 * @return
+	 */
+	public float getCurrency() {
+		return currency;
 	}
 
 	/**
@@ -48,7 +92,8 @@ public class Model {
 	 * @param damage The damage done to the valuable
 	 */
 	public void applyDamage(Valuable v, float damage) {
-		// TODO Implement
+		updateCurrency(-damage);
+		v.updateValue(-damage);
 	}
 
 	/**
@@ -156,6 +201,15 @@ public class Model {
 	public void addObstacle(Obstacle o) {
 		obstacles.add(o);
 		fireCreateListeners(o);
+	}
+	
+	/**
+	 * Add a valuable to the Model
+	 * @param v
+	 */
+	public void addValuable(Valuable v) {
+		valuables.add(v);
+		fireCreateListeners(v);
 	}
 
 	/**

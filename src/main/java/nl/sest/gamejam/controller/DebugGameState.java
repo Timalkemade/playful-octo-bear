@@ -42,8 +42,12 @@ public class DebugGameState extends MainGameState {
 
 		world = pi.getWorld();
 		renderer = new DebugRenderer(world);
+		pi.registerPhysicsCollisionListener(gc);
 
 		inputController = new GameInputController(model);
+		
+		// Start Game
+		gc.start();
 	}
 
 	@Override

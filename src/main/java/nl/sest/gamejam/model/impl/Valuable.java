@@ -12,75 +12,81 @@ import nl.sest.gamejam.model.Physical;
  */
 public class Valuable implements Physical {
 
+	float x, y, value, angle, radius;
+	boolean dynamic;
+	Image image;
+	
+	public Valuable(float x, float y, float value) {
+		this.x = x;
+		this.y = y;
+		this.value = value;
+	}
+	
+	/**
+	 * Add the given value to the value of the Valuable
+	 * @param delta
+	 */
+	public void updateValue(float delta) {
+		value += delta;
+	}
+	
 	@Override
 	public float getX() {
-		// TODO Auto-generated method stub
-		return 0;
+		return x;
 	}
 
 	@Override
 	public void setX(float x) {
-		// TODO Auto-generated method stub
-		
+		this.x = x;
 	}
 
 	@Override
 	public float getY() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.y;
 	}
 
 	@Override
 	public void setY(float y) {
-		// TODO Auto-generated method stub
-		
+		this.y = y;
 	}
 
 	@Override
 	public float getAngle() {
-		// TODO Auto-generated method stub
-		return 0;
+		return angle;
 	}
 
 	@Override
 	public void setAngle(float angle) {
-		// TODO Auto-generated method stub
-		
+		this.angle = angle;
 	}
 
 	@Override
 	public boolean isDynamic() {
-		// TODO Auto-generated method stub
-		return false;
+		return dynamic;
 	}
 
 	@Override
 	public Image getImage() {
-		// TODO Auto-generated method stub
-		return null;
+		return image;
 	}
 
 	@Override
 	public void setImage(Image anImage) {
-		// TODO Auto-generated method stub
-		
+		this.image = anImage;
 	}
 
 	@Override
 	public void setDynamic(boolean dynamic) {
-		// TODO Auto-generated method stub
-		
+		this.dynamic = dynamic;
 	}
 
 	@Override
 	public float getRadius() {
-		// TODO Auto-generated method stub
-		return 0;
+		return radius;
 	}
 
 	@Override
 	public void setRadius(float radius) {
-		// TODO Auto-generated method stub
-		
+		this.radius = radius;
 	}
 }

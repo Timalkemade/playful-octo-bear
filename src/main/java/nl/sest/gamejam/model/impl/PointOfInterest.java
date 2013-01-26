@@ -1,9 +1,12 @@
 package nl.sest.gamejam.model.impl;
 
+import nl.sest.gamejam.exception.ImageLoadingException;
 import nl.sest.gamejam.model.Force;
-import nl.sest.gamejam.model.Renderable;
+import nl.sest.gamejam.model.ImageRenderable;
+import nl.sest.gamejam.view.ParticleRenderer;
 import nl.sest.gamejam.view.Renderer;
-import nl.sest.gamejam.view.ViewPOI;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
 
 /**
  * A point of interest is a shiny, cool or otherwise attractive point which attracts a Bob.
@@ -11,15 +14,17 @@ import nl.sest.gamejam.view.ViewPOI;
  * @author Tim
  * @since 1/25/13 10:03 PM
  */
-public class PointOfInterest implements Force, Renderable {
+public class PointOfInterest implements Force, ImageRenderable {
 
-    private Renderer renderer;
+	private Renderer renderer;
 	private float x;
 	private float y;
 
+	private Image image;
+
 	protected float interest = 0; // This will affect how many Bobs will go to this POI.
 	protected long startTime = 0;
-	protected float maxLifetime = 0; // The total lifetime of this POI (sigma of Gaussian function)
+	protected float maxBoostTime = 0; // The total lifetime of this POI (sigma of Gaussian function)
 	protected float maxInterest = 0; // The maximum interest that this POI will reach ('a' of Gaussian function)
 
 
@@ -29,23 +34,32 @@ public class PointOfInterest implements Force, Renderable {
 	 * @param x The x location of this PointOfInterest
 	 * @param y The y location of this PointOfInternet
 	 */
-	public PointOfInterest(float x, float y, float maxInterest, float lifetime) {
+	public PointOfInterest(float x, float y, float maxInterest, float maxBoostTime) {
 		this.x = x;
 		this.y = y;
 
 		this.startTime = System.currentTimeMillis();
 		this.maxInterest = maxInterest;
-		this.maxLifetime = lifetime;
-        this.renderer = new ViewPOI( this );
+		this.maxBoostTime = maxBoostTime;
+
+		try {
+			this.image = new Image("images/earth.jpg");
+		} catch (SlickException e) {
+			throw new ImageLoadingException("Could not load image", e);
+		}
+
+		this.renderer = new ParticleRenderer(this);
 	}
 
 	/**
 	 * Starts the lifecycle of the POI
+	 *
 	 * @param maxInterest The interest factor to which it will grow
-	 * @param lifetime The time during which the POI will be active
+	 * @param lifetime    The time during which the POI will be active
 	 */
 	public void start(float maxInterest, float lifetime) {
 		startTime = System.currentTimeMillis();
+		interest = 0.01f;
 	}
 
 	@Override
@@ -63,7 +77,7 @@ public class PointOfInterest implements Force, Renderable {
 	 *
 	 * @return
 	 */
-	public float getStartTime() {
+	public long getStartTime() {
 		return startTime;
 	}
 
@@ -72,8 +86,8 @@ public class PointOfInterest implements Force, Renderable {
 	 *
 	 * @return
 	 */
-	public float getMaxLifetime() {
-		return maxLifetime;
+	public float getMaxBoostTime() {
+		return maxBoostTime;
 	}
 
 	/**
@@ -105,10 +119,15 @@ public class PointOfInterest implements Force, Renderable {
 
 	@Override
 	public Renderer getRenderer() {
-        return renderer;
+		return renderer;
 	}
 
-    public void updateRenderer(int delta) {
-        this.renderer.update(delta);
-    }
+	public void updateRenderer(int delta) {
+		this.renderer.update(delta);
+	}
+
+	@Override
+	public Image getImage() {
+		return image;
+	}
 }

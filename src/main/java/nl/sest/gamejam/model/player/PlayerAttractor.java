@@ -1,5 +1,6 @@
 package nl.sest.gamejam.model.player;
 
+import nl.sest.gamejam.exception.ImageLoadingException;
 import nl.sest.gamejam.model.Force;
 import nl.sest.gamejam.model.ImageRenderable;
 import nl.sest.gamejam.view.ImageRenderer;
@@ -35,13 +36,15 @@ public class PlayerAttractor implements Force, ImageRenderable {
 		LOGGER.debug("Created attractor at [{}, {}]", x, y);
 		this.x = x;
 		this.y = y;
-		renderer = new ImageRenderer(this);
 
 		try {
 			image = new Image("images/attraction.jpg");
 		} catch (SlickException e) {
-			throw new RuntimeException("Failed to load image");
+			throw new ImageLoadingException("Failed to load image", e);
 		}
+
+		renderer = new ImageRenderer(this);
+
 	}
 
 	public float getX() {
