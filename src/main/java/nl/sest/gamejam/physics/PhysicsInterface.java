@@ -29,6 +29,8 @@ import org.jbox2d.dynamics.Fixture;
 import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
 import org.jbox2d.dynamics.contacts.Contact;
+import org.jbox2d.dynamics.joints.DistanceJoint;
+import org.jbox2d.dynamics.joints.DistanceJointDef;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -130,6 +132,25 @@ public class PhysicsInterface implements CreatePhysicalListener, DeletePhysicalL
 		
 	    // Attach FixtureDef to body
 	    body.createFixture(fixtureDef);
+	    
+	    // Join it with another body (for Blockade)
+	    /*if (physical instanceof Blockade) {
+	    	Blockade blockade = (Blockade) physical;
+	    	Blockade previous = blockade.getPrevious();
+	    	Body previousBody = objects.get(previous);
+			
+	    	// Middle or last object in list
+	    	if ((previous != null && blockade.isDynamic() == true) 
+	    			|| (previous == null && blockade.isDynamic() == false)) {
+	    		DistanceJointDef djd = new DistanceJointDef();
+	    		djd.bodyA = previousBody;
+				djd.bodyB = body;
+				djd.length = previousBody.getLocalCenter().sub(body.getLocalCenter()).length();
+				djd.frequencyHz = 0;
+				djd.dampingRatio = 0;
+				DistanceJoint dj = (DistanceJoint) world.createJoint(djd);
+	    	}
+	    }*/
 	}
 	
 	public void deleteObject(Physical physical) {
