@@ -18,19 +18,6 @@ public class PointOfInterest implements Force {
     private float x;
     private float y;
 
-
-    /**
-     * Constructor for a point of interest.
-     *
-     * @param x The x location of this PointOfInterest
-     * @param y The y location of this PointOfInternet
-     */
-    public PointOfInterest(float x, float y) {
-        id = UUID.randomUUID();
-        this.x = x;
-        this.y = y;
-    }
-
     @Override
     public float getX() {
         return x;
@@ -73,6 +60,7 @@ public class PointOfInterest implements Force {
 		startTime = System.currentTimeMillis();
 		this.maxInterest = maxInterest;
 		this.maxLifetime = lifetime;
+		id = UUID.randomUUID();
 	}
 	
 	/**
