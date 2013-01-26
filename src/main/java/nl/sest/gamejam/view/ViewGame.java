@@ -89,9 +89,13 @@ public class ViewGame implements Renderer, EventListener {
 	 * Map generator
 	 */
 	private void map() throws SlickException {
-		Image map = new Image("images/Map.jpg");
-		map.draw(0, HeightTopBar);
 
+        for (Renderable renderable : model.getObstacles()) {
+            Renderer renderer = renderable.getRenderer();
+            if (renderer != null) {
+                renderer.render();
+            }
+        }
 	}
 
 	/**

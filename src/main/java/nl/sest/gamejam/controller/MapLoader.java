@@ -21,21 +21,21 @@ public class MapLoader {
 		// Create buildings
 
 		// Line 3
-		model.addObstacle(new Obstacle(1 * gs, 3 * gs));
-		model.addObstacle(new Obstacle(3 * gs, 3 * gs));
-		model.addObstacle(new Obstacle(5 * gs, 3 * gs));
-		model.addObstacle(new Obstacle(7 * gs, 3 * gs));
-		model.addObstacle(new Obstacle(9 * gs, 3 * gs));
+		model.addObstacle(new Obstacle(1 * gs, 3 * gs, "Normal", "N"));
+		model.addObstacle(new Obstacle(3 * gs, 3 * gs, "Normal", "E"));
+		model.addObstacle(new Obstacle(5 * gs, 3 * gs, "Normal", "S"));
+		model.addObstacle(new Obstacle(7 * gs, 3 * gs, "Normal", "W"));
+		model.addObstacle(new Obstacle(9 * gs, 3 * gs, "Normal", "N"));
 
 		// Line 5
-		model.addObstacle(new Obstacle(1 * gs, 5 * gs));
-		model.addObstacle(new Obstacle(3 * gs, 5 * gs));
-		model.addObstacle(new Obstacle(5 * gs, 5 * gs));
-		model.addObstacle(new Obstacle(7 * gs, 5 * gs));
-		model.addObstacle(new Obstacle(7 * gs, 5 * gs));
+		model.addObstacle(new Obstacle(1 * gs, 5 * gs, "Bank", "N"));
+		model.addObstacle(new Obstacle(3 * gs, 5 * gs, "Normal", "S"));
+		model.addObstacle(new Obstacle(5 * gs, 5 * gs, "Normal", "N"));
+		model.addObstacle(new Obstacle(7 * gs, 5 * gs, "Jewelry", "S"));
+		model.addObstacle(new Obstacle(7 * gs, 5 * gs, "Normal", "N"));
 
-		model.addObstacle(new Obstacle(2 * gs, 8 * gs, 2));
-		model.addObstacle(new Obstacle(9 * gs, 8 * gs, 2));
+		model.addObstacle(new Obstacle(2 * gs, 8 * gs, "Normal", "S", 2));
+		model.addObstacle(new Obstacle(9 * gs, 8 * gs, "Normal", "N", 2));
 
 		// Bobs
 		model.addBob(new Bob(2 * gs, 3 * gs));
