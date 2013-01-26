@@ -27,4 +27,8 @@ public interface Physical {
     void setImage(Image anImage);
     
     void setDynamic(boolean dynamic);
+    
+    float getRadius();
+    
+    void setRadius(float radius);
 }
