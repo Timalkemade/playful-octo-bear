@@ -7,6 +7,7 @@ import nl.sest.gamejam.model.Physical;
 import nl.sest.gamejam.model.Renderable;
 import nl.sest.gamejam.view.Renderer;
 import nl.sest.gamejam.view.ViewObject;
+import nl.sest.gamejam.view.ViewPhysical;
 
 import java.util.UUID;
 
@@ -29,6 +30,7 @@ public class Bob implements Physical, Renderable {
 
     public Bob(float x, float y) {
     	this(null, x, y);
+    	renderer = createDefaultRenderer();
     }
     
     public void setPOI(PointOfInterest poi) {
@@ -40,11 +42,10 @@ public class Bob implements Physical, Renderable {
     }
     
     /**
-     * TODO Not correctly implemented yet
      * @return
      */
     public Renderer createDefaultRenderer() {
-    	return new ViewObject(null, new Vector2f());
+    	return new ViewPhysical(this);
     }
     
     public Bob(Renderer aRenderer, float x, float y) {

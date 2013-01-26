@@ -12,9 +12,10 @@ import nl.sest.gamejam.model.Event;
  */
 public class Heartbeat implements Event {
 
-    private final long timestamp;
-    private float state;
+    private final long timestamp; // the start of the Heartbeat
+    private float state; // indicates the progress of the Heartbeat (between 0 and 1)
     private ArrayList<Train> trains;
+    private boolean isUnloaded = false;
 
     /**
      * Constructor for heartbeat. Use the state initialize the state and the timestamp.
@@ -63,6 +64,22 @@ public class Heartbeat implements Event {
      */
     public long getTimestamp() {
         return timestamp;
+    }
+    
+    /**
+     * States this Heartbeat as unloaded
+     * @param unloaded
+     */
+    public void setUnloaded(boolean unloaded) {
+    	isUnloaded = unloaded;
+    }
+    
+    /**
+     * Check whether this Heartbeat has already unloaded
+     * @return
+     */
+    public boolean isUnloaded() {
+    	return isUnloaded;
     }
 
 

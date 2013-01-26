@@ -23,15 +23,17 @@ public class GameController {
 	protected long currentTime;
 	
 	// Game state
-	protected long lastHeartbeat = 0;
+	protected long lastHeartbeat = 0; // timestamp when the last Heartbeat ended
 	protected int heartbeatTime = 10; // time in milliseconds between each heartbeat
+	protected long lastPOIappeared = 0; // timestamp when the last POI appeared
 	
 	// Settings
 	protected int heartbeatVolume = 10; // number of Bobs per heartbeat
 	protected float damageChance = 1; // the chance that a single Bob will damage a Valuable on collision
 	protected float damagePerEvent = 20; // the damage applied for every violent event
 	protected float heartbeatDuration = 1000; // duration of a heartbeat in milliseconds
-	protected float POIminInterval = 20000; // time before a new 
+	protected float POIminInterval = 5000; // minimum time in ms before a new POI appears
+	protected float POImaxInterval = 20000; // maximum time in ms before a new POI appears
 	
 	public GameController(Model model) {
 		this.model = model;
@@ -39,7 +41,6 @@ public class GameController {
 	
 	public void start() {
 		startTime = System.currentTimeMillis();
-		
 	}
 	
 	/**
@@ -92,8 +93,11 @@ public class GameController {
 		}
 	}
 	
+	/**
+	 * States the end of the heartbeat
+	 */
 	protected void heartbeatEnd() {
-		
+		lastHeartbeat = System.currentTimeMillis();
 	}
 	
 	/**
@@ -108,6 +112,12 @@ public class GameController {
 		// Compute state as percentage and set new state
 		float progress = (currentTime-heartbeatStart)/heartbeatDuration;
 		hb.setState(progress);
+		
+		// If progress is past halfway and has Heartbeat has not been unloaded yet, unload
+		if(hb.getState() > 0.5 && !hb.isUnloaded()) {
+			heartbeatUnload();
+			hb.setUnloaded(true);
+		}
 	}
 	
 	/**
