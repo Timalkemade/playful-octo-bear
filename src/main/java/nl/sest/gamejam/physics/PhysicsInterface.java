@@ -39,7 +39,10 @@ public class PhysicsInterface {
         	
         	// If the physical is a Bob, apply force (use predefined force for now)
         	if (physical instanceof Bob) {
-        		body.applyForce(new Vec2(5, 5), body.getWorldCenter());
+        		Vec2 bobVec = new Vec2(physical.getX(), physical.getY());
+        		Vec2 poiVec = new Vec2(0.5f, 0.5f);
+        		Vec2 force = computeForceVector(bobVec, poiVec, 1);
+        		body.applyForce(force, body.getWorldCenter());
         	}
         	
         	// If the Physical is dynamic, update the Physical properties using the Body properties
@@ -105,4 +108,14 @@ public class PhysicsInterface {
 		world.destroyBody(body);
 		objects.remove(physical);
 	}
+	
+    private Vec2 computeForceVector(Vec2 point1, Vec2 point2, float force) {
+    	float distX = point2.x - point1.x;
+    	float distY = point2.y - point1.y;
+    	float totalDist = (float) Math.sqrt(Math.pow(distX, 2.0) + Math.pow(distY, 2.0));
+    	
+    	// Compute ratio to multiply vector by
+    	float factor = force / totalDist;
+    	return new Vec2(distX*factor, distY*factor);
+    }
 }
