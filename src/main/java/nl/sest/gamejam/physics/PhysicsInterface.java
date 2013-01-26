@@ -12,6 +12,7 @@ import nl.sest.gamejam.model.impl.Bob;
 import nl.sest.gamejam.model.impl.Model;
 import nl.sest.gamejam.model.impl.Obstacle;
 import nl.sest.gamejam.model.impl.PointOfInterest;
+import nl.sest.gamejam.model.impl.Valuable;
 import nl.sest.gamejam.model.player.PlayerAttractor;
 import nl.sest.gamejam.model.player.PlayerRepulsor;
 
@@ -219,7 +220,7 @@ public class PhysicsInterface implements CreatePhysicalListener, DeletePhysicalL
 	}
 
 	@Override
-	public void beginContact(Contact contact) {
+	public void beginContact(Contact contact) {		
 		Fixture fixtureA = contact.getFixtureA();
 		Fixture fixtureB = contact.getFixtureB();
 		
@@ -233,12 +234,20 @@ public class PhysicsInterface implements CreatePhysicalListener, DeletePhysicalL
 		if (physicalA instanceof Bob && physicalB instanceof Obstacle) {
 			Obstacle obstacle = (Obstacle) physicalB;
 			// Do something with the obstacle
-			LOGGER.debug("Contact with obstacle at: [{}, {}]", bodyB.getPosition().x, bodyB.getPosition().y);
+			LOGGER.debug("Contact with obstacle at: [{}, {}]", obstacle.getX(), obstacle.getY());
 		} 
 		else if (physicalB instanceof Bob && physicalA instanceof Obstacle) {
 			Obstacle obstacle = (Obstacle) physicalA;
 			// Do something with the obstacle
-			LOGGER.debug("Contact with obstacle at: [{}, {}]", bodyA.getPosition().x, bodyA.getPosition().y);
+			LOGGER.debug("Contact with obstacle at: [{}, {}]", obstacle.getX(), obstacle.getY());
+		} else if (physicalA instanceof Bob && physicalB instanceof Valuable) {
+			Valuable valuable = (Valuable) physicalB;
+			// Do something with valuable
+			LOGGER.debug("Contact with valuable at: [{}, {}]", valuable.getX(), valuable.getY());
+		} else if (physicalB instanceof Bob && physicalA instanceof Valuable) {
+			Valuable valuable = (Valuable) physicalA;
+			// Do something with valuable
+			LOGGER.debug("Contact with valuable at: [{}, {}]", valuable.getX(), valuable.getY());
 		}
 	}
 
