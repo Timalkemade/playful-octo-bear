@@ -13,7 +13,6 @@ import java.text.DecimalFormat;
 public class ViewGame implements Renderer {
 
     private GameContainer gamecontainer = null;
-    private Graphics graphics = null;
     private TrueTypeFont font;
     private float score = 5000f;
     private float time = 0f;
@@ -25,12 +24,11 @@ public class ViewGame implements Renderer {
 
     /**
      * Constructor
-     * @param gc The GameContainer object
-     * @param g  The Graphics object
-     */
-    public ViewGame(GameContainer gc, Graphics g){
+	 * @param gc The GameContainer object
+	 *
+	 */
+    public ViewGame(GameContainer gc){
         this.gamecontainer = gc;
-        this.graphics = g;
 
         this.WidthWindow = gc.getWidth();
         this.HeightWindow = gc.getHeight();
@@ -43,19 +41,20 @@ public class ViewGame implements Renderer {
     /**
      * Render Game view
      */
-    public void render() {
+    public void render(Graphics graphics) {
         //Disable Frame per Seconds
         gamecontainer.setShowFPS(false);
 
-        TopBar();
-        SideBar();
-        Map();
+        topBar(graphics);
+        sideBar();
+        map();
     }
 
     /**
      * Create topbar with scores and time
-     */
-    private void TopBar(){
+	 * @param graphics
+	 */
+    private void topBar(Graphics graphics){
         try{
             Image topbar = new Image("images/topbar.jpg");
             HeightTopBar = topbar.getHeight();
@@ -80,7 +79,7 @@ public class ViewGame implements Renderer {
     /**
      * Map generator
      */
-    private void Map() {
+    private void map() {
         try{
             Image map = new Image("images/map.jpg");
             map.draw(0,HeightTopBar);
@@ -92,7 +91,7 @@ public class ViewGame implements Renderer {
     /**
      * Create sidebar with Twitterfeed
      */
-    private void SideBar(){
+    private void sideBar(){
         //@Todo: Twitter feed
 
     }

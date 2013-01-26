@@ -1,6 +1,5 @@
 package nl.sest.gamejam.controller;
 
-import nl.sest.gamejam.view.SoundHeartbeat;
 import nl.sest.gamejam.view.ViewGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -21,7 +20,7 @@ public class TheGame extends StateBasedGame {
     @Override
     public void render(GameContainer gc, Graphics g) throws SlickException
     {
-        ViewGame vg = new ViewGame(gc,g);
+        ViewGame vg = new ViewGame(gc);
         vg.render();
     }
 
