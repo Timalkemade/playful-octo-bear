@@ -31,6 +31,8 @@ public class MainGameState extends BasicGameState {
 		PhysicsInterface pi = new PhysicsInterface(model);
 		world = pi.getWorld();
 
+		inputController = new GameInputController(model);
+
 		MapLoader maploader = new MapLoader();
 		maploader.loadMap(model);
 
@@ -64,6 +66,8 @@ public class MainGameState extends BasicGameState {
 	public void mouseClicked(int button, int x, int y, int clickCount) {
 		if (button == 0) {
 			inputController.handleLeftClick(x, y);
+		} else if (button == 1) {
+			inputController.handleRightClick(x, y);
 		}
 	}
 }

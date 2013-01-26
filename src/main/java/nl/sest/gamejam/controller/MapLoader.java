@@ -1,8 +1,10 @@
 package nl.sest.gamejam.controller;
 
+import nl.sest.gamejam.model.impl.Bob;
 import nl.sest.gamejam.model.impl.Constants;
 import nl.sest.gamejam.model.impl.Model;
 import nl.sest.gamejam.model.impl.Obstacle;
+import nl.sest.gamejam.model.impl.PointOfInterest;
 
 public class MapLoader {
 
@@ -16,8 +18,7 @@ public class MapLoader {
 	 */
 	public void loadMap(Model model) {
 		
-		float gs = 4 * Constants.METER_SIZE; // grid square size in meters
-		// With 800 * 800 pixels and METER_SIZE of 20, there are 40 * 40 meters, 10 * 10 grids
+		float gs = 8; // grid square size in meters
 		
 		// Create buildings
 		
@@ -35,8 +36,16 @@ public class MapLoader {
 		model.addObstacle(new Obstacle(7*gs, 5*gs));
 		model.addObstacle(new Obstacle(7*gs, 5*gs));
 		
-		model.addObstacle(new Obstacle(2*gs, 8*gs));
-		model.addObstacle(new Obstacle(2*gs, 8*gs));
+		model.addObstacle(new Obstacle(2*gs, 8*gs, 2));
+		model.addObstacle(new Obstacle(9*gs, 8*gs, 2));
+		
+		// Bobs
+		model.addBob(new Bob(2*gs, 3*gs));
+		model.addBob(new Bob(4*gs, 3*gs));
+		model.addBob(new Bob(6*gs, 3*gs));
+		
+		// POIs
+		model.addPointOfInterest(new PointOfInterest(7f*gs, 8*gs, 0, 0));
 	}
 
 }

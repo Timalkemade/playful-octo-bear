@@ -1,5 +1,6 @@
 package nl.sest.gamejam.physics;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,6 +11,8 @@ import nl.sest.gamejam.model.event.listener.DeletePhysicalListener;
 import nl.sest.gamejam.model.impl.Bob;
 import nl.sest.gamejam.model.impl.Model;
 import nl.sest.gamejam.model.impl.PointOfInterest;
+import nl.sest.gamejam.model.player.PlayerAttractor;
+import nl.sest.gamejam.model.player.PlayerRepulsor;
 
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.common.Vec2;
@@ -57,7 +60,9 @@ public class PhysicsInterface implements CreatePhysicalListener, DeletePhysicalL
         	
         	// If the physical is a Bob, apply force using all POIs
         	if (physical instanceof Bob) {
-        		applyForces(body);
+        		applyPOIForces(body);
+        		applyPlayerAttractorForces(body);
+        		applyPlayerRepulsorForces(body);
         	}
         	
         	// If the Physical is dynamic, update the Physical properties using the Body properties
@@ -103,7 +108,7 @@ public class PhysicsInterface implements CreatePhysicalListener, DeletePhysicalL
 	    FixtureDef fixtureDef = new FixtureDef();
 	    fixtureDef.shape = circleShape;
 	    fixtureDef.density = 1;
-	    fixtureDef.friction = 0.01f;
+	    fixtureDef.friction = 100f;
 	    fixtureDef.restitution = 0.3f;
 		
 	    // Attach FixtureDef to body
@@ -132,30 +137,59 @@ public class PhysicsInterface implements CreatePhysicalListener, DeletePhysicalL
 		body.setTransform(new Vec2(x, y), angle);
     }
     
-    private void applyForces(Body body) {
+    private void applyPOIForces(Body body) {
     	List<PointOfInterest> pois = model.getPointsOfInterest();
     	
     	for(PointOfInterest poi : pois) {
-			Vec2 bobVec = body.getPosition();
 			Vec2 poiVec = new Vec2(poi.getX(), poi.getY());
-			Vec2 force = calculateAttract(poiVec, bobVec);
+    		Vec2 bobVec = body.getWorldCenter();
+//			float bobMass = body.m_mass;
+//			Vec2 force = calculateAttract(poiVec, bobVec, bobMass);
+			Vec2 force = computeForceVector(bobVec, poiVec, 0.01f);
 			body.applyForce(force, body.getWorldCenter());
 		}
     }
     
-    private Vec2 calculateAttract(Vec2 poi, Vec2 bob) {
-    	Body poiBody = objects.get(poi);
-    	Body bobBody = objects.get(bob);
+    private void applyPlayerAttractorForces(Body body) {
+    	Collection<PlayerAttractor> pas = model.getPlayerAttractors();
     	
+    	for(PlayerAttractor pa : pas) {
+    		Vec2 paVec = new Vec2(pa.getX(), pa.getY());
+    		Vec2 bobVec = body.getWorldCenter();
+			Vec2 force = computeForceVector(bobVec, paVec, 0.01f);
+			body.applyForce(force, body.getWorldCenter());
+    	}
+    }
+    
+    private void applyPlayerRepulsorForces(Body body) {
+    	Collection<PlayerRepulsor> prs = model.getPlayerRepulsors();
+    	
+    	for(PlayerRepulsor pr : prs) {
+    		Vec2 paVec = new Vec2(pr.getX(), pr.getY());
+    		Vec2 bobVec = body.getWorldCenter();
+			Vec2 force = computeForceVector(paVec, bobVec, 0.01f);
+			body.applyForce(force, body.getWorldCenter());
+    	}    	
+    }
+    
+    private Vec2 computeForceVector(Vec2 point1, Vec2 point2, float force) {
+    	float distX = point2.x - point1.x;
+    	float distY = point2.y - point1.y;
+    	float totalDist = (float) Math.sqrt(Math.pow(distX, 2.0) + Math.pow(distY, 2.0));
+    	
+    	// Compute ratio to multiply vector by
+    	float factor = force / totalDist;
+    	return new Vec2(distX*factor, distY*factor);
+    }
+    
+    private Vec2 calculateAttract(Vec2 poiPos, Vec2 bobPos, float bobMass) {
         float forceStrength = 100; 
-        Vec2 poiPos = poiBody.getWorldCenter();    
-        Vec2 bobPos = bobBody.getWorldCenter();
         
         Vec2 force = poiPos.sub(bobPos);
         float distance = force.length();
         force.normalize();
 
-        float strength = (forceStrength * 1 * bobBody.m_mass) / (distance * distance);
+        float strength = (forceStrength * 1 * bobMass) / (distance * distance);
         force.mulLocal(strength);
         return force;
      }

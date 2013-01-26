@@ -1,8 +1,9 @@
 package nl.sest.gamejam.model.impl;
 
 import nl.sest.gamejam.model.ImagePicker;
+import nl.sest.gamejam.model.ImageRenderable;
 import nl.sest.gamejam.model.Physical;
-import nl.sest.gamejam.model.Renderable;
+import nl.sest.gamejam.view.ImageRenderer;
 import nl.sest.gamejam.view.Renderer;
 import nl.sest.gamejam.view.ViewPhysical;
 import org.newdawn.slick.Image;
@@ -13,11 +14,12 @@ import org.newdawn.slick.Image;
  * @author Tim
  * @since 1/25/13 9:40 PM
  */
-public class Bob implements Physical, Renderable {
+public class Bob implements Physical, ImageRenderable {
 
 	private Renderer renderer;
 	private float x;
 	private float y;
+	private float radius;
 	private Image image;
 	private float angle;
 	private boolean isDynamic;
@@ -116,11 +118,12 @@ public class Bob implements Physical, Renderable {
 
 	@Override
 	public float getRadius() {
-		return 0;
+		return radius;
 	}
 
 	@Override
 	public void setRadius(float radius) {
+		this.radius = radius;
 	}
 
 }
