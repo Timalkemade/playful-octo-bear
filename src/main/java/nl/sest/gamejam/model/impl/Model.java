@@ -12,7 +12,8 @@ public class Model {
 
     private final Stack<Collision> collisions = new Stack<Collision>();
     private final Set<Bob> bobs = new HashSet<Bob>();
-    private Heartbeat heartbeat = null;
+    private final ArrayList<TrainDestination> trainDestinations = new ArrayList<TrainDestination>();
+    private Heartbeat heartbeat;
 
     public Model() {
     }
@@ -25,6 +26,10 @@ public class Model {
         collisions.add(collision);
     }
 
+    /**
+     * Get the current Heartbeat
+     * @return
+     */
     public Heartbeat getHeartbeat() {
         return heartbeat;
     }
@@ -35,6 +40,10 @@ public class Model {
 
     public void addBob(Bob bob) {
         bobs.add(bob);
+    }
+    
+    public ArrayList<TrainDestination> getTrainDestinations() {
+    	return trainDestinations;
     }
 
     public void removeBob(Bob bob) {
