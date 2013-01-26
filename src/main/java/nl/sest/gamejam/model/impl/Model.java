@@ -1,9 +1,6 @@
 package nl.sest.gamejam.model.impl;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * The model keeps track of where everything in is in the world. Basically is should be called Big Brother.
@@ -14,11 +11,10 @@ import java.util.Stack;
 public class Model {
 
     private final Stack<Collision> collisions = new Stack<Collision>();
-    private final List<Bob> bobs = new ArrayList<Bob>();
-    private Heartbeat heartbeat;
+    private final Set<Bob> bobs = new HashSet<Bob>();
+    private Heartbeat heartbeat = null;
 
     public Model() {
-        heartbeat = new Heartbeat(0f);
     }
 
     public Iterable<Collision> getCollisions() {
@@ -33,8 +29,16 @@ public class Model {
         return heartbeat;
     }
 
+    public void setHeartbeat(Heartbeat aHeartbeat) {
+        heartbeat = aHeartbeat;
+    }
+
     public void addBob(Bob bob) {
         bobs.add(bob);
+    }
+
+    public void removeBob(Bob bob) {
+        bobs.remove(bob);
     }
 
 
