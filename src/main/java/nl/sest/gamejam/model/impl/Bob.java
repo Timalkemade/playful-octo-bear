@@ -82,7 +82,6 @@ public class Bob implements Physical, Renderable {
         return renderer;
     }
 
-<<<<<<< HEAD
     public UUID getId() {
         return id;
     }
@@ -100,7 +99,7 @@ public class Bob implements Physical, Renderable {
     public int hashCode() {
         return id.hashCode();
     }
-=======
+
 	@Override
 	public float getRadius() {
 		return 0;
@@ -109,5 +108,5 @@ public class Bob implements Physical, Renderable {
 	@Override
 	public void setRadius(float radius) {
 	}
->>>>>>> Added a radius to Physical
+
 }
