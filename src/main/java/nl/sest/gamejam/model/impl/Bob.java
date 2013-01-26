@@ -1,5 +1,6 @@
 package nl.sest.gamejam.model.impl;
 
+import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Vector2f;
 
 import nl.sest.gamejam.model.Physical;
@@ -21,6 +22,7 @@ public class Bob implements Physical, Renderable {
     private Renderer renderer;
     private float x;
     private float y;
+    private Image image;
     private float angle;
     private boolean isDynamic;
     protected PointOfInterest poi;
@@ -90,6 +92,16 @@ public class Bob implements Physical, Renderable {
     @Override
     public void setDynamic(boolean dynamic) {
         this.isDynamic = dynamic;
+    }
+
+    @Override
+    public Image getImage() {
+        return image;
+    }
+
+    @Override
+    public void setImage(Image anImage){
+        this.image = anImage;
     }
 
     @Override

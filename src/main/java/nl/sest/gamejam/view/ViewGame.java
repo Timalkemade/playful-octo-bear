@@ -1,7 +1,7 @@
 package nl.sest.gamejam.view;
 
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
+import java.awt.Font;
+import org.newdawn.slick.*;
 
 import java.text.DecimalFormat;
 
@@ -14,8 +14,9 @@ public class ViewGame implements Renderer {
 
     private GameContainer gamecontainer = null;
     private Graphics graphics = null;
-    private float score = 0f;
-    private float time = 70000f;
+    private TrueTypeFont font;
+    private float score = 5000f;
+    private float time = 0f;
 
     /**
      * Constructor
@@ -25,6 +26,10 @@ public class ViewGame implements Renderer {
     public ViewGame(GameContainer gc, Graphics g){
         this.gamecontainer = gc;
         this.graphics = g;
+
+        //Set font                                    .
+        Font awtFont = new Font("Times New Roman", Font.BOLD, 20);
+        font = new TrueTypeFont(awtFont, false);
     }
 
     /**
@@ -42,17 +47,24 @@ public class ViewGame implements Renderer {
      * Create topbar with scores and time
      */
     private void TopBar(){
-        graphics.drawRect(0, 0, gamecontainer.getWidth(), 22);
-        String sScore = new DecimalFormat("###,###,###.#").format(score);
-        graphics.drawString("Score: " + sScore, 10, 1);
+        try{
+            Image topbar = new Image("images/topbar.jpg");
+            topbar.draw(0,0);
+        }
+        catch(SlickException se){
+        }
 
+        String sScore = new DecimalFormat("###,###,###,###").format(score);
+        font.drawString(166,10, sScore, Color.black);
+
+        /*
         int seconds = (int) ((time / 1000) % 60);
         int minutes = (int) ((time / 1000) / 60);
         graphics.drawString("Time: " + minutes + ":" + seconds, 200,1);
+        */
 
         int FPS = gamecontainer.getFPS();
         graphics.drawString("FPS: " + FPS, 700, 1);
-
     }
 
     /**
