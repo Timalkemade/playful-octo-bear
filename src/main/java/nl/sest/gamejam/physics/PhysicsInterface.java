@@ -3,6 +3,7 @@ package nl.sest.gamejam.physics;
 import java.util.HashMap;
 
 import nl.sest.gamejam.model.Physical;
+import nl.sest.gamejam.model.impl.Bob;
 
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.common.Vec2;
@@ -35,6 +36,11 @@ public class PhysicsInterface {
         // Sync Box2D objects with the Physical objects
         for (Physical physical : objects.keySet()) {
         	Body body = objects.get(physical);
+        	
+        	// If the physical is a Bob, apply force (use predefined force for now)
+        	if (physical instanceof Bob) {
+        		body.applyForce(new Vec2(5, 5), body.getWorldCenter());
+        	}
         	
         	// If the Physical is dynamic, update the Physical properties using the Body properties
         	if (physical.isDynamic()) {
