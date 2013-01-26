@@ -1,4 +1,7 @@
-package nl.sest.gamejam.model;
+package nl.sest.gamejam.model.impl;
+
+import nl.sest.gamejam.model.Event;
+import nl.sest.gamejam.model.Physical;
 
 /**
  * @author Tim
@@ -6,13 +9,14 @@ package nl.sest.gamejam.model;
  */
 public class Collision implements Event {
 
-    private Physical collider1;
-    private Physical collider2;
-    private long timestamp;
+    private final Physical collider1;
+    private final Physical collider2;
+    private final long timestamp;
 
-    public Collision(Physical aCollider1, Physical aCollider2, long currentTime) {
+    public Collision(Physical aCollider1, Physical aCollider2) {
         this.collider1 = aCollider1;
         this.collider2 = aCollider2;
+        timestamp = System.currentTimeMillis();
     }
 
     public Physical getCollider1() {

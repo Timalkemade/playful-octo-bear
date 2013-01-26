@@ -1,7 +1,8 @@
 package nl.sest.gamejam.model.impl;
 
-import nl.sest.gamejam.model.Collision;
-
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Stack;
 
 /**
@@ -12,6 +13,29 @@ import java.util.Stack;
  */
 public class Model {
 
-    Stack<Collision> collisions;
+    private final Stack<Collision> collisions = new Stack<Collision>();
+    private final List<Bob> bobs = new ArrayList<Bob>();
+    private Heartbeat heartbeat;
+
+    public Model() {
+        heartbeat = new Heartbeat(0f);
+    }
+
+    public Iterable<Collision> getCollisions() {
+        return Collections.unmodifiableCollection(collisions);
+    }
+
+    public void addCollision(Collision collision) {
+        collisions.add(collision);
+    }
+
+    public Heartbeat getHeartbeat() {
+        return heartbeat;
+    }
+
+    public void addBob(Bob bob) {
+        bobs.add(bob);
+    }
+
 
 }
