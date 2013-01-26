@@ -24,9 +24,9 @@ public class DebugGameState extends BasicGameState {
 	PhysicsInterface pi;
 	Renderer renderer;
 	GameInputController inputController;
-	
+
 	public DebugGameState() {
-		
+
 	}
 
 	@Override
@@ -35,12 +35,12 @@ public class DebugGameState extends BasicGameState {
 
 		model = new Model();
 		pi = new PhysicsInterface(model);
-		
+
 		MapLoader maploader = new MapLoader();
 		maploader.loadMap(model);
-		
+
 //		gc = new GameController(model);
-		
+
 //		// Setup debugger
 		Slick2DJBox2DDebugDraw debug = new Slick2DJBox2DDebugDraw(arg0);
 		debug.appendFlags(DebugDraw.e_shapeBit);
@@ -48,10 +48,10 @@ public class DebugGameState extends BasicGameState {
 		debug.setCamera(40, 40, 8);
 		pi.getWorld().setDebugDraw(debug);
 		pi.update();
-		
+
 		world = pi.getWorld();
 		renderer = new DebugRenderer(world);
-		
+
 		inputController = new GameInputController(model);
 	}
 
@@ -75,11 +75,12 @@ public class DebugGameState extends BasicGameState {
 		return 0;
 	}
 
-
 	@Override
 	public void mouseClicked(int button, int x, int y, int clickCount) {
 		if (button == 0) {
 			inputController.handleLeftClick(x, y);
+		} else if (button == 1) {
+			inputController.handleRightClick(x, y);
 		}
 	}
 }

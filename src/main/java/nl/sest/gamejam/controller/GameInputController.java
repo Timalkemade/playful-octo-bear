@@ -3,6 +3,7 @@ package nl.sest.gamejam.controller;
 import nl.sest.gamejam.model.impl.Model;
 import nl.sest.gamejam.model.player.PlayerAttractor;
 import nl.sest.gamejam.model.player.PlayerRepulsor;
+import org.jbox2d.common.Vec2;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,14 +27,16 @@ public class GameInputController {
 	public void handleLeftClick(float x, float y) {
 		LOGGER.debug("Left click at: [{}, {}]", x, y);
 
-		PlayerAttractor playerAttractor = new PlayerAttractor(x, y);
+		Vec2 converted = Utils.screenToWorld(model, x, y);
+		PlayerAttractor playerAttractor = new PlayerAttractor(converted.x, converted.y);
 		model.addPlayerAttractor(playerAttractor);
 	}
 
 	public void handleRightClick(float x, float y) {
 		LOGGER.debug("Right click at [{}, {}]", x, y);
 
-		PlayerRepulsor playerRepulsor = new PlayerRepulsor(x, y);
+		Vec2 converted = Utils.screenToWorld(model, x, y);
+		PlayerRepulsor playerRepulsor = new PlayerRepulsor(converted.x, converted.y);
 		model.addPlayerRepulsor(playerRepulsor);
 	}
 }

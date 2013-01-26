@@ -1,6 +1,8 @@
 package nl.sest.gamejam.model.player;
 
 import nl.sest.gamejam.model.Force;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Tim
@@ -8,19 +10,22 @@ import nl.sest.gamejam.model.Force;
  */
 public class PlayerRepulsor implements Force {
 
-    private float x;
-    private float y;
+	private static final Logger LOGGER = LoggerFactory.getLogger(PlayerRepulsor.class);
 
-    public PlayerRepulsor(float x, float y) {
-        this.x = x;
-        this.y = y;
-    }
+	private float x;
+	private float y;
 
-    public float getX() {
-        return x;
-    }
+	public PlayerRepulsor(float x, float y) {
+		LOGGER.debug("Created repulsor at [{}, {}]", x, y);
+		this.x = x;
+		this.y = y;
+	}
 
-    public float getY() {
-        return y;
-    }
+	public float getX() {
+		return x;
+	}
+
+	public float getY() {
+		return y;
+	}
 }

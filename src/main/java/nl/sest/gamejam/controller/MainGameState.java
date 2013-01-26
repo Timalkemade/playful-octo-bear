@@ -39,6 +39,8 @@ public class MainGameState extends BasicGameState {
 //		gc = new GameController(model);
 		renderer = new ViewGame(arg0, model);
 
+		inputController = new GameInputController(model);
+
 	}
 
 	@Override
