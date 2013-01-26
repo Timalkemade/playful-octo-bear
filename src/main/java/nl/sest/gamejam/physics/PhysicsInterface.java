@@ -255,22 +255,22 @@ public class PhysicsInterface implements CreatePhysicalListener, DeletePhysicalL
 		
 		// See if a Bob collided with an Obstacle and which is which
 		if (physicalA instanceof Bob && physicalB instanceof Obstacle) {
+			Bob bob = (Bob) physicalA;
 			Obstacle obstacle = (Obstacle) physicalB;
-			// Do something with the obstacle
-			LOGGER.debug("Contact with obstacle at: [{}, {}]", obstacle.getX(), obstacle.getY());
+			fireObstacleCollisionEvent(bob, obstacle);
 		} 
 		else if (physicalB instanceof Bob && physicalA instanceof Obstacle) {
+			Bob bob = (Bob) physicalB;
 			Obstacle obstacle = (Obstacle) physicalA;
-			// Do something with the obstacle
-			LOGGER.debug("Contact with obstacle at: [{}, {}]", obstacle.getX(), obstacle.getY());
+			fireObstacleCollisionEvent(bob, obstacle);
 		} else if (physicalA instanceof Bob && physicalB instanceof Valuable) {
+			Bob bob = (Bob) physicalA;
 			Valuable valuable = (Valuable) physicalB;
-			// Do something with valuable
-			LOGGER.debug("Contact with valuable at: [{}, {}]", valuable.getX(), valuable.getY());
+			fireValuableCollisionEvent(bob, valuable);
 		} else if (physicalB instanceof Bob && physicalA instanceof Valuable) {
+			Bob bob = (Bob) physicalB;
 			Valuable valuable = (Valuable) physicalA;
-			// Do something with valuable
-			LOGGER.debug("Contact with valuable at: [{}, {}]", valuable.getX(), valuable.getY());
+			fireValuableCollisionEvent(bob, valuable);
 		}
 	}
 
