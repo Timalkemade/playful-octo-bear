@@ -1,27 +1,30 @@
 package nl.sest.gamejam.model.impl;
 
+import nl.sest.gamejam.model.Physical;
+import nl.sest.gamejam.model.Renderable;
+import nl.sest.gamejam.view.Renderer;
 import org.newdawn.slick.Image;
 
-import nl.sest.gamejam.model.Physical;
-
-public class Obstacle implements Physical {
+public class Obstacle implements Physical, Renderable {
 
 	private float x, y, radius, angle;
 	private boolean isDynamic = false;
 	private Image image;
 	private static float defaultRadius = 4;
-	
+	private Renderer renderer;
+
 	/**
 	 * Create an Obstacle of a certain size
+	 *
 	 * @param x
 	 * @param y
 	 * @param size 1 for default size, 2 for 4x size, 3 for 16x size
 	 */
 	public Obstacle(float x, float y, int size) {
-		this(x,y);
-		setRadius(size*defaultRadius);
+		this(x, y);
+		setRadius(size * defaultRadius);
 	}
-	
+
 	public Obstacle(float x, float y) {
 		this.x = x;
 		this.y = y;
@@ -88,4 +91,8 @@ public class Obstacle implements Physical {
 		this.radius = radius;
 	}
 
+	@Override
+	public Renderer getRenderer() {
+		return renderer;
+	}
 }

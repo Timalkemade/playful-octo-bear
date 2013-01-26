@@ -22,11 +22,11 @@ import nl.sest.gamejam.view.ViewGame;
 public class MainGameState extends BasicGameState {
 
 	//	GameController gc;
-	private GameInputController inputController;
-	private Renderer renderer;
 	private Model model;
 	private World world;
-	
+	private Renderer renderer;
+	private GameInputController inputController;
+
 	public MainGameState() {
 		// TODO Auto-generated constructor stub
 	}
@@ -35,6 +35,7 @@ public class MainGameState extends BasicGameState {
 	public void init(GameContainer arg0, StateBasedGame arg1)
 			throws SlickException {
 
+		renderer = new ViewGame(arg0, );
 		Model model = new Model();
 		inputController = new GameInputController(model);
 		model = new Model();
@@ -46,6 +47,12 @@ public class MainGameState extends BasicGameState {
 		
 //		gc = new GameController(model);
 		renderer = new ViewGame(arg0);
+
+//		// Setup debugger
+		Slick2DJBox2DDebugDraw debug = new Slick2DJBox2DDebugDraw(arg0);
+		debug.appendFlags(DebugDraw.e_shapeBit);
+		debug.setCamera(0, 0, 0);
+		model.getPhysicsWorld().setDebugDraw(debug);
 
 	}
 

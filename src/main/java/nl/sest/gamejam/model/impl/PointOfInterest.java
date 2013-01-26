@@ -1,6 +1,8 @@
 package nl.sest.gamejam.model.impl;
 
 import nl.sest.gamejam.model.Force;
+import nl.sest.gamejam.model.Renderable;
+import nl.sest.gamejam.view.Renderer;
 
 /**
  * A point of interest is a shiny, cool or otherwise attractive point which attracts a Bob.
@@ -8,7 +10,7 @@ import nl.sest.gamejam.model.Force;
  * @author Tim
  * @since 1/25/13 10:03 PM
  */
-public class PointOfInterest implements Force {
+public class PointOfInterest implements Force, Renderable {
 
 	private float x;
 	private float y;
@@ -97,5 +99,10 @@ public class PointOfInterest implements Force {
 	 */
 	public float getInterest() {
 		return interest;
+	}
+
+	@Override
+	public Renderer getRenderer() {
+		return null;
 	}
 }

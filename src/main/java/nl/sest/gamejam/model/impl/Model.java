@@ -1,14 +1,14 @@
 package nl.sest.gamejam.model.impl;
 
 import nl.sest.gamejam.model.Physical;
+import nl.sest.gamejam.model.Renderable;
 import nl.sest.gamejam.model.event.listener.CreatePhysicalListener;
 import nl.sest.gamejam.model.event.listener.DeletePhysicalListener;
 import nl.sest.gamejam.model.player.PlayerAttractor;
 import nl.sest.gamejam.model.player.PlayerRepulsor;
+import org.jbox2d.dynamics.World;
 
 import java.util.*;
-
-import org.jbox2d.dynamics.World;
 
 /**
  * The model keeps track of where everything in is in the world. Basically is should be called Big Brother.
@@ -175,6 +175,15 @@ public class Model {
 	 */
 	public void unregisterDeletePhysicalEventListener(DeletePhysicalListener listener) {
 		deleteListeners.remove(listener);
+	}
+
+	public Collection<Renderable> getRenderables() {
+		List<Renderable> renderables = new ArrayList<Renderable>();
+		renderables.addAll(bobs);
+		renderables.addAll(obstacles);
+		renderables.addAll(pointsOfInterest);
+
+		return renderables;
 	}
 
 	/**
