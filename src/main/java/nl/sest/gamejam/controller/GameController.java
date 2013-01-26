@@ -1,8 +1,6 @@
 package nl.sest.gamejam.controller;
 
 import java.util.ArrayList;
-import java.util.Set;
-
 import nl.sest.gamejam.model.Physical;
 import nl.sest.gamejam.model.impl.Bob;
 import nl.sest.gamejam.model.impl.Collision;
@@ -30,9 +28,10 @@ public class GameController {
 	
 	// Settings
 	protected int heartbeatVolume = 10; // number of Bobs per heartbeat
-	protected float damageChance = 0.1f; // the chance that a single Bob will damage a Valuable on collision
-	protected float damagePerEvent = 200; // the damage applied for every violent event
+	protected float damageChance = 1; // the chance that a single Bob will damage a Valuable on collision
+	protected float damagePerEvent = 20; // the damage applied for every violent event
 	protected float heartbeatDuration = 1000; // duration of a heartbeat in milliseconds
+	protected float POIminInterval = 20000; // time before a new 
 	
 	public GameController(Model model) {
 		this.model = model;
@@ -112,6 +111,31 @@ public class GameController {
 	}
 	
 	/**
+	 * Increase and decrease the interest factors of the POIs
+	 */
+	public void updatePOIs() {
+		// Go through POIs
+		ArrayList<PointOfInterest> pois = model.getPointsOfInterest();
+		for(PointOfInterest poi : pois) {
+			// If POI lifetime exceeds max lifetime, set interest to 0
+			if(currentTime-poi.getStartTime() > poi.getMaxLifetime())
+				poi.setInterest(0);
+			// Otherwise calculate interest
+			else {
+				// Gaussian function
+				float mean = poi.getMaxLifetime()/2;
+				float sd = poi.getMaxLifetime()/6;
+				float max = poi.getMaxInterest();
+				float x = currentTime-poi.getStartTime();
+				float currentInterest = (float) Math.pow(max * Math.E, -1 * (Math.pow(x-mean, 2.0) / Math.pow(2 * sd, 2.0)));
+				
+				// Set new interest
+				poi.setInterest(currentInterest);
+			}
+		}
+	}
+	
+	/**
 	 * Read model and adjust game state accordingly.
 	 * @param dt The time passed during this step in milliseconds.
 	 */
@@ -120,6 +144,7 @@ public class GameController {
 		handleCollisions();
 		maybeHeartbeat();
 		updateHeartbeat();
+		updatePOIs();
 	}
 	
 	/**

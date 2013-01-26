@@ -21,10 +21,18 @@ public class Bob implements Physical, Renderable {
     private Renderer renderer;
     private float x;
     private float y;
+    protected PointOfInterest poi;
 
     public Bob(float x, float y) {
     	this(null, x, y);
-    	renderer = createDefaultRenderer();
+    }
+    
+    public void setPOI(PointOfInterest poi) {
+    	this.poi = poi;
+    }
+    
+    public PointOfInterest getPOI() {
+    	return poi;
     }
     
     /**
