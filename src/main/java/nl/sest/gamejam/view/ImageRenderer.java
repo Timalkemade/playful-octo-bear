@@ -34,10 +34,14 @@ public class ImageRenderer implements Renderer {
 		Image image = object.getImage();
 		LOGGER.debug("original Location {}, {}", object.getX(), object.getY());
 		Vector2f location = Utils.worldToScreen(object.getX(), object.getY());
+		float drawLocationX = location.getX() - image.getCenterOfRotationX();
+		float drawLocationY = location.getY() - image.getCenterOfRotationY();
+		image.getCenterOfRotationX();
 		LOGGER.debug("location {}", location);
-		image.draw(location.x, location.y);
+		image.draw(drawLocationX, drawLocationY);
 	}
 
-    @Override
-    public void update(int delta){ }
+	@Override
+	public void update(int delta) {
+	}
 }
