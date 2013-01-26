@@ -182,7 +182,7 @@ public class GameController implements PhysicsCollisionListener {
 		// If it is time, activate new POI
 		if (currentTime > nextPOITime) {
 			// Select random POI
-			int random = (int) Math.random() * pois.size();
+			int random = (int) (Math.random() * pois.size());
 			PointOfInterest poi = pois.get(random);
 
 			// Activate POI
