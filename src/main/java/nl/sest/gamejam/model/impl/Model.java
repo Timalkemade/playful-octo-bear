@@ -13,15 +13,49 @@ public class Model {
     private final Stack<Collision> collisions = new Stack<Collision>();
     private final Set<Bob> bobs = new HashSet<Bob>();
     private final ArrayList<TrainDestination> trainDestinations = new ArrayList<TrainDestination>();
+    private final ArrayList<PointOfInterest> pointsOfInterest = new ArrayList<PointOfInterest>();
     private Heartbeat heartbeat;
 
     public Model() {
     }
+    
+    /**
+     * Apply damage to the valuable
+     * @param v
+     * @param damage
+     */
+    public void applyDamage(Valuable v, float damage) {
+    	// TODO Implement
+    }
+    
+    /**
+     * Get all the Bobs in the world
+     * @return
+     */
+    public Set<Bob> getBobs() {
+    	return bobs;
+    }
 
+    /**
+     * Gives the POIs in the World.
+     * @return
+     */
+    public ArrayList<PointOfInterest> getPointsOfInterest() {
+    	return pointsOfInterest;
+    }
+    
+    /**
+     * Gives the collisions that occurred over time
+     * @return
+     */
     public Iterable<Collision> getCollisions() {
         return Collections.unmodifiableCollection(collisions);
     }
 
+    /**
+     * Adds a collision to the list of collissions that occurred.
+     * @param collision
+     */
     public void addCollision(Collision collision) {
         collisions.add(collision);
     }

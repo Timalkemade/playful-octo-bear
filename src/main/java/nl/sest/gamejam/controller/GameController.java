@@ -1,18 +1,20 @@
 package nl.sest.gamejam.controller;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 import nl.sest.gamejam.model.Physical;
 import nl.sest.gamejam.model.impl.Bob;
 import nl.sest.gamejam.model.impl.Collision;
 import nl.sest.gamejam.model.impl.Heartbeat;
 import nl.sest.gamejam.model.impl.Model;
+import nl.sest.gamejam.model.impl.PointOfInterest;
 import nl.sest.gamejam.model.impl.Train;
 import nl.sest.gamejam.model.impl.TrainDestination;
+import nl.sest.gamejam.model.impl.Valuable;
 
 /**
  * 
- * TODO POIs
  * @author Remi
  *
  */
@@ -29,6 +31,7 @@ public class GameController {
 	// Settings
 	protected int heartbeatVolume = 10; // number of Bobs per heartbeat
 	protected float damageChance = 0.1f; // the chance that a single Bob will damage a Valuable on collision
+	protected float damagePerEvent = 200; // the damage applied for every violent event
 	protected float heartbeatDuration = 1000; // duration of a heartbeat in milliseconds
 	
 	public GameController(Model model) {
@@ -131,9 +134,24 @@ public class GameController {
 			Physical objectA = c.getCollider1();
 			Physical objectB = c.getCollider2();
 			
-			// TODO Check if one of the objects is a Bob and the other a Valuable
-			// If so, by chance apply damage to the Valuable
+			// If one of the objects is Bob and the other Valuable, by chance apply damage to Valuable
+			if((objectA instanceof Bob && objectB instanceof Valuable)) {
+				maybeApplyDamage((Bob)objectA, (Valuable)objectB);
+			}
+			else if (objectA instanceof Valuable && objectB instanceof Bob) {
+				maybeApplyDamage((Bob) objectB, (Valuable) objectA);
+			}
 		}
+	}
+	
+	/**
+	 * Checks if, by chance the given Bob should apply damage to the given Valuable and if so, does so.
+	 */
+	protected void maybeApplyDamage(Bob bob, Valuable valuable) {
+		// Determine if the damage should be applied
+		float random = (float) Math.random();
+		if(random < damageChance)
+			model.applyDamage(valuable, damagePerEvent);
 	}
 	
 	/**
