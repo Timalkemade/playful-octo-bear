@@ -2,13 +2,14 @@ package nl.sest.gamejam.controller;
 
 import nl.sest.gamejam.model.impl.Model;
 import nl.sest.gamejam.model.impl.PointOfInterest;
-import org.newdawn.slick.Input;
 
 /**
+ * Controller which handles user input.
+ *
  * @author Tim
  * @since 1/26/13 8:19 AM
-
- */public class GameInputController {
+ */
+public class GameInputController {
 
     private Model model;
 
@@ -20,5 +21,4 @@ import org.newdawn.slick.Input;
         PointOfInterest pointOfInterest = new PointOfInterest(x, y);
         model.addPointOfInterest(pointOfInterest);
     }
-
 }
