@@ -46,7 +46,7 @@ public class MapLoader {
 		model.addBob(new Bob(6*gs, 3*gs));
 
 		// POIs
-		model.addPointOfInterest(new PointOfInterest(7f*gs, 8*gs, 0, 0));
+		model.addPointOfInterest(new PointOfInterest(25*gs, 25*gs, 0, 0));
 		
 		// Trains
 		model.addTrainDestination(new TrainDestination(0, -5));

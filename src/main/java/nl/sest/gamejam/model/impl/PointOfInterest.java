@@ -3,6 +3,7 @@ package nl.sest.gamejam.model.impl;
 import nl.sest.gamejam.model.Force;
 import nl.sest.gamejam.model.Renderable;
 import nl.sest.gamejam.view.Renderer;
+import nl.sest.gamejam.view.ViewPOI;
 
 /**
  * A point of interest is a shiny, cool or otherwise attractive point which attracts a Bob.
@@ -12,6 +13,7 @@ import nl.sest.gamejam.view.Renderer;
  */
 public class PointOfInterest implements Force, Renderable {
 
+    private Renderer renderer;
 	private float x;
 	private float y;
 
@@ -34,6 +36,7 @@ public class PointOfInterest implements Force, Renderable {
 		this.startTime = System.currentTimeMillis();
 		this.maxInterest = maxInterest;
 		this.maxLifetime = lifetime;
+        this.renderer = new ViewPOI( this );
 	}
 
 	/**
@@ -102,6 +105,10 @@ public class PointOfInterest implements Force, Renderable {
 
 	@Override
 	public Renderer getRenderer() {
-		return null;
+        return renderer;
 	}
+
+    public void updateRenderer(int delta) {
+        this.renderer.update(delta);
+    }
 }

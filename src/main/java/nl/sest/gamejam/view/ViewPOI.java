@@ -1,10 +1,12 @@
 package nl.sest.gamejam.view;
 
+import nl.sest.gamejam.model.Renderable;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.particles.ParticleSystem;
 import org.newdawn.slick.particles.effects.FireEmitter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * User: JMIEGHEM
@@ -14,27 +16,36 @@ import org.newdawn.slick.particles.effects.FireEmitter;
 public class ViewPOI implements Renderer {
 
     /** The particle system running everything */
+    private static final Logger LOGGER = LoggerFactory.getLogger(ViewPOI.class);
+
     private ParticleSystem system;
+    private Renderable object;
 
     /**
      * POI particle view
-     * @param location Vector2f lcoation of POI
-     * @throws SlickException
+     * @param newObject Renderable object POI
      */
-    public ViewPOI( Vector2f location) throws SlickException{
-        Image image = new Image("images/earth.jpg", true);
-        system = new ParticleSystem(image);
+    public ViewPOI( Renderable newObject) {
+        object = newObject;
 
-        system.addEmitter(new FireEmitter( (int)location.x, (int)location.y ));
+        Image image = null;
+        try {
+            image = new Image("images/earth.jpg", true);
+        } catch (SlickException e) {
+            e.printStackTrace();
+        }
+        system = new ParticleSystem(image);
+        system.addEmitter(new FireEmitter( (int)object.getX(), (int)object.getY() ));
     }
 
+    @Override
     public void update(int delta){
+        LOGGER.debug("Update Delta {}", delta);
         system.update(delta);
     }
 
     public void render(){
         system.render();
     }
-
 
 }
