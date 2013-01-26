@@ -1,12 +1,11 @@
 package nl.sest.gamejam.model.impl;
 
-import nl.sest.gamejam.exception.ImageLoadingException;
+import nl.sest.gamejam.model.ImagePicker;
 import nl.sest.gamejam.model.ImageRenderable;
 import nl.sest.gamejam.model.Physical;
 import nl.sest.gamejam.view.ImageRenderer;
 import nl.sest.gamejam.view.Renderer;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
 
 /**
  * This is an object that should be protected.
@@ -25,11 +24,8 @@ public class Valuable implements Physical, ImageRenderable {
 		this.x = x;
 		this.y = y;
 		this.value = value;
-		try {
-			image = new Image("images/buildings/Jewelry.png");
-		} catch (SlickException e) {
-			throw new ImageLoadingException("Could not load image", e);
-		}
+		ImagePicker im = new ImagePicker();
+		this.image = im.pick("valuables");
 		renderer = new ImageRenderer(this);
 	}
 
