@@ -39,7 +39,10 @@ public class PhysicsInterface {
         	
         	// If the physical is a Bob, apply force (use predefined force for now)
         	if (physical instanceof Bob) {
-        		body.applyForce(new Vec2(5, 5), body.getWorldCenter());
+        		Vec2 bobVec = new Vec2(physical.getX(), physical.getY());
+        		Vec2 poiVec = new Vec2(0.5f, 0.5f);
+        		Vec2 force = calculateAttract(poiVec, bobVec);
+        		body.applyForce(force, body.getWorldCenter());
         	}
         	
         	// If the Physical is dynamic, update the Physical properties using the Body properties
@@ -105,4 +108,22 @@ public class PhysicsInterface {
 		world.destroyBody(body);
 		objects.remove(physical);
 	}
+	
+    Vec2 calculateAttract(Vec2 poi, Vec2 bob) {
+    	Body poiBody = objects.get(poi);
+    	Body bobBody = objects.get(bob);
+    	
+        float forceStrength = 100; 
+        Vec2 poiPos = poiBody.getWorldCenter();    
+        Vec2 bobPos = bobBody.getWorldCenter();
+        
+        Vec2 force = poiPos.sub(bobPos);
+        float distance = force.length();
+        force.normalize();
+
+        float strength = (forceStrength * 1 * bobBody.m_mass) / (distance * distance);
+        force.mulLocal(strength);
+        return force;
+      }
+
 }

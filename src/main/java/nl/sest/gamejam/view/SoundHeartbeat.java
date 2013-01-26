@@ -14,11 +14,8 @@ public class SoundHeartbeat implements Renderer {
 
     /**
      * Constructor
-     * @param file location of the sound (in case empty use default)
      */
-    public SoundHeartbeat(String file) {
-        if(file.compareTo("") == 0)
-            SoundFile = file;
+    public SoundHeartbeat() {
     }
 
     /**
@@ -26,8 +23,8 @@ public class SoundHeartbeat implements Renderer {
      */
     public void render() {
         try{
-        Sound Heartbeat = new Sound(SoundFile);
-        Heartbeat.play();
+            Sound Heartbeat = new Sound(SoundFile);
+            Heartbeat.play();
         }
         catch (SlickException ex)
         {

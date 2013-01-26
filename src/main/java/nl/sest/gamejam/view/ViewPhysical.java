@@ -6,22 +6,22 @@ import org.newdawn.slick.geom.Vector2f;
 
 /**
  * User: JMIEGHEM
- * Date: 25-1-13
- * Time: 22:46
+ * Date: 26-1-13
+ * Time: 11:40
  */
-public class ViewObject implements Renderer {
+public class ViewPhysical {
 
     private Image image;
     private Vector2f location;
 
     /**
-     * Start object with image
-     * @param Image image
-     * @param Vector2f Location
+     * Create view for physical object
+     * @param Object
      */
-    public ViewObject(Image anImage, Vector2f aLocation) {
-        this.image = anImage;
-        this.location = aLocation;
+    public ViewPhysical(Physical Object)
+    {
+        this.image = Object.getImage();
+        this.location = new Vector2f(Object.getX(), Object.getY());
     }
 
     /**
