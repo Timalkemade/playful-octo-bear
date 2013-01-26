@@ -1,5 +1,6 @@
 package nl.sest.gamejam.model.impl;
 
+import nl.sest.gamejam.model.Physical;
 import nl.sest.gamejam.model.event.listener.CreatePhysicalListener;
 import nl.sest.gamejam.model.event.listener.DeletePhysicalListener;
 import nl.sest.gamejam.model.player.PlayerAttractor;
@@ -41,14 +42,6 @@ public class Model {
 		// TODO Implement
 	}
 
-	/**
-	 * Get all the Bobs in the world
-	 *
-	 * @return
-	 */
-	public Set<Bob> getBobs() {
-		return bobs;
-	}
 
 	/**
 	 * Gives the POIs in the World.
@@ -92,14 +85,26 @@ public class Model {
 
 	public void addBob(Bob bob) {
 		bobs.add(bob);
+		fireCreateListeners(bob);
 	}
 
-	public ArrayList<TrainDestination> getTrainDestinations() {
-		return trainDestinations;
+
+	/**
+	 * Get all the Bobs in the world
+	 *
+	 * @return
+	 */
+	public Set<Bob> getBobs() {
+		return Collections.unmodifiableSet(bobs);
 	}
 
 	public void removeBob(Bob bob) {
 		bobs.remove(bob);
+		fireDeleteListeners(bob);
+	}
+
+	public ArrayList<TrainDestination> getTrainDestinations() {
+		return trainDestinations;
 	}
 
 	public void addPointOfInterest(PointOfInterest pointOfInterest) {
@@ -160,5 +165,27 @@ public class Model {
 	 */
 	public void unregisterDeletePhysicalEventListener(DeletePhysicalListener listener) {
 		deleteListeners.remove(listener);
+	}
+
+	/**
+	 * Fires all {@link CreatePhysicalListener}s that are registered.
+	 *
+	 * @param physical The {@link Physical} that was created
+	 */
+	private void fireCreateListeners(Physical physical) {
+		for (CreatePhysicalListener createPhysicalListener : createListeners) {
+			createPhysicalListener.fireCreatePhysical(physical);
+		}
+	}
+
+	/**
+	 * Fires all {@link DeletePhysicalListener}s that are registered.
+	 *
+	 * @param physical The {@link Physical} that was deleted
+	 */
+	private void fireDeleteListeners(Physical physical) {
+		for (DeletePhysicalListener deletePhysicalListener : deleteListeners) {
+			deletePhysicalListener.fireDeletePhysical(physical);
+		}
 	}
 }
