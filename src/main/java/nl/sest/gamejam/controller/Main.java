@@ -17,7 +17,8 @@ public class Main {
 		try{
 			TheGame game = new TheGame("The Game");
 			AppGameContainer app = new AppGameContainer(game, 800, 800, false);
-		
+			Utils.setScreenDimension(800, 800);
+			
 			app.setMinimumLogicUpdateInterval(20);
 			app.start();
 		}

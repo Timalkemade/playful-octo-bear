@@ -33,6 +33,9 @@ public class Model {
 	private List<DeletePhysicalListener> deleteListeners = new ArrayList<DeletePhysicalListener>();
 
 	private Heartbeat heartbeat;
+	
+	private float height = 0;
+	private float width = 0;
 
 	public Model() {
 	}
@@ -46,7 +49,24 @@ public class Model {
 	public void applyDamage(Valuable v, float damage) {
 		// TODO Implement
 	}
-
+	
+	/**
+	 * Set the dimension of the World
+	 * @param width
+	 * @param height
+	 */
+	public void setWorldDimension(float width, float height) {
+		this.height = height;
+		this.width = width;
+	}
+	
+	public float getWorldHeight() {
+		return height;
+	}
+	
+	public float getWorldWidth() {
+		return width;
+	}
 
 	/**
 	 * Gives the POIs in the World.
