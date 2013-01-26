@@ -21,6 +21,8 @@ public class Bob implements Physical, Renderable {
     private Renderer renderer;
     private float x;
     private float y;
+    private float angle;
+    private boolean isDynamic;
     protected PointOfInterest poi;
 
     public Bob(float x, float y) {
@@ -47,6 +49,9 @@ public class Bob implements Physical, Renderable {
         this.renderer = aRenderer;
         this.x = x;
         this.y = y;
+        angle = 0;
+        isDynamic = true;
+
     }
 
     @Override
@@ -55,7 +60,8 @@ public class Bob implements Physical, Renderable {
     }
 
     @Override
-    public void setX(float x) {
+    public void setX(float newX) {
+        this.x = newX;
     }
 
     @Override
@@ -64,25 +70,26 @@ public class Bob implements Physical, Renderable {
     }
 
     @Override
-    public void setY(float y) {
+    public void setY(float newY) {
+        y = newY;
     }
 
-    @Override
     public float getAngle() {
-        return 0;
+        return angle;
     }
 
-    @Override
-    public void setAngle(float angle) {
+    public void setAngle(float newAngle) {
+        this.angle = newAngle;
     }
 
     @Override
     public boolean isDynamic() {
-        return false;
+        return isDynamic;
     }
 
     @Override
     public void setDynamic(boolean dynamic) {
+        this.isDynamic = dynamic;
     }
 
     @Override
@@ -107,4 +114,14 @@ public class Bob implements Physical, Renderable {
     public int hashCode() {
         return id.hashCode();
     }
+
+	@Override
+	public float getRadius() {
+		return 0;
+	}
+
+	@Override
+	public void setRadius(float radius) {
+	}
+
 }

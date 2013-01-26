@@ -3,6 +3,7 @@ package nl.sest.gamejam.physics;
 import java.util.HashMap;
 
 import nl.sest.gamejam.model.Physical;
+import nl.sest.gamejam.model.impl.Bob;
 
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.common.Vec2;
@@ -35,6 +36,14 @@ public class PhysicsInterface {
         // Sync Box2D objects with the Physical objects
         for (Physical physical : objects.keySet()) {
         	Body body = objects.get(physical);
+        	
+        	// If the physical is a Bob, apply force (use predefined force for now)
+        	if (physical instanceof Bob) {
+        		Vec2 bobVec = new Vec2(physical.getX(), physical.getY());
+        		Vec2 poiVec = new Vec2(0.5f, 0.5f);
+        		Vec2 force = calculateAttract(poiVec, bobVec);
+        		body.applyForce(force, body.getWorldCenter());
+        	}
         	
         	// If the Physical is dynamic, update the Physical properties using the Body properties
         	if (physical.isDynamic()) {
@@ -74,9 +83,11 @@ public class PhysicsInterface {
 		body.setUserData(physical);
 		objects.put(physical, body);
 
-		// Create shape (use circle for now)
+		// Create shape using Physical properties
+		float radius = physical.getRadius();
+		
 	    CircleShape circleShape = new CircleShape();
-	    circleShape.m_radius = 0.5f;
+	    circleShape.m_radius = radius;
 
 	    // Create FixtureDef (use predefined parameters for now)
 	    FixtureDef fixtureDef = new FixtureDef();
@@ -97,4 +108,22 @@ public class PhysicsInterface {
 		world.destroyBody(body);
 		objects.remove(physical);
 	}
+	
+    Vec2 calculateAttract(Vec2 poi, Vec2 bob) {
+    	Body poiBody = objects.get(poi);
+    	Body bobBody = objects.get(bob);
+    	
+        float forceStrength = 100; 
+        Vec2 poiPos = poiBody.getWorldCenter();    
+        Vec2 bobPos = bobBody.getWorldCenter();
+        
+        Vec2 force = poiPos.sub(bobPos);
+        float distance = force.length();
+        force.normalize();
+
+        float strength = (forceStrength * 1 * bobBody.m_mass) / (distance * distance);
+        force.mulLocal(strength);
+        return force;
+      }
+
 }
