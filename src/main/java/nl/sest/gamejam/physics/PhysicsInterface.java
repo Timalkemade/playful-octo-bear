@@ -9,6 +9,7 @@ import nl.sest.gamejam.controller.GameInputController;
 import nl.sest.gamejam.model.Physical;
 import nl.sest.gamejam.model.event.listener.CreatePhysicalListener;
 import nl.sest.gamejam.model.event.listener.DeletePhysicalListener;
+import nl.sest.gamejam.model.impl.Blockade;
 import nl.sest.gamejam.model.impl.Bob;
 import nl.sest.gamejam.model.impl.Model;
 import nl.sest.gamejam.model.impl.Obstacle;
@@ -134,7 +135,7 @@ public class PhysicsInterface implements CreatePhysicalListener, DeletePhysicalL
 	    body.createFixture(fixtureDef);
 	    
 	    // Join it with another body (for Blockade)
-	    /*if (physical instanceof Blockade) {
+	    if (physical instanceof Blockade) {
 	    	Blockade blockade = (Blockade) physical;
 	    	Blockade previous = blockade.getPrevious();
 	    	Body previousBody = objects.get(previous);
@@ -150,7 +151,7 @@ public class PhysicsInterface implements CreatePhysicalListener, DeletePhysicalL
 				djd.dampingRatio = 0;
 				DistanceJoint dj = (DistanceJoint) world.createJoint(djd);
 	    	}
-	    }*/
+	    }
 	}
 	
 	public void deleteObject(Physical physical) {
