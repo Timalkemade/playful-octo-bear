@@ -23,9 +23,8 @@ public class MapLoader {
 		model.setWorldDimension(20 * gs, 15 * gs);
 		
 		// Buildings
-		model.addObstacle(new Bank(2 * gs, 2 * gs, "N"));
-        model.addObstacle(new Clothing(9 * gs, 2 * gs, "N"));
-		model.addObstacle(new Supermarket(9 * gs, 2 * gs, "N"));
+        model.addObstacle(new NormalBuilding(2 * gs, 2 * gs, "N"));
+        model.addObstacle(new NormalBuilding(9 * gs, 2 * gs, "N"));
 		model.addObstacle(new NormalBuilding(14 * gs, 2 * gs, "N"));
 		model.addObstacle(new NormalBuilding(19 * gs, 3 * gs, "N"));
 		model.addObstacle(new NormalBuilding(12 * gs, 4 * gs, "N"));
@@ -34,13 +33,13 @@ public class MapLoader {
 		model.addObstacle(new NormalBuilding(8 * gs, 5 * gs, "N"));
 		model.addObstacle(new NormalBuilding(11 * gs, 6 * gs, "N"));
 		model.addObstacle(new NormalBuilding(15 * gs, 6 * gs, "N"));
-		model.addObstacle(new Jewelry(18 * gs, 6 * gs, "N"));
+		model.addObstacle(new NormalBuilding(18 * gs, 6 * gs, "N"));
 		model.addObstacle(new NormalBuilding(2 * gs, 7 * gs, "N"));
 		model.addObstacle(new NormalBuilding(6 * gs, 7 * gs, "N"));
 		model.addObstacle(new NormalBuilding(8 * gs, 7 * gs, "N"));
-		model.addObstacle(new Butcher(10 * gs, 8 * gs, "E"));
+		model.addObstacle(new NormalBuilding(10 * gs, 8 * gs, "E"));
 		model.addObstacle(new NormalBuilding(13 * gs, 8 * gs, "N"));
-		model.addObstacle(new Church(16 * gs, 9 * gs, "N"));
+		model.addObstacle(new NormalBuilding(16 * gs, 9 * gs, "N"));
 		model.addObstacle(new NormalBuilding(2 * gs, 11 * gs, "N"));
 		model.addObstacle(new NormalBuilding(8 * gs, 11 * gs, "N"));
 		model.addObstacle(new NormalBuilding(10 * gs, 11 * gs, "N"));
@@ -48,7 +47,7 @@ public class MapLoader {
 		model.addObstacle(new NormalBuilding(12 * gs, 12 * gs, "N"));
 		model.addObstacle(new NormalBuilding(17 * gs, 12 * gs, "N"));
 		model.addObstacle(new NormalBuilding(2 * gs, 13 * gs, "N"));
-		model.addObstacle(new Supermarket(9 * gs, 13 * gs, "N"));
+		model.addObstacle(new NormalBuilding(9 * gs, 13 * gs, "N"));
 		model.addObstacle(new NormalBuilding(19 * gs, 13 * gs, "N"));
 		model.addObstacle(new NormalBuilding(5 * gs, 14 * gs, "N"));
 		model.addObstacle(new NormalBuilding(13 * gs, 14 * gs, "N"));

@@ -14,9 +14,9 @@ public class Obstacle implements Physical, ImageRenderable {
 	protected boolean isDynamic = false;
     protected String direction;
 	protected Image image;
-	protected static float defaultRadius = 4;
+	protected static float defaultRadius = 4f;
 	protected Renderer renderer;
-    protected String imageFile = "images/buildings/Normal_Shadow_1.png";
+    protected String imageFile = "images/buildings/Normal/A/Building_Normal_1_Shadow_A.png";
     protected float imageSize = 100f;
     protected float value = 0f;
 
@@ -25,32 +25,18 @@ public class Obstacle implements Physical, ImageRenderable {
     }
 
      public void initializeObstacle(){
-        renderer = new ImageRenderer(this);
         imageBuilding();
+        renderer = new ImageRenderer(this);
     }
 
     /**
      * Default image of building
      */
     public void imageBuilding(){
-        int directionInt = convertDirection(direction);
-        SpriteSheet sheet = null;
         try {
-            sheet = new SpriteSheet(this.imageFile, (int)this.imageSize, (int)this.imageSize);
+            image = new Image(this.imageFile + "Building_" + direction + ".png");
         } catch (SlickException e) {
-            e.printStackTrace();
         }
-        image = sheet.getSubImage( (int)((directionInt-1)*this.imageSize), 0, (int)this.imageSize, (int)this.imageSize);
-    }
-
-    public int convertDirection(String direction){
-        if(direction.compareTo("E") == 0)
-            return 2;
-        if(direction.compareTo("S") == 0)
-            return 3;
-        if(direction.compareTo("W") == 0)
-            return 4;
-        return 1;
     }
 
 	@Override
@@ -75,7 +61,7 @@ public class Obstacle implements Physical, ImageRenderable {
 
 	@Override
 	public float getAngle() {
-		return angle;
+		return angle+45;
 	}
 
 	@Override

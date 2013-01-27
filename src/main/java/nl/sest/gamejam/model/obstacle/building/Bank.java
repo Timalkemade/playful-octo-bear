@@ -11,8 +11,8 @@ public class Bank extends Obstacle {
 
     public Bank(float x, float y, String direction) {
         this.imageSize = 150f;
-        this.imageFile = "images/buildings/Bank.png";
-        this.radius = 5;
+        this.imageFile = "images/buildings/Bank/";
+        this.radius = 10f;
         this.value = 0f;
 
         this.x = x;

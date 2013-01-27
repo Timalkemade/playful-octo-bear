@@ -11,8 +11,8 @@ public class Jewelry extends Obstacle {
 
     public Jewelry(float x, float y, String direction) {
         this.imageSize = 150f;
-        this.imageFile = "images/buildings/Jewelry.png";
-        this.radius = 5;
+        this.imageFile = "images/buildings/Jewelry/";
+        this.radius = 10f;
         this.value = 0f;
 
         this.x = x;

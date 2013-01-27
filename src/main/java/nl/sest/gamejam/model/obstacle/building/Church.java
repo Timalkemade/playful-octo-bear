@@ -11,8 +11,8 @@ public class Church extends Obstacle {
 
     public Church(float x, float y, String direction) {
         this.imageSize = 150f;
-        this.imageFile = "images/buildings/Church.png";
-        this.radius = 5;
+        this.imageFile = "images/buildings/Church/";
+        this.radius = 10f;
         this.value = 0f;
 
         this.x = x;

@@ -79,7 +79,7 @@ public class Valuable implements Physical, ImageRenderable {
 
 	@Override
 	public float getAngle() {
-		return angle;
+		return angle+45;
 	}
 
 	@Override

@@ -1,8 +1,7 @@
 package nl.sest.gamejam.model.obstacle.building;
 
+import nl.sest.gamejam.model.ImagePicker;
 import nl.sest.gamejam.model.impl.Obstacle;
-import org.newdawn.slick.SlickException;
-import org.newdawn.slick.SpriteSheet;
 
 /**
  * User: JMIEGHEM
@@ -11,15 +10,10 @@ import org.newdawn.slick.SpriteSheet;
  */
 public class NormalBuilding extends Obstacle {
 
-    protected String imageFile = "images/buildings/Normal_Shadow_1.png";
-    protected float imageSize = 100f;
-    protected float radius = 4;
-    protected float value = 0f;
-
     public NormalBuilding(float x, float y, String direction) {
-        imageFile = "images/buildings/Normal_Shadow_1.png";
+        imageFile = "buildings/Normal/"+direction+"/";
         imageSize = 100f;
-        radius = 4;
+        radius = 7f;
         value = 0f;
 
         this.x = x;
@@ -30,15 +24,8 @@ public class NormalBuilding extends Obstacle {
 
     @Override
     public void imageBuilding(){
-        int directionInt = convertDirection(direction);
-        SpriteSheet sheet = null;
-        try {
-            sheet = new SpriteSheet("images/buildings/Normal_Shadow_" + directionInt + ".png", (int)imageSize, (int)imageSize);
-        } catch (SlickException e) {
-            e.printStackTrace();
-        }
-        int random = (int)(Math.random() * 8);
-
-        image = sheet.getSubImage(random % 2, random % 4, (int)imageSize, (int)imageSize);
+        //PickImage
+        ImagePicker im = new ImagePicker();
+        image = im.pick(imageFile);
     }
 }
