@@ -21,8 +21,8 @@ public class Main {
 			float height;
 			float width;
 
-			height = 900;
-			width = 1440;
+			height = 768;
+			width = 1024;
 
 			AppGameContainer app = new AppGameContainer(game, (int) width, (int) height, false);
 			Utils.initialize(width, height);

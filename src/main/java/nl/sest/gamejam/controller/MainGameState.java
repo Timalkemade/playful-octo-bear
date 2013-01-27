@@ -52,6 +52,7 @@ public class MainGameState extends BasicGameState {
 
 		world = pi.getWorld();
 		inputController = new GameInputController(model);
+		gc.start();
 
 	}
 

@@ -9,6 +9,7 @@ import nl.sest.gamejam.physics.PhysicsCollisionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +29,7 @@ public class GameController implements PhysicsCollisionListener {
 	protected long nextPOITime = 0; // timestamp when next POI should appear
 	protected HashMap<Bob, Float> bobDamageCooldown = new HashMap<Bob, Float>();
 	protected float virusCellRatio = 0.1f;
+	protected float virusRatioIncreasePerStep = 0.000005f; // per ms
 	
 	// Settings
 	protected int heartbeatVolume = 9; // number of Bobs per heartbeat
@@ -41,8 +43,8 @@ public class GameController implements PhysicsCollisionListener {
 	protected float POImaxBoostTime = 10000; // maximum life time of POIs 
 	protected float POIboostRate = 0.001f; // interest boost per ms during boost
 	protected float POIdecayRate = 0.0005f; // interest decrease per ms always
-	protected float maxCurrency = 100000; // starting currency
-	protected float damagePerVirus = 200;
+	protected float maxCurrency = 1000; // starting currency
+	protected float damagePerVirus = 100;
 	protected float repairPerCell = 50;
 	
 	private final static Logger logger = LoggerFactory.getLogger(GameController.class);
@@ -112,11 +114,18 @@ public class GameController implements PhysicsCollisionListener {
 			// Create Bobs at the destination
 			for (int i = 0; i < t.getNumBobs(); i++) {
 				// Scatter Bobs
-				float rX = (float)(Math.random()*9);
-				float rY = (float)(Math.random()*9);
+				float rX = (float)(Math.random()*27);
+				float rY = (float)(Math.random()*27);
 				
-				Bob bob = new Bob(x+rX, y+rY);
+				Bob bob = new Bob(x+rX, y+rY, false);
 				model.addBob(bob);
+				
+				// Decide whether a virus should be added
+				float r = (float)Math.random();
+				if(r < virusCellRatio) {
+					Bob virus = new Bob(x+rX, y+rY, true);
+					model.addBob(virus);
+				}
 			}
 		}
 	}
@@ -156,6 +165,10 @@ public class GameController implements PhysicsCollisionListener {
 			heartbeatEnd();
 		}
 	}
+	
+	private void updateVirusRatio(int dt) {
+		virusCellRatio += dt * virusRatioIncreasePerStep;
+	}
 
 	/**
 	 * Read model and adjust game state accordingly.
@@ -166,6 +179,7 @@ public class GameController implements PhysicsCollisionListener {
 		currentTime = System.currentTimeMillis();
 		maybeHeartbeat();
 		updateHeartbeat();
+		updateVirusRatio(dt);
 	}
 
 	/**
@@ -222,12 +236,11 @@ public class GameController implements PhysicsCollisionListener {
 	public void edgeCollisionEvent(Bob bob, Edge edge) {
 		model.removeBob(bob);
 		if(bob.isVirus()) {
-			model.updateCurrency(damagePerVirus);
+			model.updateCurrency(-damagePerVirus);
 			model.fireEvent(new VirusPassEvent(currentTime, bob));
 		}
 		else {
-			if(model.getCurrency() < maxCurrency)
-				model.updateCurrency(repairPerCell);
+			model.updateCurrency(repairPerCell);
 			model.fireEvent(new CellPassEvent(currentTime, bob));
 		}
 	}

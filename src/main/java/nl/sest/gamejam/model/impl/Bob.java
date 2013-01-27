@@ -26,21 +26,25 @@ public class Bob implements Physical, ImageRenderable {
 	private boolean isVirus = false;
     
 	public Bob(float x, float y, boolean isVirus) {
-		this(x, y);
+		this.x = x;
+		this.y = y;
 		this.isVirus = isVirus;
+		initializeBob();
+		renderer = createDefaultRenderer();
 	}
 	
     public Bob(float x, float y) {
-    	this(null, x, y);
+    	this.x = x;
+    	this.y = y;
+    	initializeBob();
     	renderer = createDefaultRenderer();
-        initializeBob();
     }
     
     public Bob(Renderer aRenderer, float x, float y) {
-        this.renderer = aRenderer;
         this.x = x;
         this.y = y;
         initializeBob();
+        renderer = aRenderer;
     }
     
     public boolean isVirus() {
