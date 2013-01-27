@@ -12,6 +12,8 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.TrueTypeFont;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.awt.*;
 import java.text.DecimalFormat;
@@ -22,6 +24,8 @@ import java.text.DecimalFormat;
  * Time: 22:51
  */
 public class ViewGame implements Renderer, EventListener {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(ViewGame.class);
 
 	private GameContainer gamecontainer = null;
 	private TrueTypeFont font;
@@ -142,20 +146,24 @@ public class ViewGame implements Renderer, EventListener {
 
 	@Override
 	public void onEvent(VirusKillEvent event) {
+		LOGGER.debug("Virus Kill Event");
 		DestroySound ds = new DestroySound();
 		ds.play();
 	}
 
 	@Override
 	public void onEvent(CellKillEvent event) {
+		LOGGER.debug("Cell kill Event");
 	}
 
 	@Override
 	public void onEvent(CellPassEvent event) {
+		LOGGER.debug("Cell Pass Event");
 	}
 
 	@Override
 	public void onEvent(VirusPassEvent event) {
+		LOGGER.debug("Cell Pass Event");
 	}
 
 
