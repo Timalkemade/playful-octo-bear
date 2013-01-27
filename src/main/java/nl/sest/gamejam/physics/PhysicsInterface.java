@@ -22,6 +22,8 @@ import org.jbox2d.callbacks.ContactImpulse;
 import org.jbox2d.callbacks.ContactListener;
 import org.jbox2d.collision.Manifold;
 import org.jbox2d.collision.shapes.CircleShape;
+import org.jbox2d.collision.shapes.PolygonShape;
+import org.jbox2d.collision.shapes.Shape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyDef;
@@ -119,14 +121,23 @@ public class PhysicsInterface implements CreatePhysicalListener, DeletePhysicalL
 		objects.put(physical, body);
 
 		// Create shape using Physical properties
-		float radius = physical.getRadius();
-		
-	    CircleShape circleShape = new CircleShape();
-	    circleShape.m_radius = radius;
+		Shape shape;
+		/*if (physical instanceof Edge) {
+			Edge edge = (Edge) physical;
+			
+		    shape = new PolygonShape();
+		    shape.setAsBox(edge.getWidth(), edge.getWidth());
+		}
+		else {*/
+			float radius = physical.getRadius();
+			
+			shape = new CircleShape();
+			shape.m_radius = radius;
+		//}
 
 	    // Create FixtureDef (use predefined parameters for now)
 	    FixtureDef fixtureDef = new FixtureDef();
-	    fixtureDef.shape = circleShape;
+	    fixtureDef.shape = shape;
 	    fixtureDef.density = 1;
 	    fixtureDef.friction = 100f;
 	    fixtureDef.restitution = 0.3f;
