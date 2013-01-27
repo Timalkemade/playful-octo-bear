@@ -10,14 +10,13 @@ import nl.sest.gamejam.view.sound.DestroyCellSound;
 import nl.sest.gamejam.view.sound.DestroySound;
 import nl.sest.gamejam.view.sound.MusicSound;
 import nl.sest.gamejam.view.sound.SoundHeartbeat;
-import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.*;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
-import org.newdawn.slick.TrueTypeFont;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.awt.*;
+import java.awt.Font;
 import java.text.DecimalFormat;
 
 /**
@@ -63,16 +62,47 @@ public class ViewGame implements Renderer, EventListener {
 	public void render() throws SlickException {
 		//Disable Frame per Seconds
 		gamecontainer.setShowFPS(false);
-		Image background = new Image("images/Background_Day3b.png");
-        float heightScale = Utils.getScreenHeight() / background.getHeight();
-        LOGGER.debug("Screen {} / image {} = scale {}", Utils.getScreenHeight(), background.getHeight(), heightScale);
-		background.draw(0, 0, heightScale*1.15f);
 
+        backgroundSolid();
+        //backgroundAnimated();
 		sideBar();
 		map();
 		renderModel();
 		topBar();
 	}
+
+    private void backgroundSolid() throws SlickException {
+        Image background = new Image("images/Background_Day3b.png");
+        float heightScale = Utils.getScreenHeight() / background.getHeight();
+        LOGGER.debug("Screen {} / image {} = scale {}", Utils.getScreenHeight(), background.getHeight(), heightScale);
+        background.draw(0, 0, heightScale*1.15f);
+    }
+
+    private void backgroundAnimated() throws SlickException {
+        Animation animation = new Animation(true);
+        int duration = 20;
+
+        Image im1_us = new Image("images/background/1.png");
+        float heightScale = 1.15f * Utils.getScreenHeight() / im1_us.getHeight();
+        Image im1 = im1_us.getScaledCopy(heightScale);
+        Image im2_us = new Image("images/background/2.png");
+        Image im2 = im2_us.getScaledCopy(heightScale);
+        Image im3_us = new Image("images/background/3.png");
+        Image im3 = im3_us.getScaledCopy(heightScale);
+        Image im4_us = new Image("images/background/4.png");
+        Image im4 = im4_us.getScaledCopy(heightScale);
+
+        animation.addFrame(im1, duration);
+        animation.addFrame(im2, duration);
+        animation.addFrame(im3, duration);
+        animation.addFrame(im4, duration);
+        animation.addFrame(im3, duration);
+        animation.addFrame(im2, duration);
+        animation.addFrame(im1, duration);
+
+        animation.setLooping(true);
+        animation.draw(0,0);
+    }
 
 	/**
 	 * Create topbar with scores and time
