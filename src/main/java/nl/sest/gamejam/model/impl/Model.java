@@ -22,17 +22,18 @@ public class Model {
 	private final Set<Bob> bobs = new HashSet<Bob>();
 	private final Set<PlayerAttractor> playerAttractors = new HashSet<PlayerAttractor>();
 	private final Set<PlayerRepulsor> playerRepulsors = new HashSet<PlayerRepulsor>();
+	private final Set<Blockade> blockades = new HashSet<Blockade>();
 
 	private final List<PointOfInterest> pointsOfInterest = new ArrayList<PointOfInterest>();
-
 	private final Set<Obstacle> obstacles = new HashSet<Obstacle>();
+
 	private final Set<Valuable> valuables = new HashSet<Valuable>();
 	private final Set<Edge> edges = new HashSet<Edge>();
 
 	private final ArrayList<TrainDestination> trainDestinations = new ArrayList<TrainDestination>();
-
 	private List<CreatePhysicalListener> createListeners = new ArrayList<CreatePhysicalListener>();
 	private List<DeletePhysicalListener> deleteListeners = new ArrayList<DeletePhysicalListener>();
+
 	private List<EventListener> eventListeners = new ArrayList<EventListener>();
 
 	private Heartbeat heartbeat;
@@ -175,6 +176,20 @@ public class Model {
 	public void addEdge(Edge edge) {
 		edges.add(edge);
 		fireCreateListeners(edge);
+	}
+
+	public void addBlockade(Blockade blockade) {
+		blockades.add(blockade);
+		fireCreateListeners(blockade);
+	}
+
+	public void removeBlockade(Blockade blockade) {
+		blockades.remove(blockade);
+		fireDeleteListeners(blockade);
+	}
+
+	public Collection<Blockade> getBlockades() {
+		return Collections.unmodifiableCollection(blockades);
 	}
 
 	/**
@@ -324,6 +339,7 @@ public class Model {
 		renderables.addAll(playerAttractors);
 		renderables.addAll(playerRepulsors);
 		renderables.addAll(valuables);
+		renderables.addAll(blockades);
 
 		return renderables;
 	}
