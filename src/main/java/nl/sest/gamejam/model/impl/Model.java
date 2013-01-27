@@ -1,5 +1,6 @@
 package nl.sest.gamejam.model.impl;
 
+import nl.sest.gamejam.events.HeartbeatEvent;
 import nl.sest.gamejam.model.Event;
 import nl.sest.gamejam.model.Physical;
 import nl.sest.gamejam.model.Renderable;
@@ -27,7 +28,7 @@ public class Model {
 	private final List<PointOfInterest> pointsOfInterest = new ArrayList<PointOfInterest>();
 	private final Set<Obstacle> obstacles = new HashSet<Obstacle>();
 	private final Set<PointOfInterest> destinations = new HashSet<PointOfInterest>();
-	private final Set<Pit> pits = new HashSet<Pit> ();
+	private final Set<Pit> pits = new HashSet<Pit>();
 
 	private final Set<Valuable> valuables = new HashSet<Valuable>();
 	private final Set<Edge> edges = new HashSet<Edge>();
@@ -127,6 +128,12 @@ public class Model {
 		return width;
 	}
 
+	public void fireEvent(HeartbeatEvent heartbeatEvent) {
+		for (EventListener eventListener : eventListeners) {
+			eventListener.onEvent(heartbeatEvent);
+		}
+	}
+
 	/**
 	 * Fire an event for all EventListeners
 	 *
@@ -177,7 +184,7 @@ public class Model {
 		bobs.remove(bob);
 		fireDeleteListeners(bob);
 	}
-	
+
 	public void addEdge(Edge edge) {
 		edges.add(edge);
 		fireCreateListeners(edge);
@@ -222,6 +229,7 @@ public class Model {
 
 	/**
 	 * Add a POI with a Pit
+	 *
 	 * @param pointOfInterest
 	 */
 	public void addPointOfInterest(PointOfInterest pointOfInterest) {
@@ -230,27 +238,27 @@ public class Model {
 		pits.add(pit);
 		fireCreateListeners(pit);
 	}
-	
+
 	public void cellKill() {
 		cellKills++;
 	}
-	
+
 	public void virusKill() {
 		virusKills++;
 	}
-	
+
 	public void virusPass() {
 		virusPass++;
 	}
-	
+
 	public int getVirusKills() {
 		return virusKills;
 	}
-	
+
 	public int getCellKills() {
 		return cellKills;
 	}
-	
+
 	public int getVirusPass() {
 		return virusPass;
 	}
@@ -283,15 +291,16 @@ public class Model {
 	public Set<Obstacle> getObstacles() {
 		return obstacles;
 	}
-	
+
 	/**
 	 * Add POI that will be attracting throughout the level
+	 *
 	 * @param pointOfInterest
 	 */
 	public void addDestination(PointOfInterest pointOfInterest) {
 		destinations.add(pointOfInterest);
 	}
-	
+
 	public Set<PointOfInterest> getDestinations() {
 		return destinations;
 	}
