@@ -31,7 +31,7 @@ public abstract class AbstractSoundPlayer {
 	}
 
 	public void loop() {
-		sound.loop(1f, 0.7f);
+		sound.loop(1f, 0.1f);
 	}
 
 

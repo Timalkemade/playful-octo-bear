@@ -3,11 +3,13 @@ package nl.sest.gamejam.controller;
 import nl.sest.gamejam.events.CellPassEvent;
 import nl.sest.gamejam.events.HeartbeatEvent;
 import nl.sest.gamejam.events.VirusPassEvent;
+import nl.sest.gamejam.model.event.listener.EndGameListener;
 import nl.sest.gamejam.model.impl.*;
 import nl.sest.gamejam.physics.PhysicsCollisionListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 
@@ -30,6 +32,7 @@ public class GameController implements PhysicsCollisionListener {
 	protected float virusCellRatio = 0.1f;
 	protected float virusRatioIncreasePerStep = 0.000005f; // per ms
 	protected boolean playing = false;
+	protected boolean ended = false;
 	
 	// Settings
 	protected int heartbeatTime = 2000; // time in milliseconds between each heartbeat
@@ -44,14 +47,26 @@ public class GameController implements PhysicsCollisionListener {
 	protected float POImaxBoostTime = 10000; // maximum life time of POIs 
 	protected float POIboostRate = 0.001f; // interest boost per ms during boost
 	protected float POIdecayRate = 0.0005f; // interest decrease per ms always
-	protected float maxCurrency = 1000; // starting currency
-	protected float damagePerVirus = 100;
-	protected float repairPerCell = 50;
+	protected float maxCurrency = 10; // starting currency
+	protected float damagePerVirus = 2;
+	protected float repairPerCell = 1;
+	
+	protected HashSet<EndGameListener> endGameListeners = new HashSet<EndGameListener>();
 	
 	private final static Logger logger = LoggerFactory.getLogger(GameController.class);
 	
 	public GameController(Model model) {
 		this.model = model;
+	}
+	
+	public void addEndGameListener(EndGameListener listener) {
+		endGameListeners.add(listener);
+	}
+	
+	public void fireEndGame() {
+		for(EndGameListener el : endGameListeners) {
+			el.endGame();
+		}
 	}
 
 	public void start() {
@@ -63,6 +78,12 @@ public class GameController implements PhysicsCollisionListener {
 	public void end() {
 		playing = false;
 		model.setEndTime(System.currentTimeMillis());
+		fireEndGame();
+		ended = true;
+	}
+	
+	public boolean isEnded() {
+		return ended;
 	}
 
 	/**
@@ -188,6 +209,10 @@ public class GameController implements PhysicsCollisionListener {
 			maybeHeartbeat();
 			updateHeartbeat();
 			updateVirusRatio(dt);
+			
+			// End Game
+			if(model.getCurrency() <= 0)
+				end();
 		}
 	}
 
