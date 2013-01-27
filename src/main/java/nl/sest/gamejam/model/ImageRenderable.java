@@ -9,4 +9,6 @@ import org.newdawn.slick.Image;
 public interface ImageRenderable extends Renderable {
 
 	Image getImage();
+
+    public float getAngle();
 }

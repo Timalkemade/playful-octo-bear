@@ -130,4 +130,9 @@ public class PointOfInterest implements Force, ImageRenderable {
 	public Image getImage() {
 		return image;
 	}
+
+    @Override
+    public float getAngle() {
+        return 0f;
+    }
 }

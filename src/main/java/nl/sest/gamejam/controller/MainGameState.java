@@ -29,6 +29,7 @@ public class MainGameState extends BasicGameState {
 			throws SlickException {
 
 		model = new Model();
+        model.setStartTime(System.currentTimeMillis());
 		Utils.setModel(model);
 
 		pi = new PhysicsInterface(model);

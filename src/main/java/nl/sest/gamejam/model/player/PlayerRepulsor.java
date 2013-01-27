@@ -29,7 +29,7 @@ public class PlayerRepulsor implements Force, ImageRenderable {
 		this.y = y;
 
 		try {
-			image = new Image("images/dino.png");
+			image = new Image("images/REPULSOR1.png");
 		} catch (SlickException e) {
 			throw new ImageLoadingException("Failed to load image", e);
 		}
@@ -54,4 +54,9 @@ public class PlayerRepulsor implements Force, ImageRenderable {
 	public Image getImage() {
 		return image;
 	}
+
+    @Override
+    public float getAngle() {
+        return 0f;
+    }
 }
