@@ -22,11 +22,29 @@ public class GameInputController {
 	private Model model;
 
 	private Vector2f dragStart;
+	private PlayerRepulsor repulsor;
 
 	public GameInputController(Model model) {
 		this.model = model;
 		dragStart = null;
+		repulsor = null;
 	}
+
+	public void handleMousePressed(float x, float y) {
+		LOGGER.debug("Mouse Pressed [{},{}]", x, y);
+		Vector2f converted = Utils.screenToWorld(model, x, y);
+		repulsor = new PlayerRepulsor(converted.x, converted.y);
+		model.addPlayerRepulsor(repulsor);
+	}
+
+	public void handleForceReleased(float x, float y) {
+		LOGGER.debug("Mouse Force Released [{}, {}]", x, y);
+
+		model.removePlayerRepulsor(repulsor);
+		repulsor = null;
+
+	}
+
 
 	public void handleLeftClick(float x, float y) {
 		LOGGER.debug("Left click at: [{}, {}]", x, y);
@@ -60,7 +78,7 @@ public class GameInputController {
 		}
 	}
 
-	public void handleDragAndDrop(float startX, float startY, float endX, float endY) {
+	private void handleDragAndDrop(float startX, float startY, float endX, float endY) {
 
 		float[] logvalues = {startX, startY, endX, endY};
 		LOGGER.debug("{}", logvalues);

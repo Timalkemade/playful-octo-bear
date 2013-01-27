@@ -72,25 +72,14 @@ public class MainGameState extends BasicGameState {
 		return 0;
 	}
 
-
 	@Override
-	public void mouseClicked(int button, int x, int y, int clickCount) {
-		if (button == 0) {
-			inputController.handleLeftClick(x, y);
-		} else if (button == 1) {
-			inputController.handleRightClick(x, y);
-		}
-	}
-
-
-	@Override
-	public void mouseDragged(int oldx, int oldy, int newx, int newy) {
-		inputController.handleMouseDrag(oldx, oldy, newx, newy);
+	public void mousePressed(int button, int x, int y) {
+		inputController.handleMousePressed(x, y);
 	}
 
 	@Override
 	public void mouseReleased(int button, int x, int y) {
-		inputController.handleMouseUp(x, y);
+		inputController.handleForceReleased(x, y);
 	}
 
 	@Override
