@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  */
 public class AnimationRenderer implements Renderer {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ImageRenderer.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AnimationRenderer.class);
 
     private AnimationRenderable object;
     private Animation animation;
