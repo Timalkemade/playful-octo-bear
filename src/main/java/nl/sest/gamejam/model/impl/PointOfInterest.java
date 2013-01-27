@@ -26,7 +26,7 @@ public class PointOfInterest implements Force, ImageRenderable {
 	protected long startTime = 0;
 	protected float maxBoostTime = 0; // The total lifetime of this POI (sigma of Gaussian function)
 	protected float maxInterest = 0; // The maximum interest that this POI will reach ('a' of Gaussian function)
-
+	protected float staticInterest = 0; // If set higher than 0, this will always stay the same
 
 	/**
 	 * Constructor for a point of interest.
@@ -49,6 +49,14 @@ public class PointOfInterest implements Force, ImageRenderable {
 		}
 
 		this.renderer = new ParticleRenderer(this);
+	}
+	
+	/**
+	 * Set a static interest to this POI. This will not change if set.
+	 * @param interest
+	 */
+	public void setStaticInterest(float interest) {
+		staticInterest = interest;
 	}
 
 	/**
@@ -114,7 +122,10 @@ public class PointOfInterest implements Force, ImageRenderable {
 	 * @return
 	 */
 	public float getInterest() {
-		return interest;
+		if(staticInterest > 0)
+			return staticInterest;
+		else
+			return interest;
 	}
 
 	@Override

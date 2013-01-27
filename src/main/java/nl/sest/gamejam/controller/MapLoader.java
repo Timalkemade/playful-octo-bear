@@ -1,5 +1,7 @@
 package nl.sest.gamejam.controller;
 
+import org.jbox2d.common.Vec2;
+
 import nl.sest.gamejam.model.impl.*;
 
 public class MapLoader {
@@ -49,9 +51,9 @@ public class MapLoader {
 		model.addObstacle(new Obstacle(13 * gs, 14 * gs, "Normal", "N"));
 
 		// Trains
-		model.addTrainDestination(new TrainDestination(20 * gs, -3 * gs));
-		model.addTrainDestination(new TrainDestination(-3 * gs, 4 * gs));
-		model.addTrainDestination(new TrainDestination(0 * gs, 18 * gs));
+		model.addTrainDestination(new TrainDestination(20 * gs, -1 * gs));
+		model.addTrainDestination(new TrainDestination(-1 * gs, 4 * gs));
+		model.addTrainDestination(new TrainDestination(0 * gs, 16 * gs));
 
 		// POIs
 		model.addPointOfInterest(new PointOfInterest(6 * gs, 2 * gs, 0, 5000));
@@ -59,7 +61,9 @@ public class MapLoader {
 		model.addPointOfInterest(new PointOfInterest(7 * gs, 14 * gs, 0, 5000));
 		model.addPointOfInterest(new PointOfInterest(19 * gs, 10 * gs, 0, 5000));
 		model.addPointOfInterest(new PointOfInterest(12 * gs, 6 * gs, 0, 5000));
-		model.addPointOfInterest(new PointOfInterest(25 * gs, 20 * gs, 0, 60000));
+		PointOfInterest goal = new PointOfInterest(25 * gs, 20 * gs, 0, 0);
+		goal.setStaticInterest(5);
+		model.addPointOfInterest(goal);
 		
 		
 		// Valuable
@@ -74,15 +78,22 @@ public class MapLoader {
 		model.addValuable(new Valuable(10.5f * gs, 13f * gs, 1000));
 		
 		// Edges
-		model.addEdge(new Edge(0, 0, 18*gs, 1)); // top wall
-		model.addEdge(new Edge(18 * gs, - 10 * gs, 1, 10 * gs)); // to guide Bobs in
-		model.addEdge(new Edge(20 * gs, 0, 10 * gs, 1)); // to guide Bobs in
+//		model.addEdge(new Edge(new Vec2(5*gs,0), new Vec2(18*gs,0))); // top wall
+//		model.addEdge(new Edge(new Vec2(19*gs,-5*gs), new Vec2(18*gs,0))); // to guide Bobs (top right)
+//		model.addEdge(new Edge(new Vec2(20*gs,0), new Vec2(25*gs,-2*gs))); // to guide Bobs (top right)
+//		
+//		model.addEdge(new Edge(new Vec2(20*gs,0), new Vec2(20*gs,15*gs))); // right wall
+//		model.addEdge(new Edge(new Vec2(5*gs,15*gs), new Vec2(20*gs,15*gs))); // bottom wall
+//		model.addEdge(new Edge(new Vec2(20*gs,0), new Vec2(20*gs,15*gs))); // guide Bobs in (bottom right)
+//		model.addEdge(new Edge(new Vec2(20*gs,15*gs), new Vec2(25*gs,20*gs))); // guide Bobs in (bottom right)
+//		
+//		model.addEdge(new Edge(new Vec2(0,5*gs), new Vec2(0,15*gs))); // left wall
+//		model.addEdge(new Edge(new Vec2(0,15*gs), new Vec2(-5*gs,17*gs))); // guide Bobs in (bottom left)
+//		model.addEdge(new Edge(new Vec2(5*gs,15*gs), new Vec2(2*gs,20*gs))); // guide Bobs in (bottom left)
+//		
+//		model.addEdge(new Edge(new Vec2(0,5*gs), new Vec2(-5*gs,-2*gs))); // guide Bobs in (top left)
+//		model.addEdge(new Edge(new Vec2(5*gs,0), new Vec2(0*gs,-5*gs))); // guide Bobs in (top left)
 		
-		model.addEdge(new Edge(20 * gs, 0, 1, 15 * gs)); // right wall
-		model.addEdge(new Edge(5 * gs, 15 * gs, (20-5) * gs, 1)); // bottom wall
-		model.addEdge(new Edge(5 * gs, 15 * gs, 10 * gs, 1)); // to guide Bobs in
-		model.addEdge(new Edge(5 * gs, 15 * gs, 10 * gs, 1)); // to guide Bobs in
-		model.addEdge(new Edge(0, 5 *gs, 1, (15-5) * gs)); // left wall
 	}
 
 }

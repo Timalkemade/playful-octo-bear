@@ -127,7 +127,7 @@ public class PhysicsInterface implements CreatePhysicalListener, DeletePhysicalL
 			Edge edge = (Edge) physical;
 			
 		    PolygonShape pShape = new PolygonShape();
-		    pShape.setAsBox(edge.getWidth(), edge.getWidth());
+		    pShape.setAsEdge(edge.getPoint1(), edge.getPoint2());
 		    shape = pShape;
 		}
 		else {
@@ -207,7 +207,7 @@ public class PhysicsInterface implements CreatePhysicalListener, DeletePhysicalL
 	    		float interest = poi.getInterest()/10f;
 	    		float dist = (float)Math.max(0.0001, poiVec.sub(bobVec).length());
 				Vec2 force = computeForceVector(bobVec, poiVec, (interest)/dist);
-				force.mulLocal(1f/numActivePOIs);
+//				force.mulLocal(1f/numActivePOIs);
 				body.applyForce(force, body.getWorldCenter());
     		}
 		}

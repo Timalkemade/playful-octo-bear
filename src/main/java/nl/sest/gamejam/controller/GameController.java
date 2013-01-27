@@ -84,7 +84,7 @@ public class GameController implements PhysicsCollisionListener {
 		int numTrains = destinations.size();
 		Heartbeat hb = new Heartbeat(0);
 		if(numTrains > 0) {
-			int r = (int) Math.random() * (destinations.size()-1);
+			int r = (int) (Math.random() * destinations.size());
 			TrainDestination destination = destinations.get(r);
 			hb.addTrain(new Train(destination, heartbeatVolume));
 		}

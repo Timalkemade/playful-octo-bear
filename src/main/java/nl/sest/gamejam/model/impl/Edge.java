@@ -1,45 +1,46 @@
 package nl.sest.gamejam.model.impl;
 
+import org.jbox2d.common.Vec2;
+
 import nl.sest.gamejam.model.Physical;
 
 public class Edge implements Physical{
 
-	float x, y, radius, angle, height, width;
+	float radius, angle;
 	boolean dynamic = false;
+	Vec2 point1, point2;
 	
-	public Edge(float x, float y, float width, float height) {
-		this.x = x;
-		this.y = y;
-		this.width = width;
-		this.height = height;
-	}
-
-	public float getHeight() {
-		return height;
+	public Edge(Vec2 point1, Vec2 point2) {
+		this.point1 = point1;
+		this.point2 = point2;
 	}
 	
-	public float getWidth() {
-		return width;
+	public Vec2 getPoint1() {
+		return point1;
+	}
+	
+	public Vec2 getPoint2() {
+		return point2;
 	}
 	
 	@Override
 	public float getX() {
-		return x;
+		return point1.x;
 	}
 
 	@Override
 	public void setX(float x) {
-		this.x = x;
+		point1.x = x;
 	}
 
 	@Override
 	public float getY() {
-		return y;
+		return point1.y;
 	}
 
 	@Override
 	public void setY(float y) {
-		this.y = y;
+		point1.y = y;
 	}
 
 	@Override
