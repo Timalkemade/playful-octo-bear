@@ -50,6 +50,7 @@ public class Model {
 	private int virusPass = 0;
 	private int cellPass = 0;
 	private long startTime = 0;
+	private long endTime = 0;
 
 	public Model() {
 	}
@@ -61,6 +62,14 @@ public class Model {
 	 */
 	public void setStartTime(long startTime) {
 		this.startTime = startTime;
+	}
+	
+	public void setEndTime(long endTime) {
+		this.endTime = endTime;
+	}
+	
+	public long getEndTime() {
+		return this.endTime;
 	}
 
 	/**

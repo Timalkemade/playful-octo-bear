@@ -65,7 +65,7 @@ public class ViewGame implements Renderer, EventListener {
 		Image background = new Image("images/Background_Day3b.png");
         float heightScale = Utils.getScreenHeight() / background.getHeight();
         LOGGER.debug("Screen {} / image {} = scale {}", Utils.getScreenHeight(), background.getHeight(), heightScale);
-		background.draw(0, 0);
+		background.draw(0, 0, heightScale*1.15f);
 
 		sideBar();
 		map();

@@ -9,6 +9,7 @@ import nl.sest.gamejam.physics.PhysicsCollisionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,14 +24,16 @@ public class GameController implements PhysicsCollisionListener {
 
 	// Game state
 	protected long lastHeartbeat = 0; // timestamp when the last Heartbeat ended
-	protected int heartbeatTime = 1000; // time in milliseconds between each heartbeat
 	protected long lastPOIappeared = 0; // timestamp when the last POI appeared
 	protected long nextPOITime = 0; // timestamp when next POI should appear
 	protected HashMap<Bob, Float> bobDamageCooldown = new HashMap<Bob, Float>();
 	protected float virusCellRatio = 0.1f;
+	protected float virusRatioIncreasePerStep = 0.000005f; // per ms
+	protected boolean playing = false;
 	
 	// Settings
-	protected int heartbeatVolume = 9; // number of Bobs per heartbeat
+	protected int heartbeatTime = 2000; // time in milliseconds between each heartbeat
+	protected int heartbeatVolume = 15; // number of Bobs per heartbeat
 	protected float damageChance = 1; // the chance that a single Bob will damage a Valuable on collision
 	protected float damagePerEvent = 20; // the damage applied for every violent event
 	protected float damageCoolDown = 1000; // time in ms before a Bob can damage something again
@@ -41,8 +44,8 @@ public class GameController implements PhysicsCollisionListener {
 	protected float POImaxBoostTime = 10000; // maximum life time of POIs 
 	protected float POIboostRate = 0.001f; // interest boost per ms during boost
 	protected float POIdecayRate = 0.0005f; // interest decrease per ms always
-	protected float maxCurrency = 100000; // starting currency
-	protected float damagePerVirus = 200;
+	protected float maxCurrency = 1000; // starting currency
+	protected float damagePerVirus = 100;
 	protected float repairPerCell = 50;
 	
 	private final static Logger logger = LoggerFactory.getLogger(GameController.class);
@@ -54,6 +57,12 @@ public class GameController implements PhysicsCollisionListener {
 	public void start() {
 		model.setStartTime(System.currentTimeMillis());
 		model.setCurrency(maxCurrency);
+		playing = true;
+	}
+	
+	public void end() {
+		playing = false;
+		model.setEndTime(System.currentTimeMillis());
 	}
 
 	/**
@@ -112,11 +121,18 @@ public class GameController implements PhysicsCollisionListener {
 			// Create Bobs at the destination
 			for (int i = 0; i < t.getNumBobs(); i++) {
 				// Scatter Bobs
-				float rX = (float)(Math.random()*9);
-				float rY = (float)(Math.random()*9);
+				float rX = (float)(Math.random()*35);
+				float rY = (float)(Math.random()*27);
 				
-				Bob bob = new Bob(x+rX, y+rY);
+				Bob bob = new Bob(rX/2 + x + rX, y+rY, false);
 				model.addBob(bob);
+				
+				// Decide whether a virus should be added
+				float r = (float)Math.random();
+				if(r < virusCellRatio) {
+					Bob virus = new Bob(x+rX, y+rY, true);
+					model.addBob(virus);
+				}
 			}
 		}
 	}
@@ -156,6 +172,10 @@ public class GameController implements PhysicsCollisionListener {
 			heartbeatEnd();
 		}
 	}
+	
+	private void updateVirusRatio(int dt) {
+		virusCellRatio += dt * virusRatioIncreasePerStep;
+	}
 
 	/**
 	 * Read model and adjust game state accordingly.
@@ -163,9 +183,12 @@ public class GameController implements PhysicsCollisionListener {
 	 * @param dt The time passed during this step in milliseconds.
 	 */
 	public void step(int dt) {
-		currentTime = System.currentTimeMillis();
-		maybeHeartbeat();
-		updateHeartbeat();
+		if(playing) {
+			currentTime = System.currentTimeMillis();
+			maybeHeartbeat();
+			updateHeartbeat();
+			updateVirusRatio(dt);
+		}
 	}
 
 	/**
@@ -222,12 +245,11 @@ public class GameController implements PhysicsCollisionListener {
 	public void edgeCollisionEvent(Bob bob, Edge edge) {
 		model.removeBob(bob);
 		if(bob.isVirus()) {
-			model.updateCurrency(damagePerVirus);
+			model.updateCurrency(-damagePerVirus);
 			model.fireEvent(new VirusPassEvent(currentTime, bob));
 		}
 		else {
-			if(model.getCurrency() < maxCurrency)
-				model.updateCurrency(repairPerCell);
+			model.updateCurrency(repairPerCell);
 			model.fireEvent(new CellPassEvent(currentTime, bob));
 		}
 	}

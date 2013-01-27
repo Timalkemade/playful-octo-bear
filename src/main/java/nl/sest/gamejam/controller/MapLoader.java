@@ -52,16 +52,16 @@ public class MapLoader {
 		model.addObstacle(new NormalBuilding(13 * gs, 14 * gs, "N"));
 
 		// Trains
-		model.addTrainDestination(new TrainDestination(10 * gs, -1 * gs));
-		model.addTrainDestination(new TrainDestination(-1 * gs, 4 * gs));
+		model.addTrainDestination(new TrainDestination(10 * gs, -2 * gs));
+		model.addTrainDestination(new TrainDestination(-5 * gs, 4 * gs));
 
 		// POIs
-		model.addPointOfInterest(new PointOfInterest(6 * gs, 2 * gs, 0.5f));
+		model.addPointOfInterest(new PointOfInterest(5 * gs, 3 * gs, 3f));
 //		model.addPointOfInterest(new PointOfInterest(6 * gs, 9 * gs, 0.5f));
-		model.addPointOfInterest(new PointOfInterest(7 * gs, 14 * gs, 0.5f));
-		model.addPointOfInterest(new PointOfInterest(19 * gs, 10 * gs, 0.5f));
+		model.addPointOfInterest(new PointOfInterest(4 * gs, 13 * gs, 3f));
+		model.addPointOfInterest(new PointOfInterest(19 * gs, 10 * gs, 3f));
 //		model.addPointOfInterest(new PointOfInterest(12 * gs, 6 * gs, 0.5f));
-		PointOfInterest goal = new PointOfInterest(17 * gs, 20 * gs, 50);
+		PointOfInterest goal = new PointOfInterest(17 * gs, 20 * gs, 30);
 		model.addPointOfInterest(goal);
 		
 		
@@ -77,7 +77,7 @@ public class MapLoader {
 //		model.addValuable(new Tree1(10.5f * gs, 13f * gs));
 		
 		// Edges
-		model.addEdge(new Edge(new Vec2(10*gs,16*gs), new Vec2(20*gs,1))); // top wall
+		model.addEdge(new Edge(new Vec2(10*gs,16*gs), new Vec2(80*gs,1))); // top wall
 //		model.addEdge(new Edge(new Vec2(19*gs,-5*gs), new Vec2(18*gs,0))); // to guide Bobs (top right)
 //		model.addEdge(new Edge(new Vec2(20*gs,0), new Vec2(25*gs,-2*gs))); // to guide Bobs (top right)
 //		
