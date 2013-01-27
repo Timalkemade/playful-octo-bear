@@ -104,8 +104,8 @@ public class ViewGame implements Renderer, EventListener {
         /*
 		*/
 
-		int FPS = gamecontainer.getFPS();
-		font.drawString(widthWindow - 100, 1, "FPS: " + FPS);
+//		int FPS = gamecontainer.getFPS();
+//		font.drawString(widthWindow - 100, 1, "FPS: " + FPS);
 	}
 
 	/**
