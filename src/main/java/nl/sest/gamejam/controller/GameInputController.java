@@ -42,7 +42,14 @@ public class GameInputController {
 
 		model.removePlayerRepulsor(repulsor);
 		repulsor = null;
+	}
 
+	public void handleForceDragged(float x, float y) {
+		LOGGER.debug("Mouse Force Dragged");
+
+		Vector2f converted = Utils.screenToWorld(model, x, y);
+		repulsor.setX(converted.x);
+		repulsor.setY(converted.y);
 	}
 
 

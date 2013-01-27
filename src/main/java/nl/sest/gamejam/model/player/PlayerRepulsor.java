@@ -3,8 +3,8 @@ package nl.sest.gamejam.model.player;
 import nl.sest.gamejam.exception.ImageLoadingException;
 import nl.sest.gamejam.model.Force;
 import nl.sest.gamejam.model.ImageRenderable;
-import nl.sest.gamejam.view.image.ImageRenderer;
 import nl.sest.gamejam.view.Renderer;
+import nl.sest.gamejam.view.image.ImageRenderer;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.slf4j.Logger;
@@ -55,8 +55,16 @@ public class PlayerRepulsor implements Force, ImageRenderable {
 		return image;
 	}
 
-    @Override
-    public float getAngle() {
-        return 0f;
-    }
+	@Override
+	public float getAngle() {
+		return 0f;
+	}
+
+	public void setX(float newX) {
+		x = newX;
+	}
+
+	public void setY(float newY) {
+		y = newY;
+	}
 }
