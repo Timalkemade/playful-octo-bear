@@ -1,10 +1,13 @@
 package nl.sest.gamejam.model.player;
 
 import nl.sest.gamejam.exception.ImageLoadingException;
+import nl.sest.gamejam.model.AnimationRenderable;
 import nl.sest.gamejam.model.Force;
 import nl.sest.gamejam.model.ImageRenderable;
+import nl.sest.gamejam.view.AnimationRenderer;
 import nl.sest.gamejam.view.ImageRenderer;
 import nl.sest.gamejam.view.Renderer;
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.slf4j.Logger;
@@ -16,13 +19,14 @@ import org.slf4j.LoggerFactory;
  * @author Tim
  * @since 1/26/13 9:37 AM
  */
-public class PlayerAttractor implements Force, ImageRenderable {
+public class PlayerAttractor implements Force, AnimationRenderable {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(PlayerAttractor.class);
 
 	private float x;
 	private float y;
-	private Image image;
+	private Animation animation;
+    private int duration = 50;
 
 	private Renderer renderer;
 
@@ -37,14 +41,15 @@ public class PlayerAttractor implements Force, ImageRenderable {
 		this.x = x;
 		this.y = y;
 
-		try {
-			image = new Image("images/ATTRACTOR1.png");
-		} catch (SlickException e) {
-			throw new ImageLoadingException("Failed to load image", e);
-		}
-
-		renderer = new ImageRenderer(this);
-
+        try {
+            animation = new Animation(true);
+            animation.addFrame(new Image("images/attractor/ATRACTOR1.png"), duration);
+            animation.addFrame(new Image("images/attractor/ATRACTOR2.png"), duration);
+            animation.setLooping(true);
+            renderer = new AnimationRenderer(this);
+        } catch (SlickException e) {
+            throw new ImageLoadingException("Failed to load image", e);
+        }
 	}
 
 	public float getX() {
@@ -60,13 +65,8 @@ public class PlayerAttractor implements Force, ImageRenderable {
 		return renderer;
 	}
 
-	@Override
-	public Image getImage() {
-		return image;
-	}
-
     @Override
-    public float getAngle() {
-        return 0f;
+    public Animation getAnimation() {
+        return animation;
     }
 }

@@ -69,7 +69,7 @@ public class ViewGame implements Renderer, EventListener {
         int barWidth = 240;
         int logoWidth = 120;
         //Currency
-        Image imageCurrency = new Image("images/menu/Currency.png");
+        Image imageCurrency = new Image("images/menu/Health.png");
         imageCurrency.draw(halfWindow-barWidth-seperator, 0);
 
 		String sScore = new DecimalFormat("###,###,###,###").format(model.getCurrency());
