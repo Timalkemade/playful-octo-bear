@@ -1,7 +1,8 @@
-package nl.sest.gamejam.view;
+package nl.sest.gamejam.view.image;
 
 import nl.sest.gamejam.controller.Utils;
 import nl.sest.gamejam.model.ImageRenderable;
+import nl.sest.gamejam.view.Renderer;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Vector2f;
 import org.slf4j.Logger;
