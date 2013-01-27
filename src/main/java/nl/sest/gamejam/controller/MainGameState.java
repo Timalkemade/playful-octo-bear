@@ -67,6 +67,9 @@ public class MainGameState extends BasicGameState {
 			throws SlickException {
 		pi.update();
 		gc.step(arg2);
+		if(gc.isEnded()) {
+			arg1.enterState(1);
+		}
 
 	}
 

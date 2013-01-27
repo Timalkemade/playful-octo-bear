@@ -59,7 +59,7 @@ public class MapLoader {
 		model.addPointOfInterest(new PointOfInterest(5 * gs, 3 * gs, 3f));
 //		model.addPointOfInterest(new PointOfInterest(6 * gs, 9 * gs, 0.5f));
 		model.addPointOfInterest(new PointOfInterest(4 * gs, 13 * gs, 3f));
-		model.addPointOfInterest(new PointOfInterest(19 * gs, 10 * gs, 3f));
+		model.addPointOfInterest(new PointOfInterest(17 * gs, 10 * gs, 3f));
 //		model.addPointOfInterest(new PointOfInterest(12 * gs, 6 * gs, 0.5f));
 		PointOfInterest goal = new PointOfInterest(17 * gs, 20 * gs, 30);
 		model.addPointOfInterest(goal);
