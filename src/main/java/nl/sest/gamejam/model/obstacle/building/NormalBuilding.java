@@ -13,7 +13,7 @@ public class NormalBuilding extends Obstacle {
     public NormalBuilding(float x, float y, String direction) {
         imageFile = "buildings/Normal/"+direction+"/";
         imageSize = 100f;
-        radius = 7f;
+        radius = 10f;
         value = 0f;
 
         this.x = x;

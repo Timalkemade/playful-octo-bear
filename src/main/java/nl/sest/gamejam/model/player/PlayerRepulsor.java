@@ -24,6 +24,7 @@ public class PlayerRepulsor implements Force, AnimationRenderable {
 	private int duration = 50;
     private Animation animation;
 	private Renderer renderer;
+    private String repulsorDir = "repulsor2";
 
 	public PlayerRepulsor(float x, float y) {
 		LOGGER.debug("Created repulsor at [{}, {}]", x, y);
@@ -32,13 +33,13 @@ public class PlayerRepulsor implements Force, AnimationRenderable {
 
         try {
             animation = new Animation(true);
-            animation.addFrame(new Image("images/repulsor1/WC_1.png"), duration);
-            animation.addFrame(new Image("images/repulsor1/WC_2.png"), duration);
-            animation.addFrame(new Image("images/repulsor1/WC_3.png"), duration);
-            animation.addFrame(new Image("images/repulsor1/WC_4.png"), duration);
-            animation.addFrame(new Image("images/repulsor1/WC_3.png"), duration);
-            animation.addFrame(new Image("images/repulsor1/WC_2.png"), duration);
-            animation.addFrame(new Image("images/repulsor1/WC_1.png"), duration);
+            animation.addFrame(new Image("images/"+repulsorDir+"/WC_1.png"), duration);
+            animation.addFrame(new Image("images/"+repulsorDir+"/WC_2.png"), duration);
+            animation.addFrame(new Image("images/"+repulsorDir+"/WC_3.png"), duration);
+            animation.addFrame(new Image("images/"+repulsorDir+"/WC_4.png"), duration);
+            animation.addFrame(new Image("images/"+repulsorDir+"/WC_3.png"), duration);
+            animation.addFrame(new Image("images/"+repulsorDir+"/WC_2.png"), duration);
+            animation.addFrame(new Image("images/"+repulsorDir+"/WC_1.png"), duration);
             animation.setLooping(true);
             this.renderer = new AnimationRenderer(this);
         } catch (SlickException e) {

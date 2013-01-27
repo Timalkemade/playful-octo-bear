@@ -237,8 +237,10 @@ public class PhysicsInterface implements CreatePhysicalListener, DeletePhysicalL
     	for(PlayerRepulsor pr : prs) {
     		Vec2 paVec = new Vec2(pr.getX(), pr.getY());
     		Vec2 bobVec = body.getWorldCenter();
-			Vec2 force = computeForceVector(paVec, bobVec, 0.01f);
-			body.applyForce(force, body.getWorldCenter());
+			Vec2 force = computeForceVector(paVec, bobVec, 0.03f);
+			float dist = bobVec.sub(paVec).length();
+			if(dist < 30)
+				body.applyForce(force, body.getWorldCenter());
     	} 
     }
     

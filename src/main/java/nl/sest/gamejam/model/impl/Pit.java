@@ -10,7 +10,7 @@ public class Pit implements Physical {
 	public Pit(float x, float y) {
 		this.x = x;
 		this.y = y;
-		radius = 2;
+		radius = 10;
 	}
 	
 	@Override
