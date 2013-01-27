@@ -52,8 +52,12 @@ public class MainGameState extends BasicGameState {
 
 		world = pi.getWorld();
 		inputController = new GameInputController(model);
+	}
+	
+	@Override
+	public void enter(GameContainer container, StateBasedGame game)
+			throws SlickException {
 		gc.start();
-
 	}
 
 	@Override
@@ -68,14 +72,20 @@ public class MainGameState extends BasicGameState {
 		pi.update();
 		gc.step(arg2);
 		if(gc.isEnded()) {
-			arg1.enterState(1);
+			try {
+				Thread.sleep(5000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			arg0.exit();
 		}
 
 	}
 
 	@Override
 	public int getID() {
-		return 0;
+		return 2;
 	}
 
 	@Override

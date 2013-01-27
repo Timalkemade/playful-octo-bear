@@ -29,7 +29,7 @@ public class GameController implements PhysicsCollisionListener {
 	protected long lastPOIappeared = 0; // timestamp when the last POI appeared
 	protected long nextPOITime = 0; // timestamp when next POI should appear
 	protected HashMap<Bob, Float> bobDamageCooldown = new HashMap<Bob, Float>();
-	protected float virusCellRatio = 0.9f;
+	protected float virusCellRatio = 0.1f;
 	protected float virusRatioIncreasePerStep = 0.000005f; // per ms
 	protected boolean playing = false;
 	protected boolean ended = false;
