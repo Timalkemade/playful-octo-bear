@@ -11,8 +11,8 @@ public class Supermarket extends Obstacle {
 
     public Supermarket(float x, float y, String direction) {
         this.imageSize = 150f;
-        this.imageFile = "images/buildings/Supermarket.png";
-        this.radius = 5;
+        this.imageFile = "images/buildings/Supermarket/";
+        this.radius = 10f;
         this.value = 0f;
 
         this.x = x;

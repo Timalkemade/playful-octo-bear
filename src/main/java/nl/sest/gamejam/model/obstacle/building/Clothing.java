@@ -11,8 +11,8 @@ public class Clothing extends Obstacle {
 
     public Clothing(float x, float y, String direction) {
         this.imageSize = 150f;
-        this.imageFile = "images/buildings/Clothing.png";
-        this.radius = 5;
+        this.imageFile = "images/buildings/Clothing/";
+        this.radius = 10f;
         this.value = 0f;
 
         this.x = x;

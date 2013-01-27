@@ -44,6 +44,9 @@ public class Model {
 	private float width = 0;
 
 	private float currency = 0;
+	private int virusKills = 0;
+	private int cellKills = 0;
+	private int virusPass = 0;
 	private long startTime = 0;
 
 	public Model() {
@@ -217,9 +220,39 @@ public class Model {
 		trainDestinations.add(td);
 	}
 
+	/**
+	 * Add a POI with a Pit
+	 * @param pointOfInterest
+	 */
 	public void addPointOfInterest(PointOfInterest pointOfInterest) {
 		pointsOfInterest.add(pointOfInterest);
-//		pits.add(new Pit());
+		Pit pit = new Pit(pointOfInterest.getX(), pointOfInterest.getY());
+		pits.add(pit);
+		fireCreateListeners(pit);
+	}
+	
+	public void cellKill() {
+		cellKills++;
+	}
+	
+	public void virusKill() {
+		virusKills++;
+	}
+	
+	public void virusPass() {
+		virusPass++;
+	}
+	
+	public int getVirusKills() {
+		return virusKills;
+	}
+	
+	public int getCellKills() {
+		return cellKills;
+	}
+	
+	public int getVirusPass() {
+		return virusPass;
 	}
 
 	/**

@@ -52,8 +52,8 @@ public class ViewGame implements Renderer, EventListener, DeletePhysicalListener
 	public void render() throws SlickException {
 		//Disable Frame per Seconds
 		gamecontainer.setShowFPS(false);
-		Image background = new Image("images/Background_D.png");
-		background.draw(0, 0);
+        Image background = new Image("images/Background_A.png");
+        background.draw(0, 0);
 
 		sideBar();
 		map();

@@ -31,7 +31,7 @@ public class Blockade implements Physical, ImageRenderable {
 		isDynamic = dynamic;
 		this.previous = previous;
 		try {
-			image = new Image("images/bobs/bob1.png");
+			image = new Image("images/bobs/bloodcell.png");
 		} catch (SlickException e) {
 			throw new ImageLoadingException("Failed to load image");
 		}

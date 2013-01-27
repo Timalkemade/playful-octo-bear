@@ -17,6 +17,7 @@ public class ImageRenderer implements Renderer {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ImageRenderer.class);
 
 	private ImageRenderable object;
+    private Image image;
 
 	/**
 	 * Create view for physical object
@@ -25,18 +26,18 @@ public class ImageRenderer implements Renderer {
 	 */
 	public ImageRenderer(ImageRenderable newObject) {
 		object = newObject;
+        image = object.getImage();
+        image.rotate(object.getAngle());
 	}
 
 	/**
 	 * Render object
 	 */
 	public void render() {
-		Image image = object.getImage();
 		//LOGGER.debug("original Location {}, {}", object.getX(), object.getY());
 		Vector2f location = Utils.worldToScreen(object.getX(), object.getY());
 		float drawLocationX = location.getX() - image.getCenterOfRotationX();
 		float drawLocationY = location.getY() - image.getCenterOfRotationY();
-        image.rotate(object.getAngle());
 		//LOGGER.debug("location {}", location);
 		image.draw(drawLocationX, drawLocationY);
 	}

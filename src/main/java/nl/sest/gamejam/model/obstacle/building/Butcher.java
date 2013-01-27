@@ -11,8 +11,8 @@ public class Butcher extends Obstacle {
 
     public Butcher(float x, float y, String direction) {
         this.imageSize = 150f;
-        this.imageFile = "images/buildings/Butcher.png";
-        this.radius = 5;
+        this.imageFile = "images/buildings/Butcher/";
+        this.radius = 10f;
         this.value = 0f;
 
         this.x = x;
