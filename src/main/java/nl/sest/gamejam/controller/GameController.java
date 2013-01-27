@@ -1,6 +1,8 @@
 package nl.sest.gamejam.controller;
 
+import nl.sest.gamejam.events.CellPassEvent;
 import nl.sest.gamejam.events.HeartbeatEvent;
+import nl.sest.gamejam.events.VirusPassEvent;
 import nl.sest.gamejam.model.impl.*;
 import nl.sest.gamejam.physics.PhysicsCollisionListener;
 
@@ -39,6 +41,8 @@ public class GameController implements PhysicsCollisionListener {
 	protected float POIboostRate = 0.001f; // interest boost per ms during boost
 	protected float POIdecayRate = 0.0005f; // interest decrease per ms always
 	protected float startingCurrency = 100000; // starting currency
+	protected float damagePerVirus = 200;
+	protected float repairPerCell = 50;
 	
 	private final static Logger logger = LoggerFactory.getLogger(GameController.class);
 	
@@ -154,47 +158,6 @@ public class GameController implements PhysicsCollisionListener {
 	}
 
 	/**
-	 * Increase and decrease the interest factors of the POIs
-	 */
-	public void updatePOIs(int dt) {
-		// Go through POIs
-		List<PointOfInterest> pois = model.getPointsOfInterest();
-		for (PointOfInterest poi : pois) {
-            poi.updateRenderer(dt);
-            
-            // Get current interest
-            float currentInterest = poi.getInterest();
-            
-			// If POI is within boost time, add interest
-			if (currentTime - poi.getStartTime() < poi.getMaxBoostTime()) {
-				// Boost
-				currentInterest += POIboostRate * dt;
-			}
-			
-			// Decay interest
-			currentInterest -= POIdecayRate * dt;
-			
-			// Update interest
-			logger.debug("Interest {}", currentInterest);
-			poi.setInterest(currentInterest);
-		}
-
-		// If it is time, activate new POI
-		if (currentTime > nextPOITime) {
-			// Select random POI
-			int random = (int) (Math.random() * pois.size());
-			PointOfInterest poi = pois.get(random);
-
-			// Activate POI
-			poi.start(POImaxInterest, POImaxBoostTime);
-
-			// Determine next POI appearance
-			int POIInterval = (int) (Math.random() * (POImaxInterval - POIminInterval) + POIminInterval);
-			nextPOITime = currentTime + POIInterval;
-		}			
-	}
-
-	/**
 	 * Read model and adjust game state accordingly.
 	 *
 	 * @param dt The time passed during this step in milliseconds.
@@ -203,7 +166,6 @@ public class GameController implements PhysicsCollisionListener {
 		currentTime = System.currentTimeMillis();
 		maybeHeartbeat();
 		updateHeartbeat();
-		updatePOIs(dt);
 	}
 
 	/**
@@ -239,14 +201,6 @@ public class GameController implements PhysicsCollisionListener {
 //	
 //	@Override
 //	public void obstacleCollisionEvent(Bob bob, Pit obstacle) {
-//		if(bob.isVirus())
-//			model.cellKill();
-//		else
-//			model.virusKill();
-//	}
-//
-//	@Override
-//	public void obstacleCollisionEvent(Bob bob, Obstacle obstacle) {
 //		
 //	}
 
@@ -263,14 +217,28 @@ public class GameController implements PhysicsCollisionListener {
 
 	@Override
 	public void pitCollisionEvent(Bob bob, Pit pit) {
-		// TODO Auto-generated method stub
-		
+		if(bob.isVirus()) {
+			model.virusKill(bob);
+		}
+		else {
+			model.cellKill(bob);
+		}
 	}
 
 	@Override
+	/**
+	 * Bobs passing
+	 */
 	public void edgeCollisionEvent(Bob bob, Edge edge) {
-		// TODO Auto-generated method stub
-		
+		model.removeBob(bob);
+		if(bob.isVirus()) {
+			model.updateCurrency(damagePerVirus);
+			model.fireEvent(new VirusPassEvent(currentTime, bob));
+		}
+		else {
+			model.updateCurrency(repairPerCell);
+			model.fireEvent(new CellPassEvent(currentTime, bob));
+		}
 	}
 
 }

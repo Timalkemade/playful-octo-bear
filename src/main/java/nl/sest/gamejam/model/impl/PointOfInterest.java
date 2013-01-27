@@ -34,13 +34,12 @@ public class PointOfInterest implements Force, ImageRenderable {
 	 * @param x The x location of this PointOfInterest
 	 * @param y The y location of this PointOfInternet
 	 */
-	public PointOfInterest(float x, float y, float maxInterest, float maxBoostTime) {
+	public PointOfInterest(float x, float y, float interest) {
 		this.x = x;
 		this.y = y;
+		this.interest = interest;
 
 		this.startTime = System.currentTimeMillis();
-		this.maxInterest = maxInterest;
-		this.maxBoostTime = maxBoostTime;
 
 		try {
 			this.image = new Image("images/earth.jpg");
@@ -122,10 +121,7 @@ public class PointOfInterest implements Force, ImageRenderable {
 	 * @return
 	 */
 	public float getInterest() {
-		if(staticInterest > 0)
-			return staticInterest;
-		else
-			return interest;
+		return interest;
 	}
 
 	@Override

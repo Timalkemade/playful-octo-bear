@@ -4,7 +4,6 @@ import org.jbox2d.common.Vec2;
 
 import nl.sest.gamejam.model.impl.*;
 import nl.sest.gamejam.model.obstacle.building.*;
-import nl.sest.gamejam.model.obstacle.valuable.*;
 
 public class MapLoader {
 
@@ -19,7 +18,7 @@ public class MapLoader {
 	 */
 	public void loadMap(Model model) {
 
-		float gs = 8; // grid square size in meters
+		float gs = 16; // grid square size in meters
 		model.setWorldDimension(20 * gs, 15 * gs);
 		
 		// Buildings
@@ -53,34 +52,33 @@ public class MapLoader {
 		model.addObstacle(new NormalBuilding(13 * gs, 14 * gs, "N"));
 
 		// Trains
-		model.addTrainDestination(new TrainDestination(20 * gs, -1 * gs));
+		model.addTrainDestination(new TrainDestination(10 * gs, -1 * gs));
 		model.addTrainDestination(new TrainDestination(-1 * gs, 4 * gs));
 		model.addTrainDestination(new TrainDestination(0 * gs, 16 * gs));
 
 		// POIs
-		model.addPointOfInterest(new PointOfInterest(6 * gs, 2 * gs, 0, 5000));
-		model.addPointOfInterest(new PointOfInterest(6 * gs, 9 * gs, 0, 5000));
-		model.addPointOfInterest(new PointOfInterest(7 * gs, 14 * gs, 0, 5000));
-		model.addPointOfInterest(new PointOfInterest(19 * gs, 10 * gs, 0, 5000));
-		model.addPointOfInterest(new PointOfInterest(12 * gs, 6 * gs, 0, 5000));
-		PointOfInterest goal = new PointOfInterest(25 * gs, 20 * gs, 0, 0);
-		goal.setStaticInterest(5);
-		model.addDestination(goal);
+		model.addPointOfInterest(new PointOfInterest(6 * gs, 2 * gs, 0.5f));
+		model.addPointOfInterest(new PointOfInterest(6 * gs, 9 * gs, 0.5f));
+		model.addPointOfInterest(new PointOfInterest(7 * gs, 14 * gs, 0.5f));
+		model.addPointOfInterest(new PointOfInterest(19 * gs, 10 * gs, 0.5f));
+		model.addPointOfInterest(new PointOfInterest(12 * gs, 6 * gs, 0.5f));
+		PointOfInterest goal = new PointOfInterest(17 * gs, 20 * gs, 50);
+		model.addPointOfInterest(goal);
 		
 		
 		// Valuable
-		model.addValuable(new ATM(10.5f * gs, 3.5f * gs));
-		model.addValuable(new Tree1(19f * gs, 5f * gs));
-		model.addValuable(new Bus(7f * gs, 6f * gs));
-		model.addValuable(new Bench(17f * gs, 6.5f * gs));
-		model.addValuable(new Garbagebin1(2f * gs, 7.5f * gs));
-		model.addValuable(new Tree2(9f * gs, 7.5f * gs));
-		model.addValuable(new Tile(18f * gs, 10f * gs));
-		model.addValuable(new Lantern(8f * gs, 11.5f * gs));
-		model.addValuable(new Tree1(10.5f * gs, 13f * gs));
+//		model.addValuable(new ATM(10.5f * gs, 3.5f * gs));
+//		model.addValuable(new Tree1(19f * gs, 5f * gs));
+//		model.addValuable(new Bus(7f * gs, 6f * gs));
+//		model.addValuable(new Bench(17f * gs, 6.5f * gs));
+//		model.addValuable(new Garbagebin1(2f * gs, 7.5f * gs));
+//		model.addValuable(new Tree2(9f * gs, 7.5f * gs));
+//		model.addValuable(new Tile(18f * gs, 10f * gs));
+//		model.addValuable(new Lantern(8f * gs, 11.5f * gs));
+//		model.addValuable(new Tree1(10.5f * gs, 13f * gs));
 		
 		// Edges
-//		model.addEdge(new Edge(new Vec2(5*gs,0), new Vec2(18*gs,0))); // top wall
+		model.addEdge(new Edge(new Vec2(0,-1*gs), new Vec2(20*gs,-1*gs))); // top wall
 //		model.addEdge(new Edge(new Vec2(19*gs,-5*gs), new Vec2(18*gs,0))); // to guide Bobs (top right)
 //		model.addEdge(new Edge(new Vec2(20*gs,0), new Vec2(25*gs,-2*gs))); // to guide Bobs (top right)
 //		

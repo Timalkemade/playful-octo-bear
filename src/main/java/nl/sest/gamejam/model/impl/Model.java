@@ -1,5 +1,7 @@
 package nl.sest.gamejam.model.impl;
 
+import nl.sest.gamejam.events.CellKillEvent;
+import nl.sest.gamejam.events.VirusKillEvent;
 import nl.sest.gamejam.model.Event;
 import nl.sest.gamejam.model.Physical;
 import nl.sest.gamejam.model.Renderable;
@@ -47,6 +49,7 @@ public class Model {
 	private int virusKills = 0;
 	private int cellKills = 0;
 	private int virusPass = 0;
+	private int cellPass = 0;
 	private long startTime = 0;
 
 	public Model() {
@@ -231,16 +234,24 @@ public class Model {
 		fireCreateListeners(pit);
 	}
 	
-	public void cellKill() {
+	public void cellKill(Bob bob) {
 		cellKills++;
+		removeBob(bob);
+		fireEvent(new CellKillEvent(System.currentTimeMillis(), bob));
 	}
 	
-	public void virusKill() {
+	public void virusKill(Bob bob) {
 		virusKills++;
+		removeBob(bob);
+		fireEvent(new VirusKillEvent(System.currentTimeMillis(), bob));
 	}
 	
 	public void virusPass() {
 		virusPass++;
+	}
+	
+	public void cellPass() {
+		cellPass++;
 	}
 	
 	public int getVirusKills() {
@@ -253,6 +264,10 @@ public class Model {
 	
 	public int getVirusPass() {
 		return virusPass;
+	}
+	
+	public int getCellPass() {
+		return cellPass;
 	}
 
 	/**
