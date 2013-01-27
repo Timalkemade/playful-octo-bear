@@ -25,6 +25,7 @@ public class Main {
 			width = 1024;
 
 			AppGameContainer app = new AppGameContainer(game, (int) width, (int) height, false);
+            app.setShowFPS(false);
 			Utils.initialize(width, height);
 
 			app.setMinimumLogicUpdateInterval(20);
