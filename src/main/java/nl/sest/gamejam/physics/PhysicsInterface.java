@@ -155,12 +155,11 @@ public class PhysicsInterface implements CreatePhysicalListener, DeletePhysicalL
 	    	Body previousBody = objects.get(previous);
 			
 	    	// Middle or last object in list
-	    	if ((previous != null && blockade.isDynamic() == true) 
-	    			|| (previous == null && blockade.isDynamic() == false)) {
+	    	if (previous != null) {
 	    		DistanceJointDef djd = new DistanceJointDef();
 	    		djd.bodyA = previousBody;
 				djd.bodyB = body;
-				djd.length = previousBody.getLocalCenter().sub(body.getLocalCenter()).length();
+				djd.length = 1f;
 				djd.frequencyHz = 0;
 				djd.dampingRatio = 0;
 				DistanceJoint dj = (DistanceJoint) world.createJoint(djd);

@@ -75,12 +75,12 @@ public class GameInputController {
 		while (convertedEnd.copy().sub(convertedStart).lengthSquared() > nextVectorPoint.copy().sub(convertedStart).lengthSquared()
 				&& nextVectorPoint.copy().sub(convertedStart).lengthSquared() < 576) {
 
-			Blockade blockade = new Blockade(nextVectorPoint.x, nextVectorPoint.y, i == 0, previous);
+			Blockade blockade = new Blockade(nextVectorPoint.x, nextVectorPoint.y, i != 0, previous);
 			model.addBlockade(blockade);
 			previous = blockade;
 			nextVectorPoint.add(addingVector);
 			i++;
 		}
-		model.addBlockade(new Blockade(nextVectorPoint.x, nextVectorPoint.y, true, previous));
+		model.addBlockade(new Blockade(nextVectorPoint.x, nextVectorPoint.y, false, previous));
 	}
 }
