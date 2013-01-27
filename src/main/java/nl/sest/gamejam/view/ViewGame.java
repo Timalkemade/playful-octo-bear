@@ -3,7 +3,6 @@ package nl.sest.gamejam.view;
 import nl.sest.gamejam.model.Event;
 import nl.sest.gamejam.model.Renderable;
 import nl.sest.gamejam.model.impl.EventListener;
-import nl.sest.gamejam.model.impl.Heartbeat;
 import nl.sest.gamejam.model.impl.Model;
 import org.newdawn.slick.Color;
 import nl.sest.gamejam.events.HeartbeatEvent;
@@ -23,12 +22,8 @@ public class ViewGame implements Renderer, EventListener {
 
 	private GameContainer gamecontainer = null;
 	private TrueTypeFont font;
-	private float score = 0f;
-	private float time = 0f;
 
-	private int HeightTopBar = 0;
-	private int HeightWindow = 0;
-	private int WidthWindow = 0;
+	private int widthWindow = 0;
 
 	private Model model;
 
@@ -42,8 +37,7 @@ public class ViewGame implements Renderer, EventListener {
 		model = theModel;
 		model.registerEventListener(this);
 
-		this.WidthWindow = gc.getWidth();
-		this.HeightWindow = gc.getHeight();
+		this.widthWindow = gc.getWidth();
 
 		//Set font                                    .
 		Font awtFont = new Font("Times New Roman", Font.BOLD, 20);
@@ -69,21 +63,34 @@ public class ViewGame implements Renderer, EventListener {
 	 * Create topbar with scores and time
 	 */
 	private void topBar() throws SlickException {
-		Image topbar = new Image("images/topbar.jpg");
-		HeightTopBar = topbar.getHeight();
-		topbar.draw(0, 0);
+
+        int halfWindow = widthWindow /2;
+        int seperator = 10;
+        int barWidth = 150;
+        int logoWidth = 55;
+        //Currency
+        Image imageCurrency = new Image("images/menu/Currency.png");
+        imageCurrency.draw(halfWindow-barWidth-seperator, 0);
 
 		String sScore = new DecimalFormat("###,###,###,###").format(model.getCurrency());
-		font.drawString(166, 8, sScore, Color.black);
+		font.drawString(halfWindow-barWidth-seperator+logoWidth, 12, sScore);
+
+        //Currency
+        Image imageTime = new Image("images/menu/Time.png");
+        imageTime.draw(halfWindow+seperator, 0);
+
+        long time = System.currentTimeMillis()-model.getStartTime();
+        int seconds = (int) ((time / 1000) % 60);
+        int minutes = (int) ((time / 1000) / 60);
+        String sMinutes = new DecimalFormat("00").format(minutes);
+        String sSeconds = new DecimalFormat("00").format(seconds);
+        font.drawString(halfWindow+seperator+logoWidth,12, sMinutes + ":" + sSeconds);
 
         /*
-		int seconds = (int) ((time / 1000) % 60);
-        int minutes = (int) ((time / 1000) / 60);
-        font.drawString("Time: " + minutes + ":" + seconds, 200,1);
         */
 
 		int FPS = gamecontainer.getFPS();
-		font.drawString( WidthWindow-100, 1, "FPS: " + FPS);
+		font.drawString( widthWindow -100, 1, "FPS: " + FPS);
 	}
 
 	/**

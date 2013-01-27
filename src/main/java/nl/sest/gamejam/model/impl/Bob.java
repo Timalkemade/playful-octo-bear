@@ -82,6 +82,7 @@ public class Bob implements Physical, ImageRenderable {
 		y = newY;
 	}
 
+    @Override
 	public float getAngle() {
 		return angle;
 	}
@@ -103,11 +104,6 @@ public class Bob implements Physical, ImageRenderable {
 	@Override
 	public Image getImage() {
 		return image;
-	}
-
-	@Override
-	public void setImage(Image anImage) {
-		this.image = anImage;
 	}
 
 	@Override

@@ -33,12 +33,12 @@ public class PlayerAttractor implements Force, ImageRenderable {
 	 * @param y y location
 	 */
 	public PlayerAttractor(float x, float y) {
-		LOGGER.debug("Created attractor at [{}, {}]", x, y);
+		//LOGGER.debug("Created attractor at [{}, {}]", x, y);
 		this.x = x;
 		this.y = y;
 
 		try {
-			image = new Image("images/attraction.jpg");
+			image = new Image("images/ATTRACTOR1.png");
 		} catch (SlickException e) {
 			throw new ImageLoadingException("Failed to load image", e);
 		}
@@ -64,4 +64,9 @@ public class PlayerAttractor implements Force, ImageRenderable {
 	public Image getImage() {
 		return image;
 	}
+
+    @Override
+    public float getAngle() {
+        return 0f;
+    }
 }

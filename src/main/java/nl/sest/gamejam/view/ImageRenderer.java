@@ -32,12 +32,13 @@ public class ImageRenderer implements Renderer {
 	 */
 	public void render() {
 		Image image = object.getImage();
-		LOGGER.debug("original Location {}, {}", object.getX(), object.getY());
+		//LOGGER.debug("original Location {}, {}", object.getX(), object.getY());
 		Vector2f location = Utils.worldToScreen(object.getX(), object.getY());
 		float drawLocationX = location.getX() - image.getCenterOfRotationX();
 		float drawLocationY = location.getY() - image.getCenterOfRotationY();
 		image.getCenterOfRotationX();
-		LOGGER.debug("location {}", location);
+        image.rotate(object.getAngle());
+		//LOGGER.debug("location {}", location);
 		image.draw(drawLocationX, drawLocationY);
 	}
 
