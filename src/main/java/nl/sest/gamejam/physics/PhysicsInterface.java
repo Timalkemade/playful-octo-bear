@@ -128,7 +128,7 @@ public class PhysicsInterface implements CreatePhysicalListener, DeletePhysicalL
 			Edge edge = (Edge) physical;
 			
 		    PolygonShape pShape = new PolygonShape();
-		    pShape.setAsEdge(edge.getPoint1(), edge.getPoint2());
+		    pShape.setAsBox(edge.getX(), edge.getY());
 		    shape = pShape;
 		}
 		else {
