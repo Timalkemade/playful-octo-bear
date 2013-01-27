@@ -16,7 +16,7 @@ import org.newdawn.slick.state.transition.FadeInTransition;
 public class SponsorGameState extends BasicGameState {
 
 	private Image image;
-	boolean isRenderered;
+	boolean isRendered;
 
 	@Override
 	public int getID() {
@@ -25,7 +25,7 @@ public class SponsorGameState extends BasicGameState {
 
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
-		image = new Image("images/credits2013_new.png");
+		image = new Image("images/credits2013_new.png").getScaledCopy(0.7f);
 	}
 
 	@Override
@@ -36,12 +36,12 @@ public class SponsorGameState extends BasicGameState {
 		} catch (InterruptedException e) {
 			throw new RuntimeException("Interrupted");
 		}
-		isRenderered = true;
+		isRendered = true;
 	}
 
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-		if (isRenderered) {
+		if (isRendered) {
 			game.enterState(1, new EmptyTransition(), new FadeInTransition());
 		}
 	}

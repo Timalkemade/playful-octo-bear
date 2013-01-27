@@ -41,13 +41,13 @@ public class MenuGameState extends BasicGameState implements ComponentListener {
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		image = new Image("images/menu/Menu_A.png").getScaledCopy(container.getWidth(), container.getHeight());
-		Image startButtonImage = new Image("images/menu/Menu_Button_Play.png").getScaledCopy(1.5f);
-		Image endButtonImage = new Image("images/menu/Menu_Button_Stop.png").getScaledCopy(1.5f);
-		Image wtfButtonImage = new Image("images/menu/Menu_Button_Wtf.png").getScaledCopy(1.5f);
+		Image startButtonImage = new Image("images/menu/Menu_Button_Play.png");
+		Image endButtonImage = new Image("images/menu/Menu_Button_Stop.png");
+		Image wtfButtonImage = new Image("images/menu/Menu_Button_Wtf.png");
 
-		startButton = new MouseOverArea(container, startButtonImage, 500, 350, this);
-		endButton = new MouseOverArea(container, endButtonImage, 500, 500, this);
-		wtfButton = new MouseOverArea(container, wtfButtonImage, 500, 650, this);
+		startButton = new MouseOverArea(container, startButtonImage, 350, 300, this);
+		endButton = new MouseOverArea(container, endButtonImage, 350, 400, this);
+		wtfButton = new MouseOverArea(container, wtfButtonImage, 350, 500, this);
 	}
 
 	@Override
