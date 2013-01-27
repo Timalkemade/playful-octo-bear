@@ -23,7 +23,13 @@ public class Bob implements Physical, ImageRenderable {
 	private float angle;
 	private boolean isDynamic;
 	protected PointOfInterest poi;
+	private boolean isVirus = false;
     
+	public Bob(float x, float y, boolean isVirus) {
+		this(x, y);
+		this.isVirus = isVirus;
+	}
+	
     public Bob(float x, float y) {
     	this(null, x, y);
     	renderer = createDefaultRenderer();
@@ -35,6 +41,10 @@ public class Bob implements Physical, ImageRenderable {
         this.x = x;
         this.y = y;
         initializeBob();
+    }
+    
+    public boolean isVirus() {
+    	return isVirus;
     }
 
     private void initializeBob()

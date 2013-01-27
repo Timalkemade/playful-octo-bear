@@ -231,15 +231,46 @@ public class GameController implements PhysicsCollisionListener {
 	public void loadSettings() {
 
 	}
-
-	@Override
-	public void obstacleCollisionEvent(Bob bob, Obstacle obstacle) {
-		
-	}
+	
+//	@Override
+//	public void obstacleCollisionEvent(Bob bob, Obstacle obstacle) {
+//		
+//	}
+//	
+//	@Override
+//	public void obstacleCollisionEvent(Bob bob, Pit obstacle) {
+//		if(bob.isVirus())
+//			model.cellKill();
+//		else
+//			model.virusKill();
+//	}
+//
+//	@Override
+//	public void obstacleCollisionEvent(Bob bob, Obstacle obstacle) {
+//		
+//	}
 
 	@Override
 	public void valuableCollisionEvent(Bob bob, Valuable valuable) {
 		maybeApplyDamage(bob, valuable);
+	}
+
+	@Override
+	public void obstacleCollisionEvent(Bob bob, Obstacle obstacle) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void pitCollisionEvent(Bob bob, Pit pit) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void edgeCollisionEvent(Bob bob, Edge edge) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

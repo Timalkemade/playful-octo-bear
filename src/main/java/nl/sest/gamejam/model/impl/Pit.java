@@ -7,8 +7,10 @@ public class Pit implements Physical {
 	float x, y, angle, radius;
 	boolean dynamic = false;
 	
-	public Pit(float x, float y, float angle, float radius) {
-		
+	public Pit(float x, float y) {
+		this.x = x;
+		this.y = y;
+		radius = 2;
 	}
 	
 	@Override
