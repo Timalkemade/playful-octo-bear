@@ -82,6 +82,7 @@ public class Bob implements Physical, ImageRenderable {
 		y = newY;
 	}
 
+    @Override
 	public float getAngle() {
 		return angle;
 	}
