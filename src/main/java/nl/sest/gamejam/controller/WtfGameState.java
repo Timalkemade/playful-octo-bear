@@ -21,7 +21,7 @@ public class WtfGameState extends BasicGameState {
 
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
-		image = new Image("images/credits2013_new.png");
+		image = new Image("images/credits2013_new.png").getScaledCopy(container.getWidth(), container.getHeight());
 	}
 
 	@Override

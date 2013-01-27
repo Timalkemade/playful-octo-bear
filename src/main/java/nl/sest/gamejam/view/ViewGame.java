@@ -6,6 +6,7 @@ import nl.sest.gamejam.model.Event;
 import nl.sest.gamejam.model.Renderable;
 import nl.sest.gamejam.model.impl.EventListener;
 import nl.sest.gamejam.model.impl.Model;
+import nl.sest.gamejam.view.sound.DestroyCellSound;
 import nl.sest.gamejam.view.sound.DestroySound;
 import nl.sest.gamejam.view.sound.MusicSound;
 import nl.sest.gamejam.view.sound.SoundHeartbeat;
@@ -189,6 +190,8 @@ public class ViewGame implements Renderer, EventListener {
 	@Override
 	public void onEvent(CellKillEvent event) {
 		LOGGER.debug("Cell kill Event");
+		DestroyCellSound sound = new DestroyCellSound();
+		sound.play();
 	}
 
 	@Override
