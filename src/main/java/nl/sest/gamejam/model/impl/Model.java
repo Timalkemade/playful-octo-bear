@@ -38,47 +38,52 @@ public class Model {
 
 	private float height = 0;
 	private float width = 0;
-	
+
 	private float currency = 0;
 	private long startTime = 0;
 
 	public Model() {
 	}
-	
+
 	/**
 	 * Set the game starting time
+	 *
 	 * @param startTime
 	 */
 	public void setStartTime(long startTime) {
 		this.startTime = startTime;
 	}
-	
+
 	/**
 	 * Get the timestamp when the game started
+	 *
 	 * @return
 	 */
 	public long getStartTime() {
 		return startTime;
 	}
-	
+
 	/**
 	 * Set the amount of currency the player has
+	 *
 	 * @param currency
 	 */
 	public void setCurrency(float currency) {
 		this.currency = currency;
 	}
-	
+
 	/**
 	 * Add or subtract currency from the player's stash
+	 *
 	 * @param delta
 	 */
 	public void updateCurrency(float delta) {
 		this.currency += delta;
 	}
-	
+
 	/**
 	 * Get the current amount of currency in the player's stash
+	 *
 	 * @return
 	 */
 	public float getCurrency() {
@@ -202,9 +207,10 @@ public class Model {
 		obstacles.add(o);
 		fireCreateListeners(o);
 	}
-	
+
 	/**
 	 * Add a valuable to the Model
+	 *
 	 * @param v
 	 */
 	public void addValuable(Valuable v) {
@@ -311,6 +317,7 @@ public class Model {
 		renderables.addAll(pointsOfInterest);
 		renderables.addAll(playerAttractors);
 		renderables.addAll(playerRepulsors);
+		renderables.addAll(valuables);
 
 		return renderables;
 	}

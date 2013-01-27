@@ -9,6 +9,7 @@ import nl.sest.gamejam.controller.GameInputController;
 import nl.sest.gamejam.model.Physical;
 import nl.sest.gamejam.model.event.listener.CreatePhysicalListener;
 import nl.sest.gamejam.model.event.listener.DeletePhysicalListener;
+import nl.sest.gamejam.model.impl.Blockade;
 import nl.sest.gamejam.model.impl.Bob;
 import nl.sest.gamejam.model.impl.Model;
 import nl.sest.gamejam.model.impl.Obstacle;
@@ -29,6 +30,8 @@ import org.jbox2d.dynamics.Fixture;
 import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
 import org.jbox2d.dynamics.contacts.Contact;
+import org.jbox2d.dynamics.joints.DistanceJoint;
+import org.jbox2d.dynamics.joints.DistanceJointDef;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -130,6 +133,25 @@ public class PhysicsInterface implements CreatePhysicalListener, DeletePhysicalL
 		
 	    // Attach FixtureDef to body
 	    body.createFixture(fixtureDef);
+	    
+	    // Join it with another body (for Blockade)
+	    if (physical instanceof Blockade) {
+	    	Blockade blockade = (Blockade) physical;
+	    	Blockade previous = blockade.getPrevious();
+	    	Body previousBody = objects.get(previous);
+			
+	    	// Middle or last object in list
+	    	if ((previous != null && blockade.isDynamic() == true) 
+	    			|| (previous == null && blockade.isDynamic() == false)) {
+	    		DistanceJointDef djd = new DistanceJointDef();
+	    		djd.bodyA = previousBody;
+				djd.bodyB = body;
+				djd.length = previousBody.getLocalCenter().sub(body.getLocalCenter()).length();
+				djd.frequencyHz = 0;
+				djd.dampingRatio = 0;
+				DistanceJoint dj = (DistanceJoint) world.createJoint(djd);
+	    	}
+	    }
 	}
 	
 	public void deleteObject(Physical physical) {
@@ -157,13 +179,23 @@ public class PhysicsInterface implements CreatePhysicalListener, DeletePhysicalL
     private void applyPOIForces(Body body) {
     	List<PointOfInterest> pois = model.getPointsOfInterest();
     	
+    	// Get number of active POIs (interest > 0)
+    	int numActivePOIs = 0;
     	for(PointOfInterest poi : pois) {
-			Vec2 poiVec = new Vec2(poi.getX(), poi.getY());
-    		Vec2 bobVec = body.getWorldCenter();
-//			float bobMass = body.m_mass;
-//			Vec2 force = calculateAttract(poiVec, bobVec, bobMass);
-			Vec2 force = computeForceVector(bobVec, poiVec, 0.01f);
-			body.applyForce(force, body.getWorldCenter());
+    		if(poi.getInterest() > 0)
+    			numActivePOIs++;
+    	}
+    	
+    	for(PointOfInterest poi : pois) {
+    		if(poi.getInterest() > 0) {
+				Vec2 poiVec = new Vec2(poi.getX(), poi.getY());
+	    		Vec2 bobVec = body.getWorldCenter();
+	//			float bobMass = body.m_mass;
+	//			Vec2 force = calculateAttract(poiVec, bobVec, bobMass);
+				Vec2 force = computeForceVector(bobVec, poiVec, 0.01f);
+				force.mulLocal(1f/numActivePOIs);
+				body.applyForce(force, body.getWorldCenter());
+    		}
 		}
     }
     
