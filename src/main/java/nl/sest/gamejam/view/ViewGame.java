@@ -7,6 +7,8 @@ import nl.sest.gamejam.model.Renderable;
 import nl.sest.gamejam.model.event.listener.DeletePhysicalListener;
 import nl.sest.gamejam.model.impl.EventListener;
 import nl.sest.gamejam.model.impl.Model;
+import nl.sest.gamejam.view.sound.DestroySound;
+import nl.sest.gamejam.view.sound.SoundHeartbeat;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
@@ -45,6 +47,7 @@ public class ViewGame implements Renderer, EventListener, DeletePhysicalListener
 		//Set font                                    .
 		Font awtFont = new Font("Times New Roman", Font.BOLD, 20);
 		font = new TrueTypeFont(awtFont, false);
+
 	}
 
 	/**

@@ -1,6 +1,7 @@
-package nl.sest.gamejam.view;
+package nl.sest.gamejam.view.sound;
 
 import nl.sest.gamejam.exception.SoundLoadingException;
+import nl.sest.gamejam.view.Renderer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 
