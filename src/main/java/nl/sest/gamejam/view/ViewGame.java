@@ -50,7 +50,7 @@ public class ViewGame implements Renderer, EventListener {
 	public void render() throws SlickException {
 		//Disable Frame per Seconds
 		gamecontainer.setShowFPS(false);
-        Image background = new Image("images/Background.png");
+        Image background = new Image("images/Background_D.png");
         background.draw(0, 0);
 
 		sideBar();
@@ -65,15 +65,15 @@ public class ViewGame implements Renderer, EventListener {
 	private void topBar() throws SlickException {
 
         int halfWindow = widthWindow /2;
-        int seperator = 10;
-        int barWidth = 150;
-        int logoWidth = 55;
+        int seperator = 25;
+        int barWidth = 240;
+        int logoWidth = 120;
         //Currency
         Image imageCurrency = new Image("images/menu/Currency.png");
         imageCurrency.draw(halfWindow-barWidth-seperator, 0);
 
 		String sScore = new DecimalFormat("###,###,###,###").format(model.getCurrency());
-		font.drawString(halfWindow-barWidth-seperator+logoWidth, 12, sScore);
+		font.drawString(halfWindow-barWidth-seperator+logoWidth, 47, sScore);
 
         //Currency
         Image imageTime = new Image("images/menu/Time.png");
@@ -84,7 +84,7 @@ public class ViewGame implements Renderer, EventListener {
         int minutes = (int) ((time / 1000) / 60);
         String sMinutes = new DecimalFormat("00").format(minutes);
         String sSeconds = new DecimalFormat("00").format(seconds);
-        font.drawString(halfWindow+seperator+logoWidth,12, sMinutes + ":" + sSeconds);
+        font.drawString(halfWindow+seperator+logoWidth,47, sMinutes + ":" + sSeconds);
 
         /*
         */

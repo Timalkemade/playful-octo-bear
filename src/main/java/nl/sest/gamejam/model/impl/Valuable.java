@@ -6,6 +6,7 @@ import nl.sest.gamejam.model.Physical;
 import nl.sest.gamejam.view.ImageRenderer;
 import nl.sest.gamejam.view.Renderer;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
 
 /**
  * This is an object that should be protected.
@@ -15,19 +16,32 @@ import org.newdawn.slick.Image;
  */
 public class Valuable implements Physical, ImageRenderable {
 
-	private float x, y, value, angle, radius;
-	private boolean dynamic;
-	private Image image;
-	private Renderer renderer;
+	protected float x, y, value, radius;
+	protected boolean dynamic;
+	protected Image image;
+	protected Renderer renderer;
+    protected String imageFile = "images/valuables/Tree1.png";
+    protected float imageWidth = 60f;
+    protected float imageHeight = 45f;
+    protected float angle = 0f;
 
-	public Valuable(float x, float y, float value) {
+    public Valuable() {};
+
+	/*public Valuable(float x, float y, float angle) {
 		this.x = x;
 		this.y = y;
-		this.value = value;
-		ImagePicker im = new ImagePicker();
-		this.image = im.pick("valuables");
-		renderer = new ImageRenderer(this);
-	}
+        this.angle = angle;
+        initiateValuable();
+	}         */
+
+    public void initiateValuable() {
+        try {
+            image = new Image(imageFile);
+        } catch (SlickException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+        renderer = new ImageRenderer(this);
+    }
 
 	/**
 	 * Add the given value to the value of the Valuable

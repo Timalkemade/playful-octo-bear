@@ -36,7 +36,6 @@ public class ImageRenderer implements Renderer {
 		Vector2f location = Utils.worldToScreen(object.getX(), object.getY());
 		float drawLocationX = location.getX() - image.getCenterOfRotationX();
 		float drawLocationY = location.getY() - image.getCenterOfRotationY();
-		image.getCenterOfRotationX();
         image.rotate(object.getAngle());
 		//LOGGER.debug("location {}", location);
 		image.draw(drawLocationX, drawLocationY);

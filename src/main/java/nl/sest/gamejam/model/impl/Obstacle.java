@@ -10,65 +10,40 @@ import org.newdawn.slick.SpriteSheet;
 
 public class Obstacle implements Physical, ImageRenderable {
 
-	private float x, y, radius, angle;
-	private boolean isDynamic = false;
-	private Image image;
-	private static float defaultRadius = 4;
-	private Renderer renderer;
+	protected float x, y, radius, angle;
+	protected boolean isDynamic = false;
+    protected String direction;
+	protected Image image;
+	protected static float defaultRadius = 4;
+	protected Renderer renderer;
+    protected String imageFile = "images/buildings/Normal_Shadow_1.png";
+    protected float imageSize = 100f;
+    protected float value = 0f;
 
-	/**
-	 * Create an Obstacle of a certain size
-	 *
-	 * @param x
-	 * @param y
-	 * @param size 1 for default size, 2 for 4x size, 3 for 16x size
-	 */
-	public Obstacle(float x, float y, String building, String direction, int size) {
-        this.x = x;
-        this.y = y;
-        initializeObstacle();
-        imageBuilding(building, direction);
-	}
+    public Obstacle() {
 
-	public Obstacle(float x, float y, String building, String direction) {
-		this.x = x;
-		this.y = y;
-        initializeObstacle();
-        imageBuilding(building, direction);
-	}
+    }
 
-    private void initializeObstacle(){
+     public void initializeObstacle(){
         renderer = new ImageRenderer(this);
-        setRadius(defaultRadius);
+        imageBuilding();
     }
 
-    private void imageBuilding(String building, String direction){
+    /**
+     * Default image of building
+     */
+    public void imageBuilding(){
         int directionInt = convertDirection(direction);
-        if(building.compareTo("Normal") == 0)
-        {
-            //Normal home
-            SpriteSheet sheet = null;
-            try {
-                sheet = new SpriteSheet("images/buildings/Normal_Shadow_" + directionInt + ".png", 100, 100);
-            } catch (SlickException e) {
-                e.printStackTrace();
-            }
-            int random = (int)(Math.random() * 8);
-
-            image = sheet.getSubImage(random % 2, random % 4, 100, 100);
+        SpriteSheet sheet = null;
+        try {
+            sheet = new SpriteSheet(this.imageFile, (int)this.imageSize, (int)this.imageSize);
+        } catch (SlickException e) {
+            e.printStackTrace();
         }
-        else{
-            //Valuable
-            SpriteSheet sheet = null;
-            try {
-                sheet = new SpriteSheet("images/buildings/" + building + ".png", 150, 150);
-            } catch (SlickException e) {
-                e.printStackTrace();
-            }
-            image = sheet.getSubImage( (directionInt-1)*150, 0, 150, 150);
-        }
+        image = sheet.getSubImage( (int)((directionInt-1)*this.imageSize), 0, (int)this.imageSize, (int)this.imageSize);
     }
-    private int convertDirection(String direction){
+
+    public int convertDirection(String direction){
         if(direction.compareTo("E") == 0)
             return 2;
         if(direction.compareTo("S") == 0)

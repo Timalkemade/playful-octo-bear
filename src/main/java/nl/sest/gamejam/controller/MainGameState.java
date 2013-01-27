@@ -10,15 +10,19 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class MainGameState extends BasicGameState {
 
-	GameController gc;
-	Model model;
-	World world;
-	Renderer renderer;
-	GameInputController inputController;
-	PhysicsInterface pi;
+	private final static Logger LOGGER = LoggerFactory.getLogger(MainGameState.class);
+
+	protected GameController gc;
+	protected Model model;
+	protected World world;
+	protected Renderer renderer;
+	protected GameInputController inputController;
+	protected PhysicsInterface pi;
 
 	public MainGameState() {
 		// TODO Auto-generated constructor stub
@@ -29,7 +33,7 @@ public class MainGameState extends BasicGameState {
 			throws SlickException {
 
 		model = new Model();
-        model.setStartTime(System.currentTimeMillis());
+		model.setStartTime(System.currentTimeMillis());
 		Utils.setModel(model);
 
 		pi = new PhysicsInterface(model);
@@ -76,6 +80,17 @@ public class MainGameState extends BasicGameState {
 		} else if (button == 1) {
 			inputController.handleRightClick(x, y);
 		}
+	}
+
+
+	@Override
+	public void mouseDragged(int oldx, int oldy, int newx, int newy) {
+		inputController.handleMouseDrag(oldx, oldy, newx, newy);
+	}
+
+	@Override
+	public void mouseReleased(int button, int x, int y) {
+		inputController.handleMouseUp(x, y);
 	}
 
 	@Override
