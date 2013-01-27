@@ -79,7 +79,7 @@ public class PhysicsInterface implements CreatePhysicalListener, DeletePhysicalL
         for (Physical physical : objects.keySet()) {
         	Body body = objects.get(physical);
         	
-        	body.setLinearDamping(0.05f);
+        	body.setLinearDamping(0.08f);
         	
         	// If the physical is a Bob, apply force using all POIs
         	if (physical instanceof Bob) {
