@@ -190,8 +190,9 @@ public class PhysicsInterface implements CreatePhysicalListener, DeletePhysicalL
     		if(poi.getInterest() > 0) {
 				Vec2 poiVec = new Vec2(poi.getX(), poi.getY());
 	    		Vec2 bobVec = body.getWorldCenter();
-	    		float interest = poi.getInterest() / 100.0f;
-				Vec2 force = computeForceVector(bobVec, poiVec, interest);
+	    		float interest = poi.getInterest()/10f;
+	    		float dist = (float)Math.max(0.0001, poiVec.sub(bobVec).length());
+				Vec2 force = computeForceVector(bobVec, poiVec, (interest)/dist);
 				force.mulLocal(1f/numActivePOIs);
 				body.applyForce(force, body.getWorldCenter());
     		}
