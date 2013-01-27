@@ -1,17 +1,18 @@
 package nl.sest.gamejam.model.obstacle.valuable;
 
 import nl.sest.gamejam.model.impl.Valuable;
+
 /**
  * User: JMIEGHEM
  * Date: 27-1-13
- * Time: 2:24
+ * Time: 2:55
  */
-public class ATM extends Valuable {
+public class Tree2 extends Valuable {
 
-    public ATM(float x, float y) {
+    public Tree2(float x, float y) {
         this.imageWidth = 45f;
         this.imageHeight = 45f;
-        this.imageFile = "images/valuables/ATM.png";
+        this.imageFile = "images/valuables/Tree_2.png";
         this.radius = 5;
         this.value = 0f;
 
@@ -20,3 +21,4 @@ public class ATM extends Valuable {
         initiateValuable();
     }
 }
+
