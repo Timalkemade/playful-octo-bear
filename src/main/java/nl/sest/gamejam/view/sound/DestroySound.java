@@ -1,4 +1,4 @@
-package nl.sest.gamejam.view;
+package nl.sest.gamejam.view.sound;
 
 /**
  * @author Tim

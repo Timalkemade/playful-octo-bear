@@ -1,4 +1,4 @@
-package nl.sest.gamejam.view;
+package nl.sest.gamejam.view.sound;
 
 import nl.sest.gamejam.exception.SoundLoadingException;
 import org.newdawn.slick.SlickException;
@@ -8,7 +8,7 @@ import org.newdawn.slick.Sound;
  * @author Tim
  * @since 1/27/13 10:16 AM
  */
-public abstract class AbstractSoundPlayer implements Renderer {
+public abstract class AbstractSoundPlayer {
 
 	private Sound sound;
 
@@ -26,12 +26,13 @@ public abstract class AbstractSoundPlayer implements Renderer {
 	/**
 	 * Play sound
 	 */
-	@Override
-	public void render() {
+	public void play() {
 		sound.play();
 	}
 
-	@Override
-	public void update(int delta) {
+	public void loop() {
+		sound.loop(1f, 0.7f);
 	}
+
+
 }

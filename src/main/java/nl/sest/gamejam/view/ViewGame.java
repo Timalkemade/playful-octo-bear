@@ -7,6 +7,9 @@ import nl.sest.gamejam.model.Renderable;
 import nl.sest.gamejam.model.event.listener.DeletePhysicalListener;
 import nl.sest.gamejam.model.impl.EventListener;
 import nl.sest.gamejam.model.impl.Model;
+import nl.sest.gamejam.view.sound.DestroySound;
+import nl.sest.gamejam.view.sound.MusicSound;
+import nl.sest.gamejam.view.sound.SoundHeartbeat;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
@@ -38,12 +41,15 @@ public class ViewGame implements Renderer, EventListener, DeletePhysicalListener
 		this.gamecontainer = gc;
 		model = theModel;
 		model.registerEventListener(this);
+		model.registerDeletePhysicalEventListener(this);
 
 		this.widthWindow = gc.getWidth();
 
 		//Set font                                    .
 		Font awtFont = new Font("Times New Roman", Font.BOLD, 20);
 		font = new TrueTypeFont(awtFont, false);
+		MusicSound music = new MusicSound();
+		music.loop();
 	}
 
 	/**
@@ -52,8 +58,8 @@ public class ViewGame implements Renderer, EventListener, DeletePhysicalListener
 	public void render() throws SlickException {
 		//Disable Frame per Seconds
 		gamecontainer.setShowFPS(false);
-        Image background = new Image("images/Background_A.png");
-        background.draw(0, 0);
+		Image background = new Image("images/Background_A.png");
+		background.draw(0, 0);
 
 		sideBar();
 		map();
@@ -134,7 +140,7 @@ public class ViewGame implements Renderer, EventListener, DeletePhysicalListener
 	@Override
 	public void onEvent(HeartbeatEvent event) {
 		SoundHeartbeat hb = new SoundHeartbeat();
-		hb.render();
+		hb.play();
 	}
 
 
@@ -146,6 +152,6 @@ public class ViewGame implements Renderer, EventListener, DeletePhysicalListener
 	@Override
 	public void fireDeletePhysical(Physical physical) {
 		DestroySound ds = new DestroySound();
-		ds.render();
+		ds.play();
 	}
 }

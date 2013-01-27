@@ -2,7 +2,7 @@ package nl.sest.gamejam.model.impl;
 
 import nl.sest.gamejam.model.ImageRenderable;
 import nl.sest.gamejam.model.Physical;
-import nl.sest.gamejam.view.ImageRenderer;
+import nl.sest.gamejam.view.image.ImageRenderer;
 import nl.sest.gamejam.view.Renderer;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
