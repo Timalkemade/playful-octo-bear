@@ -52,6 +52,6 @@ public class DebugGameState extends MainGameState {
 
 	@Override
 	public int getID() {
-		return 0;
+		return 9;
 	}
 }

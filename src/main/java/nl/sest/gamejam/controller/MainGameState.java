@@ -71,7 +71,7 @@ public class MainGameState extends BasicGameState {
 
 	@Override
 	public int getID() {
-		return 0;
+		return 2;
 	}
 
 	@Override
