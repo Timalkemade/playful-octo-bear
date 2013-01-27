@@ -11,6 +11,6 @@ public class DestroySound extends AbstractSoundPlayer {
 	 * Constructor
 	 */
 	public DestroySound() {
-		super("sounds/BUBBLE.ogg");
+		super("sounds/Bling.ogg");
 	}
 }
