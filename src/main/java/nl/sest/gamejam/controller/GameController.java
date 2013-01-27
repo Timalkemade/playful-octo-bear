@@ -27,6 +27,7 @@ public class GameController implements PhysicsCollisionListener {
 	protected long lastPOIappeared = 0; // timestamp when the last POI appeared
 	protected long nextPOITime = 0; // timestamp when next POI should appear
 	protected HashMap<Bob, Float> bobDamageCooldown = new HashMap<Bob, Float>();
+	protected float virusCellRatio = 0.1f;
 	
 	// Settings
 	protected int heartbeatVolume = 9; // number of Bobs per heartbeat
@@ -40,7 +41,7 @@ public class GameController implements PhysicsCollisionListener {
 	protected float POImaxBoostTime = 10000; // maximum life time of POIs 
 	protected float POIboostRate = 0.001f; // interest boost per ms during boost
 	protected float POIdecayRate = 0.0005f; // interest decrease per ms always
-	protected float startingCurrency = 100000; // starting currency
+	protected float maxCurrency = 100000; // starting currency
 	protected float damagePerVirus = 200;
 	protected float repairPerCell = 50;
 	
@@ -52,7 +53,7 @@ public class GameController implements PhysicsCollisionListener {
 
 	public void start() {
 		model.setStartTime(System.currentTimeMillis());
-		model.setCurrency(startingCurrency);
+		model.setCurrency(maxCurrency);
 	}
 
 	/**
@@ -88,9 +89,8 @@ public class GameController implements PhysicsCollisionListener {
 		int numTrains = destinations.size();
 		Heartbeat hb = new Heartbeat(0);
 		if(numTrains > 0) {
-			int r = (int) (Math.random() * destinations.size());
-			TrainDestination destination = destinations.get(r);
-			hb.addTrain(new Train(destination, heartbeatVolume));
+			for(TrainDestination td : destinations)
+				hb.addTrain(new Train(td, heartbeatVolume));
 		}
 		// Create heartbeat
 		model.setHeartbeat(hb);
@@ -193,16 +193,6 @@ public class GameController implements PhysicsCollisionListener {
 	public void loadSettings() {
 
 	}
-	
-//	@Override
-//	public void obstacleCollisionEvent(Bob bob, Obstacle obstacle) {
-//		
-//	}
-//	
-//	@Override
-//	public void obstacleCollisionEvent(Bob bob, Pit obstacle) {
-//		
-//	}
 
 	@Override
 	public void valuableCollisionEvent(Bob bob, Valuable valuable) {
@@ -236,7 +226,8 @@ public class GameController implements PhysicsCollisionListener {
 			model.fireEvent(new VirusPassEvent(currentTime, bob));
 		}
 		else {
-			model.updateCurrency(repairPerCell);
+			if(model.getCurrency() < maxCurrency)
+				model.updateCurrency(repairPerCell);
 			model.fireEvent(new CellPassEvent(currentTime, bob));
 		}
 	}

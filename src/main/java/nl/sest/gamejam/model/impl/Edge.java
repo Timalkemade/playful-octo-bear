@@ -10,6 +10,11 @@ public class Edge implements Physical{
 	boolean dynamic = false;
 	Vec2 point1, point2;
 	
+	/**
+	 * 
+	 * @param point1 Location
+	 * @param point2 Dimensions
+	 */
 	public Edge(Vec2 point1, Vec2 point2) {
 		this.point1 = point1;
 		this.point2 = point2;

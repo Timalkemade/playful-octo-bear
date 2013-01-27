@@ -40,10 +40,12 @@ public class MainGameState extends BasicGameState {
 
 		inputController = new GameInputController(model);
 
+		gc = new GameController(model);
+		pi.registerPhysicsCollisionListener(gc);
+		
 		MapLoader maploader = new MapLoader();
 		maploader.loadMap(model);
-
-		gc = new GameController(model);
+		
 		pi.update();
 
 		renderer = new ViewGame(arg0, model);

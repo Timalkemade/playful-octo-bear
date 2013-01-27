@@ -46,6 +46,7 @@ public class PhysicsInterface implements CreatePhysicalListener, DeletePhysicalL
 	private World world;
 	private HashMap<Physical, Body> objects = new HashMap<Physical, Body>();
 	private Model model;
+	private ArrayList<Physical> toDestroy = new ArrayList<Physical>();
 	
 	private ArrayList<PhysicsCollisionListener> physicsCollisionListeners = new ArrayList<PhysicsCollisionListener>();
 	
@@ -75,6 +76,7 @@ public class PhysicsInterface implements CreatePhysicalListener, DeletePhysicalL
 	public void update() {
 		// Update Box2D world
         world.step(timeStep, 8, 3);
+        sweepDeadBodies();
         
         // Sync Box2D objects with the Physical objects
         for (Physical physical : objects.keySet()) {
@@ -168,13 +170,18 @@ public class PhysicsInterface implements CreatePhysicalListener, DeletePhysicalL
 	    }
 	}
 	
-	public void deleteObject(Physical physical) {
-		// Get Body attached to Physical object
-		Body body = objects.get(physical);
-		
+	private void sweepDeadBodies() {
+		for(Physical p : toDestroy) {
+			Body body = objects.get(p);
+			world.destroyBody(body);
+			objects.remove(p);
+		}
+		toDestroy.clear();
+	}
+	
+	public void deleteObject(Physical physical) {		
 		// Remove Body from world and Physical from hashmap
-		world.destroyBody(body);
-		objects.remove(physical);
+		toDestroy.add(physical);
 	}
 	
     private void updatePhysical(Physical physical, Body body) {
