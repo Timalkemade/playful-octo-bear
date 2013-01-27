@@ -1,5 +1,6 @@
 package nl.sest.gamejam.view;
 
+import nl.sest.gamejam.controller.Utils;
 import nl.sest.gamejam.events.*;
 import nl.sest.gamejam.model.Event;
 import nl.sest.gamejam.model.Renderable;
@@ -59,7 +60,9 @@ public class ViewGame implements Renderer, EventListener {
 	public void render() throws SlickException {
 		//Disable Frame per Seconds
 		gamecontainer.setShowFPS(false);
-		Image background = new Image("images/Background_A.png");
+		Image background = new Image("images/Background_Day3b.png");
+        float heightScale = Utils.getScreenHeight() / background.getHeight();
+        LOGGER.debug("Screen {} / image {} = scale {}", Utils.getScreenHeight(), background.getHeight(), heightScale);
 		background.draw(0, 0);
 
 		sideBar();

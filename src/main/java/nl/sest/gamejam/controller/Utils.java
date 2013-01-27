@@ -44,7 +44,9 @@ public class Utils {
 	}
 
 	public static float getWorldToScreenScale() {
-		return screenHeight / model.getWorldHeight();
+        LOGGER.debug("WorldScreenScale {} / {}", screenHeight, model.getWorldHeight());
+        return 0.75f;
+		//return screenHeight / model.getWorldHeight();
 	}
 	
 	public static Vector2f worldToScreen(float x, float y) {
@@ -56,5 +58,9 @@ public class Utils {
 		float screenY = (worldHeight - y) * ratio;
 		return new Vector2f(screenX, screenY);
 	}
+
+    public static float getScreenHeight() {
+        return screenHeight;
+    }
 
 }

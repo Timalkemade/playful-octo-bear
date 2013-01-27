@@ -3,7 +3,7 @@ package nl.sest.gamejam.model.impl;
 import nl.sest.gamejam.exception.ImageLoadingException;
 import nl.sest.gamejam.model.Force;
 import nl.sest.gamejam.model.ImageRenderable;
-import nl.sest.gamejam.view.image.ParticleRenderer;
+import nl.sest.gamejam.view.image.ImageRenderer;
 import nl.sest.gamejam.view.Renderer;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
@@ -42,12 +42,12 @@ public class PointOfInterest implements Force, ImageRenderable {
 		this.startTime = System.currentTimeMillis();
 
 		try {
-			this.image = new Image("images/earth.jpg");
+			this.image = new Image("images/Gap_of_Doom.png");
 		} catch (SlickException e) {
 			throw new ImageLoadingException("Could not load image", e);
 		}
 
-		this.renderer = new ParticleRenderer(this);
+		this.renderer = new ImageRenderer(this);
 	}
 	
 	/**
