@@ -11,6 +11,7 @@ import nl.sest.gamejam.model.event.listener.CreatePhysicalListener;
 import nl.sest.gamejam.model.event.listener.DeletePhysicalListener;
 import nl.sest.gamejam.model.impl.Blockade;
 import nl.sest.gamejam.model.impl.Bob;
+import nl.sest.gamejam.model.impl.Edge;
 import nl.sest.gamejam.model.impl.Model;
 import nl.sest.gamejam.model.impl.Obstacle;
 import nl.sest.gamejam.model.impl.PointOfInterest;
@@ -122,18 +123,20 @@ public class PhysicsInterface implements CreatePhysicalListener, DeletePhysicalL
 
 		// Create shape using Physical properties
 		Shape shape;
-		/*if (physical instanceof Edge) {
+		if (physical instanceof Edge) {
 			Edge edge = (Edge) physical;
 			
-		    shape = new PolygonShape();
-		    shape.setAsBox(edge.getWidth(), edge.getWidth());
+		    PolygonShape pShape = new PolygonShape();
+		    pShape.setAsBox(edge.getWidth(), edge.getWidth());
+		    shape = pShape;
 		}
-		else {*/
+		else {
 			float radius = physical.getRadius();
 			
-			shape = new CircleShape();
-			shape.m_radius = radius;
-		//}
+			CircleShape cShape = new CircleShape();
+			cShape.m_radius = radius;
+			shape = cShape;
+		}
 
 	    // Create FixtureDef (use predefined parameters for now)
 	    FixtureDef fixtureDef = new FixtureDef();
