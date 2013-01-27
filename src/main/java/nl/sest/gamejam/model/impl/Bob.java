@@ -1,11 +1,11 @@
 package nl.sest.gamejam.model.impl;
 
-import nl.sest.gamejam.model.ImagePicker;
 import nl.sest.gamejam.model.ImageRenderable;
 import nl.sest.gamejam.model.Physical;
 import nl.sest.gamejam.view.ImageRenderer;
 import nl.sest.gamejam.view.Renderer;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
 
 /**
  * A bob is a simple-minded drooling thingy which will follow any shiny thing he sees.
@@ -52,9 +52,14 @@ public class Bob implements Physical, ImageRenderable {
         setRadius(1);
         angle = 0;
         isDynamic = true;
-        //PickImage
-        ImagePicker im = new ImagePicker();
-        this.image = im.pick("bobs");
+        try {
+            if(isVirus())
+                    image = new Image("images/bobs/virus.png");
+            else
+                image = new Image("images/bobs/bloodcell.png");
+        } catch (SlickException e) {
+            e.printStackTrace();
+        }
     }
     
     public void setPOI(PointOfInterest poi) {
