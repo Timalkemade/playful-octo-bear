@@ -59,6 +59,7 @@ public class MapLoader {
 		model.addPointOfInterest(new PointOfInterest(7 * gs, 14 * gs, 0, 5000));
 		model.addPointOfInterest(new PointOfInterest(19 * gs, 10 * gs, 0, 5000));
 		model.addPointOfInterest(new PointOfInterest(12 * gs, 6 * gs, 0, 5000));
+		model.addPointOfInterest(new PointOfInterest(25 * gs, 20 * gs, 0, 60000));
 		
 		
 		// Valuable
@@ -71,6 +72,17 @@ public class MapLoader {
 		model.addValuable(new Valuable(18f * gs, 10f * gs, 1000));
 		model.addValuable(new Valuable(8f * gs, 11.5f * gs, 1000));
 		model.addValuable(new Valuable(10.5f * gs, 13f * gs, 1000));
+		
+		// Edges
+		model.addEdge(new Edge(0, 0, 18*gs, 1)); // top wall
+		model.addEdge(new Edge(18 * gs, - 10 * gs, 1, 10 * gs)); // to guide Bobs in
+		model.addEdge(new Edge(20 * gs, 0, 10 * gs, 1)); // to guide Bobs in
+		
+		model.addEdge(new Edge(20 * gs, 0, 1, 15 * gs)); // right wall
+		model.addEdge(new Edge(5 * gs, 15 * gs, (20-5) * gs, 1)); // bottom wall
+		model.addEdge(new Edge(5 * gs, 15 * gs, 10 * gs, 1)); // to guide Bobs in
+		model.addEdge(new Edge(5 * gs, 15 * gs, 10 * gs, 1)); // to guide Bobs in
+		model.addEdge(new Edge(0, 5 *gs, 1, (15-5) * gs)); // left wall
 	}
 
 }

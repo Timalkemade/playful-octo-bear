@@ -11,6 +11,7 @@ import nl.sest.gamejam.model.event.listener.CreatePhysicalListener;
 import nl.sest.gamejam.model.event.listener.DeletePhysicalListener;
 import nl.sest.gamejam.model.impl.Blockade;
 import nl.sest.gamejam.model.impl.Bob;
+import nl.sest.gamejam.model.impl.Edge;
 import nl.sest.gamejam.model.impl.Model;
 import nl.sest.gamejam.model.impl.Obstacle;
 import nl.sest.gamejam.model.impl.PointOfInterest;
@@ -22,6 +23,8 @@ import org.jbox2d.callbacks.ContactImpulse;
 import org.jbox2d.callbacks.ContactListener;
 import org.jbox2d.collision.Manifold;
 import org.jbox2d.collision.shapes.CircleShape;
+import org.jbox2d.collision.shapes.PolygonShape;
+import org.jbox2d.collision.shapes.Shape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyDef;
@@ -119,14 +122,25 @@ public class PhysicsInterface implements CreatePhysicalListener, DeletePhysicalL
 		objects.put(physical, body);
 
 		// Create shape using Physical properties
-		float radius = physical.getRadius();
-		
-	    CircleShape circleShape = new CircleShape();
-	    circleShape.m_radius = radius;
+		Shape shape;
+		if (physical instanceof Edge) {
+			Edge edge = (Edge) physical;
+			
+		    PolygonShape pShape = new PolygonShape();
+		    pShape.setAsBox(edge.getWidth(), edge.getWidth());
+		    shape = pShape;
+		}
+		else {
+			float radius = physical.getRadius();
+			
+			CircleShape cShape = new CircleShape();
+			cShape.m_radius = radius;
+			shape = cShape;
+		}
 
 	    // Create FixtureDef (use predefined parameters for now)
 	    FixtureDef fixtureDef = new FixtureDef();
-	    fixtureDef.shape = circleShape;
+	    fixtureDef.shape = shape;
 	    fixtureDef.density = 1;
 	    fixtureDef.friction = 100f;
 	    fixtureDef.restitution = 0.3f;
@@ -190,8 +204,9 @@ public class PhysicsInterface implements CreatePhysicalListener, DeletePhysicalL
     		if(poi.getInterest() > 0) {
 				Vec2 poiVec = new Vec2(poi.getX(), poi.getY());
 	    		Vec2 bobVec = body.getWorldCenter();
-	    		float interest = poi.getInterest() / 100.0f;
-				Vec2 force = computeForceVector(bobVec, poiVec, interest);
+	    		float interest = poi.getInterest()/10f;
+	    		float dist = (float)Math.max(0.0001, poiVec.sub(bobVec).length());
+				Vec2 force = computeForceVector(bobVec, poiVec, (interest)/dist);
 				force.mulLocal(1f/numActivePOIs);
 				body.applyForce(force, body.getWorldCenter());
     		}
