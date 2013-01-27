@@ -1,7 +1,5 @@
 package nl.sest.gamejam.controller;
 
-import javax.jws.WebParam.Mode;
-
 import nl.sest.gamejam.model.impl.*;
 
 public class MapLoader {
@@ -20,9 +18,7 @@ public class MapLoader {
 		float gs = 8; // grid square size in meters
 		model.setWorldDimension(20 * gs, 15 * gs);
 		
-		// Create buildings
-
-		// Line 3
+		// Buildings
 		model.addObstacle(new Obstacle(2 * gs, 2 * gs, "Bank", "N"));
 		model.addObstacle(new Obstacle(9 * gs, 2 * gs, "Bank", "N"));
 		model.addObstacle(new Obstacle(14 * gs, 2 * gs, "Normal", "N"));
