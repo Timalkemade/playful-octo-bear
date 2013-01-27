@@ -27,6 +27,7 @@ public class Model {
 
 	private final Set<Obstacle> obstacles = new HashSet<Obstacle>();
 	private final Set<Valuable> valuables = new HashSet<Valuable>();
+	private final Set<Edge> edges = new HashSet<Edge>();
 
 	private final ArrayList<TrainDestination> trainDestinations = new ArrayList<TrainDestination>();
 
@@ -169,6 +170,11 @@ public class Model {
 	public void removeBob(Bob bob) {
 		bobs.remove(bob);
 		fireDeleteListeners(bob);
+	}
+	
+	public void addEdge(Edge edge) {
+		edges.add(edge);
+		fireCreateListeners(edge);
 	}
 
 	/**

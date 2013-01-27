@@ -20,45 +20,73 @@ public class MapLoader {
 	public void loadMap(Model model) {
 
 		float gs = 8; // grid square size in meters
-		model.setWorldDimension(10 * gs, 10 * gs);
-
-		// Create buildings
-
-		// Line 3
-        model.addObstacle(new Bank(1 * gs, 3 * gs, "N"));
-        model.addObstacle(new Jewelry(3 * gs, 3 * gs, "S"));
-        model.addObstacle(new Clothing(5 * gs, 3 * gs, "W"));
-        model.addObstacle(new NormalBuilding(7 * gs, 3 * gs, "E"));
-		/*model.addObstacle(new Obstacle(1 * gs, 3 * gs, "Normal", "N"));
-		model.addObstacle(new Obstacle(3 * gs, 3 * gs, "Normal", "E"));
-		model.addObstacle(new Obstacle(5 * gs, 3 * gs, "Normal", "S"));
-		model.addObstacle(new Obstacle(7 * gs, 3 * gs, "Normal", "W"));
-		model.addObstacle(new Obstacle(9 * gs, 3 * gs, "Normal", "N"));
-
-		// Line 5
-		model.addObstacle(new Obstacle(1 * gs, 5 * gs, "Bank", "N"));
-		model.addObstacle(new Obstacle(3 * gs, 5 * gs, "Normal", "S"));
+		model.setWorldDimension(20 * gs, 15 * gs);
+		
+		// Buildings
+		model.addObstacle(new Obstacle(2 * gs, 2 * gs, "Bank", "N"));
+		model.addObstacle(new Obstacle(9 * gs, 2 * gs, "Bank", "N"));
+		model.addObstacle(new Obstacle(14 * gs, 2 * gs, "Normal", "N"));
+		model.addObstacle(new Obstacle(19 * gs, 3 * gs, "Normal", "N"));
+		model.addObstacle(new Obstacle(12 * gs, 4 * gs, "Normal", "N"));
+		model.addObstacle(new Obstacle(17 * gs, 4 * gs, "Normal", "N"));
 		model.addObstacle(new Obstacle(5 * gs, 5 * gs, "Normal", "N"));
-		model.addObstacle(new Obstacle(7 * gs, 5 * gs, "Jewelry", "S"));
-		model.addObstacle(new Obstacle(7 * gs, 5 * gs, "Normal", "N"));
-
-		model.addObstacle(new Obstacle(2 * gs, 8 * gs, "Normal", "S", 2));
-		model.addObstacle(new Obstacle(9 * gs, 8 * gs, "Normal", "N", 2));             */
-
-
-		// Bobs
-		model.addBob(new Bob(2 * gs, 3 * gs));
-		model.addBob(new Bob(4 * gs, 3 * gs));
-		model.addBob(new Bob(6 * gs, 3 * gs));
-
-		// POIs
-		model.addPointOfInterest(new PointOfInterest(4 * gs, 4 * gs, 0, 0));
+		model.addObstacle(new Obstacle(8 * gs, 5 * gs, "Normal", "N"));
+		model.addObstacle(new Obstacle(11 * gs, 6 * gs, "Normal", "N"));
+		model.addObstacle(new Obstacle(15 * gs, 6 * gs, "Normal", "N"));
+		model.addObstacle(new Obstacle(18 * gs, 6 * gs, "Bank", "N"));
+		model.addObstacle(new Obstacle(2 * gs, 7 * gs, "Normal", "N"));
+		model.addObstacle(new Obstacle(6 * gs, 7 * gs, "Normal", "N"));
+		model.addObstacle(new Obstacle(8 * gs, 7 * gs, "Normal", "N"));
+		model.addObstacle(new Obstacle(10 * gs, 8 * gs, "Bank", "N"));
+		model.addObstacle(new Obstacle(13 * gs, 8 * gs, "Normal", "N"));
+		model.addObstacle(new Obstacle(16 * gs, 9 * gs, "Bank", "N"));
+		model.addObstacle(new Obstacle(2 * gs, 11 * gs, "Normal", "N"));
+		model.addObstacle(new Obstacle(8 * gs, 11 * gs, "Normal", "N"));
+		model.addObstacle(new Obstacle(10 * gs, 11 * gs, "Normal", "N"));
+		model.addObstacle(new Obstacle(6 * gs, 12 * gs, "Normal", "N"));
+		model.addObstacle(new Obstacle(12 * gs, 12 * gs, "Normal", "N"));
+		model.addObstacle(new Obstacle(17 * gs, 12 * gs, "Normal", "N"));
+		model.addObstacle(new Obstacle(2 * gs, 13 * gs, "Normal", "N"));
+		model.addObstacle(new Obstacle(9 * gs, 13 * gs, "Bank", "N"));
+		model.addObstacle(new Obstacle(19 * gs, 13 * gs, "Normal", "N"));
+		model.addObstacle(new Obstacle(5 * gs, 14 * gs, "Normal", "N"));
+		model.addObstacle(new Obstacle(13 * gs, 14 * gs, "Normal", "N"));
 
 		// Trains
-		model.addTrainDestination(new TrainDestination(0, -5));
+		model.addTrainDestination(new TrainDestination(20 * gs, -3 * gs));
+		model.addTrainDestination(new TrainDestination(-3 * gs, 4 * gs));
+		model.addTrainDestination(new TrainDestination(0 * gs, 18 * gs));
 
+		// POIs
+		model.addPointOfInterest(new PointOfInterest(6 * gs, 2 * gs, 0, 5000));
+		model.addPointOfInterest(new PointOfInterest(6 * gs, 9 * gs, 0, 5000));
+		model.addPointOfInterest(new PointOfInterest(7 * gs, 14 * gs, 0, 5000));
+		model.addPointOfInterest(new PointOfInterest(19 * gs, 10 * gs, 0, 5000));
+		model.addPointOfInterest(new PointOfInterest(12 * gs, 6 * gs, 0, 5000));
+		model.addPointOfInterest(new PointOfInterest(25 * gs, 20 * gs, 0, 60000));
+		
+		
 		// Valuable
-		model.addValuable(new Valuable(2 * gs, 2 * gs, 1000));
+		model.addValuable(new Valuable(10.5f * gs, 3.5f * gs, 1000));
+		model.addValuable(new Valuable(19f * gs, 5f * gs, 1000));
+		model.addValuable(new Valuable(7f * gs, 6f * gs, 1000));
+		model.addValuable(new Valuable(17f * gs, 6.5f * gs, 1000));
+		model.addValuable(new Valuable(2f * gs, 7.5f * gs, 1000));
+		model.addValuable(new Valuable(9f * gs, 7.5f * gs, 1000));
+		model.addValuable(new Valuable(18f * gs, 10f * gs, 1000));
+		model.addValuable(new Valuable(8f * gs, 11.5f * gs, 1000));
+		model.addValuable(new Valuable(10.5f * gs, 13f * gs, 1000));
+		
+		// Edges
+		model.addEdge(new Edge(0, 0, 18*gs, 1)); // top wall
+		model.addEdge(new Edge(18 * gs, - 10 * gs, 1, 10 * gs)); // to guide Bobs in
+		model.addEdge(new Edge(20 * gs, 0, 10 * gs, 1)); // to guide Bobs in
+		
+		model.addEdge(new Edge(20 * gs, 0, 1, 15 * gs)); // right wall
+		model.addEdge(new Edge(5 * gs, 15 * gs, (20-5) * gs, 1)); // bottom wall
+		model.addEdge(new Edge(5 * gs, 15 * gs, 10 * gs, 1)); // to guide Bobs in
+		model.addEdge(new Edge(5 * gs, 15 * gs, 10 * gs, 1)); // to guide Bobs in
+		model.addEdge(new Edge(0, 5 *gs, 1, (15-5) * gs)); // left wall
 	}
 
 }
