@@ -53,15 +53,15 @@ public class MapLoader {
 
 		// Trains
 		model.addTrainDestination(new TrainDestination(10 * gs, -2 * gs));
-		model.addTrainDestination(new TrainDestination(-2 * gs, 4 * gs));
+		model.addTrainDestination(new TrainDestination(-5 * gs, 4 * gs));
 
 		// POIs
-		model.addPointOfInterest(new PointOfInterest(6 * gs, 2 * gs, 1));
+		model.addPointOfInterest(new PointOfInterest(5 * gs, 3 * gs, 3f));
 //		model.addPointOfInterest(new PointOfInterest(6 * gs, 9 * gs, 0.5f));
-		model.addPointOfInterest(new PointOfInterest(7 * gs, 14 * gs, 1f));
-		model.addPointOfInterest(new PointOfInterest(19 * gs, 10 * gs, 1f));
+		model.addPointOfInterest(new PointOfInterest(4 * gs, 13 * gs, 3f));
+		model.addPointOfInterest(new PointOfInterest(19 * gs, 10 * gs, 3f));
 //		model.addPointOfInterest(new PointOfInterest(12 * gs, 6 * gs, 0.5f));
-		PointOfInterest goal = new PointOfInterest(17 * gs, 20 * gs, 50);
+		PointOfInterest goal = new PointOfInterest(17 * gs, 20 * gs, 30);
 		model.addPointOfInterest(goal);
 		
 		
