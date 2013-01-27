@@ -13,7 +13,7 @@ public class TheGame extends StateBasedGame {
 
 	@Override
 	public void initStatesList(GameContainer arg0) throws SlickException {
-		addState(new DebugGameState());
+		addState(new MainGameState());
 	}
 
 	@Override

@@ -21,8 +21,11 @@ public class GameInputController {
 
 	private Model model;
 
+	private Vector2f dragStart;
+
 	public GameInputController(Model model) {
 		this.model = model;
+		dragStart = null;
 	}
 
 	public void handleLeftClick(float x, float y) {
@@ -41,22 +44,37 @@ public class GameInputController {
 		model.addPlayerRepulsor(playerRepulsor);
 	}
 
+	public void handleMouseDrag(float startX, float startY, float endX, float endY) {
+		LOGGER.debug("Mouse dragged");
+		if (dragStart == null) {
+			dragStart = new Vector2f(startX, startY);
+		}
+
+	}
+
+	public void handleMouseUp(float x, float y) {
+		LOGGER.debug("Mouse Released");
+		if (dragStart != null) {
+			handleDragAndDrop(dragStart.x, dragStart.y, x, y);
+			dragStart = null;
+		}
+	}
+
 	public void handleDragAndDrop(float startX, float startY, float endX, float endY) {
 
+		float[] logvalues = {startX, startY, endX, endY};
+		LOGGER.debug("{}", logvalues);
 		Vector2f convertedStart = Utils.screenToWorld(model, startX, startY);
 		Vector2f convertedEnd = Utils.screenToWorld(model, endX, endY);
 
-		float deltaX = endX - startX;
-		float deltaY = endY - startX;
-
-		Vector2f addingVector = new Vector2f(deltaX, deltaY);
-		addingVector.normalise().scale(2 * Blockade.RADIUS);
-		Vector2f nextVectorPoint = new Vector2f(startX, startY);
-
+		Vector2f addingVector = convertedEnd.copy().sub(convertedStart).normalise().scale(2 * Blockade.RADIUS);
+		Vector2f nextVectorPoint = convertedStart.copy();
 
 		Blockade previous = null;
 		int i = 0;
-		while (convertedEnd.lengthSquared() > nextVectorPoint.lengthSquared() && nextVectorPoint.copy().sub(convertedStart).lengthSquared() < 576) {
+		while (convertedEnd.copy().sub(convertedStart).lengthSquared() > nextVectorPoint.copy().sub(convertedStart).lengthSquared()
+				&& nextVectorPoint.copy().sub(convertedStart).lengthSquared() < 576) {
+
 			Blockade blockade = new Blockade(nextVectorPoint.x, nextVectorPoint.y, i == 0, previous);
 			model.addBlockade(blockade);
 			previous = blockade;

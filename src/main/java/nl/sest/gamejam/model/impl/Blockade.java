@@ -31,7 +31,7 @@ public class Blockade implements Physical, ImageRenderable {
 		isDynamic = dynamic;
 		this.previous = previous;
 		try {
-			image = new Image("images/dino.png");
+			image = new Image("images/bobs/bob1.png");
 		} catch (SlickException e) {
 			throw new ImageLoadingException("Failed to load image");
 		}
@@ -41,7 +41,7 @@ public class Blockade implements Physical, ImageRenderable {
 
 	@Override
 	public Renderer getRenderer() {
-		return null;
+		return renderer;
 	}
 
 	public float getX() {
@@ -94,6 +94,6 @@ public class Blockade implements Physical, ImageRenderable {
 
 	@Override
 	public Image getImage() {
-		return null;
+		return image;
 	}
 }

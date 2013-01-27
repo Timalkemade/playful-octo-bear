@@ -333,6 +333,7 @@ public class Model {
 		renderables.addAll(playerAttractors);
 		renderables.addAll(playerRepulsors);
 		renderables.addAll(valuables);
+		renderables.addAll(blockades);
 
 		return renderables;
 	}
