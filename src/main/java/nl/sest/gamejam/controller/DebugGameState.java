@@ -36,7 +36,7 @@ public class DebugGameState extends MainGameState {
 		Slick2DJBox2DDebugDraw debug = new Slick2DJBox2DDebugDraw(arg0);
 		debug.appendFlags(DebugDraw.e_shapeBit);
 		debug.appendFlags(DebugDraw.e_aabbBit);
-		debug.setCamera(40, 40, 8);
+		debug.setCamera(80, 80, 6);
 		pi.getWorld().setDebugDraw(debug);
 		pi.update();
 
