@@ -1,34 +1,18 @@
 package nl.sest.gamejam.view;
 
-import org.newdawn.slick.SlickException;
-import org.newdawn.slick.Sound;
-
 /**
  * User: JMIEGHEM
  * Date: 26-1-13
  * Time: 0:06
  */
-public class SoundHeartbeat implements Renderer {
+public class SoundHeartbeat extends AbstractSoundPlayer {
 
-    private String SoundFile = "sounds/heartbeat.ogg";
-
-    /**
-     * Constructor
-     */
-    public SoundHeartbeat() {
-    }
-
-    /**
-     * Play sound
-     */
-    public void render() throws SlickException {
-        Sound Heartbeat = new Sound(SoundFile);
-        Heartbeat.play();
-    }
-
-    @Override
-    public void update(int delta){ }
-
+	/**
+	 * Constructor
+	 */
+	public SoundHeartbeat() {
+		super("sounds/heartbeat.ogg");
+	}
 
 
 }
