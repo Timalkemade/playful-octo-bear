@@ -26,6 +26,8 @@ public class Model {
 
 	private final List<PointOfInterest> pointsOfInterest = new ArrayList<PointOfInterest>();
 	private final Set<Obstacle> obstacles = new HashSet<Obstacle>();
+	private final Set<PointOfInterest> destinations = new HashSet<PointOfInterest>();
+	private final Set<Pit> pits = new HashSet<Pit> ();
 
 	private final Set<Valuable> valuables = new HashSet<Valuable>();
 	private final Set<Edge> edges = new HashSet<Edge>();
@@ -217,6 +219,7 @@ public class Model {
 
 	public void addPointOfInterest(PointOfInterest pointOfInterest) {
 		pointsOfInterest.add(pointOfInterest);
+//		pits.add(new Pit());
 	}
 
 	/**
@@ -246,6 +249,18 @@ public class Model {
 	 */
 	public Set<Obstacle> getObstacles() {
 		return obstacles;
+	}
+	
+	/**
+	 * Add POI that will be attracting throughout the level
+	 * @param pointOfInterest
+	 */
+	public void addDestination(PointOfInterest pointOfInterest) {
+		destinations.add(pointOfInterest);
+	}
+	
+	public Set<PointOfInterest> getDestinations() {
+		return destinations;
 	}
 
 	public void removePointOfInterest(PointOfInterest pointOfInterest) {

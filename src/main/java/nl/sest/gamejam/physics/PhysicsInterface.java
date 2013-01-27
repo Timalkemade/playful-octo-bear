@@ -14,6 +14,7 @@ import nl.sest.gamejam.model.impl.Bob;
 import nl.sest.gamejam.model.impl.Edge;
 import nl.sest.gamejam.model.impl.Model;
 import nl.sest.gamejam.model.impl.Obstacle;
+import nl.sest.gamejam.model.impl.Pit;
 import nl.sest.gamejam.model.impl.PointOfInterest;
 import nl.sest.gamejam.model.impl.Valuable;
 import nl.sest.gamejam.model.player.PlayerAttractor;
@@ -79,7 +80,7 @@ public class PhysicsInterface implements CreatePhysicalListener, DeletePhysicalL
         for (Physical physical : objects.keySet()) {
         	Body body = objects.get(physical);
         	
-        	body.setLinearDamping(0.05f);
+        	body.setLinearDamping(0.08f);
         	
         	// If the physical is a Bob, apply force using all POIs
         	if (physical instanceof Bob) {
@@ -269,6 +270,18 @@ public class PhysicsInterface implements CreatePhysicalListener, DeletePhysicalL
     	}
     }
     
+    public void firePitCollisionEvent(Bob bob, Pit pit) {
+    	for (PhysicsCollisionListener physicsCollisionListener : physicsCollisionListeners) {
+    		physicsCollisionListener.pitCollisionEvent(bob, pit);
+    	}    	
+    }
+    
+    public void fireEdgeCollisionEvent(Bob bob, Edge edge) {
+    	for (PhysicsCollisionListener physicsCollisionListener : physicsCollisionListeners) {
+    		physicsCollisionListener.edgeCollisionEvent(bob, edge);
+    	}    	
+    }
+    
     public void registerPhysicsCollisionListener(PhysicsCollisionListener physicsCollisionListener) {
     	physicsCollisionListeners.add(physicsCollisionListener);
     }
@@ -316,6 +329,22 @@ public class PhysicsInterface implements CreatePhysicalListener, DeletePhysicalL
 			Bob bob = (Bob) physicalB;
 			Valuable valuable = (Valuable) physicalA;
 			fireValuableCollisionEvent(bob, valuable);
+		} else if (physicalA instanceof Bob && physicalB instanceof Pit) {
+			Bob bob = (Bob) physicalA;
+			Pit pit = (Pit) physicalB;
+			firePitCollisionEvent(bob, pit);
+		} else if (physicalB instanceof Bob && physicalA instanceof Pit) {
+			Bob bob = (Bob) physicalB;
+			Pit pit = (Pit) physicalA;
+			firePitCollisionEvent(bob, pit);
+		} else if (physicalA instanceof Bob && physicalB instanceof Edge) {
+			Bob bob = (Bob) physicalA;
+			Edge edge = (Edge) physicalB;
+			fireEdgeCollisionEvent(bob, edge);
+		} else if (physicalB instanceof Bob && physicalA instanceof Edge) {
+			Bob bob = (Bob) physicalB;
+			Edge edge = (Edge) physicalA;
+			fireEdgeCollisionEvent(bob, edge);
 		}
 	}
 

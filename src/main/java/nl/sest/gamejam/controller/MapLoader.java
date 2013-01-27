@@ -65,7 +65,7 @@ public class MapLoader {
 		model.addPointOfInterest(new PointOfInterest(12 * gs, 6 * gs, 0, 5000));
 		PointOfInterest goal = new PointOfInterest(25 * gs, 20 * gs, 0, 0);
 		goal.setStaticInterest(5);
-		model.addPointOfInterest(goal);
+		model.addDestination(goal);
 		
 		
 		// Valuable
