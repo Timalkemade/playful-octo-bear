@@ -1,10 +1,8 @@
 package nl.sest.gamejam.view;
 
-import nl.sest.gamejam.events.HeartbeatEvent;
+import nl.sest.gamejam.events.*;
 import nl.sest.gamejam.model.Event;
-import nl.sest.gamejam.model.Physical;
 import nl.sest.gamejam.model.Renderable;
-import nl.sest.gamejam.model.event.listener.DeletePhysicalListener;
 import nl.sest.gamejam.model.impl.EventListener;
 import nl.sest.gamejam.model.impl.Model;
 import nl.sest.gamejam.view.sound.DestroySound;
@@ -23,7 +21,7 @@ import java.text.DecimalFormat;
  * Date: 25-1-13
  * Time: 22:51
  */
-public class ViewGame implements Renderer, EventListener, DeletePhysicalListener {
+public class ViewGame implements Renderer, EventListener {
 
 	private GameContainer gamecontainer = null;
 	private TrueTypeFont font;
@@ -41,7 +39,6 @@ public class ViewGame implements Renderer, EventListener, DeletePhysicalListener
 		this.gamecontainer = gc;
 		model = theModel;
 		model.registerEventListener(this);
-		model.registerDeletePhysicalEventListener(this);
 
 		this.widthWindow = gc.getWidth();
 
@@ -143,15 +140,26 @@ public class ViewGame implements Renderer, EventListener, DeletePhysicalListener
 		hb.play();
 	}
 
+	@Override
+	public void onEvent(VirusKillEvent event) {
+		DestroySound ds = new DestroySound();
+		ds.play();
+	}
 
 	@Override
-	public void update(int delta) {
+	public void onEvent(CellKillEvent event) {
+	}
+
+	@Override
+	public void onEvent(CellPassEvent event) {
+	}
+
+	@Override
+	public void onEvent(VirusPassEvent event) {
 	}
 
 
 	@Override
-	public void fireDeletePhysical(Physical physical) {
-		DestroySound ds = new DestroySound();
-		ds.play();
+	public void update(int delta) {
 	}
 }
