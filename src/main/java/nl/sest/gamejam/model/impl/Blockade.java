@@ -18,8 +18,9 @@ public class Blockade implements Physical, ImageRenderable {
 	private float y;
 	private float angle;
 	private boolean isDynamic;
-	private float radius;
 	private Blockade previous;
+
+	public final static float RADIUS = 1f;
 
 	private Image image;
 	private Renderer renderer;
@@ -29,8 +30,6 @@ public class Blockade implements Physical, ImageRenderable {
 		this.y = y;
 		isDynamic = dynamic;
 		this.previous = previous;
-		radius = 1f;
-
 		try {
 			image = new Image("images/dino.png");
 		} catch (SlickException e) {
@@ -78,11 +77,15 @@ public class Blockade implements Physical, ImageRenderable {
 	}
 
 	public float getRadius() {
-		return radius;
+		return RADIUS;
 	}
 
+	/**
+	 * No-Op.
+	 *
+	 * @param radius the radius to ingore
+	 */
 	public void setRadius(float radius) {
-		this.radius = radius;
 	}
 
 	public Blockade getPrevious() {
