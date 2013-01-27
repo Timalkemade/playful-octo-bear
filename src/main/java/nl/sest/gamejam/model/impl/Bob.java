@@ -106,11 +106,6 @@ public class Bob implements Physical, ImageRenderable {
 	}
 
 	@Override
-	public void setImage(Image anImage) {
-		this.image = anImage;
-	}
-
-	@Override
 	public Renderer getRenderer() {
 		return renderer;
 	}

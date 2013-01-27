@@ -21,10 +21,6 @@ public interface Physical {
     void setAngle(float angle);
     
     boolean isDynamic();
-
-    Image getImage();
-
-    void setImage(Image anImage);
     
     void setDynamic(boolean dynamic);
     

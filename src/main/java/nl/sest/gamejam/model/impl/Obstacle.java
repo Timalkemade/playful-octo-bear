@@ -119,11 +119,6 @@ public class Obstacle implements Physical, ImageRenderable {
 	}
 
 	@Override
-	public void setImage(Image anImage) {
-		image = anImage;
-	}
-
-	@Override
 	public void setDynamic(boolean dynamic) {
 		this.isDynamic = dynamic;
 	}
