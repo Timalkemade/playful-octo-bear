@@ -276,6 +276,12 @@ public class PhysicsInterface implements CreatePhysicalListener, DeletePhysicalL
     	}    	
     }
     
+    public void fireEdgeCollisionEvent(Bob bob, Edge edge) {
+    	for (PhysicsCollisionListener physicsCollisionListener : physicsCollisionListeners) {
+    		physicsCollisionListener.edgeCollisionEvent(bob, edge);
+    	}    	
+    }
+    
     public void registerPhysicsCollisionListener(PhysicsCollisionListener physicsCollisionListener) {
     	physicsCollisionListeners.add(physicsCollisionListener);
     }
@@ -331,6 +337,14 @@ public class PhysicsInterface implements CreatePhysicalListener, DeletePhysicalL
 			Bob bob = (Bob) physicalB;
 			Pit pit = (Pit) physicalA;
 			firePitCollisionEvent(bob, pit);
+		} else if (physicalA instanceof Bob && physicalB instanceof Edge) {
+			Bob bob = (Bob) physicalA;
+			Edge edge = (Edge) physicalB;
+			fireEdgeCollisionEvent(bob, edge);
+		} else if (physicalB instanceof Bob && physicalA instanceof Edge) {
+			Bob bob = (Bob) physicalB;
+			Edge edge = (Edge) physicalA;
+			fireEdgeCollisionEvent(bob, edge);
 		}
 	}
 
