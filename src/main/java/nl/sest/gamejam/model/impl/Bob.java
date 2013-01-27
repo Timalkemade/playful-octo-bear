@@ -60,7 +60,7 @@ public class Bob implements Physical, ImageRenderable {
             if(isVirus())
                     image = new Image("images/bobs/virus.png");
             else
-                image = new Image("images/bobs/bloodcell.png");
+                image = new Image("images/bobs/blood.png");
         } catch (SlickException e) {
             e.printStackTrace();
         }

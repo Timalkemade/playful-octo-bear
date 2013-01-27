@@ -32,6 +32,7 @@ public class ViewGame implements Renderer, EventListener {
 	private TrueTypeFont font;
 
 	private int widthWindow = 0;
+    private int heightWindow = 0;
 
 	private Model model;
 
@@ -46,6 +47,7 @@ public class ViewGame implements Renderer, EventListener {
 		model.registerEventListener(this);
 
 		this.widthWindow = gc.getWidth();
+        this.heightWindow = gc.getHeight();
 
 		//Set font                                    .
 		Font awtFont = new Font("Times New Roman", Font.BOLD, 20);
@@ -82,21 +84,21 @@ public class ViewGame implements Renderer, EventListener {
 		int logoWidth = 120;
 		//Currency
 		Image imageCurrency = new Image("images/menu/Currency.png");
-		imageCurrency.draw(halfWindow - barWidth - seperator, 0);
+		imageCurrency.draw(halfWindow - barWidth - seperator, heightWindow-logoWidth);
 
 		String sScore = new DecimalFormat("###,###,###,###").format(model.getCurrency());
-		font.drawString(halfWindow - barWidth - seperator + logoWidth, 47, sScore);
+		font.drawString(halfWindow - barWidth - seperator + logoWidth,  heightWindow-logoWidth+47, sScore);
 
 		//Currency
 		Image imageTime = new Image("images/menu/Time.png");
-		imageTime.draw(halfWindow + seperator, 0);
+		imageTime.draw(halfWindow + seperator,  heightWindow-logoWidth);
 
 		long time = System.currentTimeMillis() - model.getStartTime();
 		int seconds = (int) ((time / 1000) % 60);
 		int minutes = (int) ((time / 1000) / 60);
 		String sMinutes = new DecimalFormat("00").format(minutes);
 		String sSeconds = new DecimalFormat("00").format(seconds);
-		font.drawString(halfWindow + seperator + logoWidth, 47, sMinutes + ":" + sSeconds);
+		font.drawString(halfWindow + seperator + logoWidth,  heightWindow-logoWidth+47, sMinutes + ":" + sSeconds);
 
         /*
 		*/
