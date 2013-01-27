@@ -1,8 +1,6 @@
 package nl.sest.gamejam.model.impl;
 
-import nl.sest.gamejam.events.HeartbeatEvent;
-import nl.sest.gamejam.events.CellKillEvent;
-import nl.sest.gamejam.events.VirusKillEvent;
+import nl.sest.gamejam.events.*;
 import nl.sest.gamejam.model.Event;
 import nl.sest.gamejam.model.Physical;
 import nl.sest.gamejam.model.Renderable;
@@ -147,6 +145,31 @@ public class Model {
 			el.onEvent(e);
 	}
 
+	public void fireEvent(VirusKillEvent virusKillEvent) {
+		for (EventListener eventListener : eventListeners) {
+			eventListener.onEvent(virusKillEvent);
+		}
+	}
+
+
+	public void fireEvent(VirusPassEvent virusPassEvent) {
+		for (EventListener eventListener : eventListeners) {
+			eventListener.onEvent(virusPassEvent);
+		}
+	}
+
+	public void fireEvent(CellKillEvent cellKillEvent) {
+		for (EventListener eventListener : eventListeners) {
+			eventListener.onEvent(cellKillEvent);
+		}
+	}
+
+	public void fireEvent(CellPassEvent cellPassEvent) {
+		for (EventListener eventListener : eventListeners) {
+			eventListener.onEvent(cellPassEvent);
+		}
+	}
+
 	/**
 	 * Gives the POIs in the World.
 	 *
@@ -257,11 +280,11 @@ public class Model {
 	public void virusPass() {
 		virusPass++;
 	}
-	
+
 	public void cellPass() {
 		cellPass++;
 	}
-	
+
 	public int getVirusKills() {
 		return virusKills;
 	}
@@ -273,7 +296,7 @@ public class Model {
 	public int getVirusPass() {
 		return virusPass;
 	}
-	
+
 	public int getCellPass() {
 		return cellPass;
 	}

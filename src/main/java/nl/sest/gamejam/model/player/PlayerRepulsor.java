@@ -64,4 +64,11 @@ public class PlayerRepulsor implements Force, AnimationRenderable {
         return animation;
     }
 
+	public void setX(float newX) {
+		x = newX;
+	}
+
+	public void setY(float newY) {
+		y = newY;
+	}
 }

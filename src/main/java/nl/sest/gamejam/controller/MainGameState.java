@@ -85,6 +85,11 @@ public class MainGameState extends BasicGameState {
 	}
 
 	@Override
+	public void mouseDragged(int oldx, int oldy, int newx, int newy) {
+		inputController.handleForceDragged(newx, newy);
+	}
+
+	@Override
 	public void leave(GameContainer container, StateBasedGame game) throws SlickException {
 		super.leave(container, game);
 		Utils.setModel(null);
